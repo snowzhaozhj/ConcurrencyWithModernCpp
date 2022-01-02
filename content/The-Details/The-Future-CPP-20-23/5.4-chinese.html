@@ -1,0 +1,472 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>扩展特性 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html" class="active"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="扩展特性"><a class="header" href="#扩展特性">扩展特性</a></h1>
+<p>promise和future形式的任务在C++11中的名声很微妙。一方面，它们比线程或条件变量更容易使用；另一方面，也有明显的不足——不能合成。C++20/23中弥补了这个缺陷。</p>
+<p>我曾经以<code>std::async</code>、<code>std::packaged_task</code>或<code>std::promise</code>和<code>std::future</code>的形式，写过关于任务的文章。C++20/23中，我们可以使用加强版的future。</p>
+<h2 id="并发技术标准-v1"><a class="header" href="#并发技术标准-v1">并发技术标准 v1</a></h2>
+<p><strong>std::future</strong></p>
+<p>扩展future很容易解释。首先，扩展了C++11的<code>std::future</code>接口；其次，一些新功能可组合创建特殊的future。先从第一点开始说起：</p>
+<p>扩展future有三种新特性:</p>
+<ul>
+<li>展开构造函数，可用于展开已包装的外部future(<code>future&lt;future&lt;T&gt;&gt;</code>)。</li>
+<li>如果共享状态可用，则返回谓词is_ready。</li>
+<li>添加了可延续附加到future的方法。</li>
+</ul>
+<p>起初，future的状态可以是valid或ready。</p>
+<p><strong>valid与ready</strong></p>
+<ul>
+<li>valid: 如果future具有共享状态(带有promise)，那么它就是有效的。这并不是必须的，因为可以默认构造一个没有promise的<code>std::future</code>。</li>
+<li>ready: 如果共享状态可用，future就已经准备好了。换句话说，如果promise已经完成，则future就已经准备好了。</li>
+</ul>
+<p>因此，<code>(valid == true)</code>是<code>(ready == true)</code>的一个必要不充分条件。</p>
+<p>我对promise和future的建模就是数据通道的两个端点。</p>
+<p><img src="../../../images/detail/The-Future-CPP-20-23/8.png" alt="" /></p>
+<p>现在，valid和ready的区别就非常自然了。如果有一个数据通道的promise，则future的状态是valid。如果promise已经将其结果放入数据通道中，则future的状态是ready。</p>
+<p>现在，为了延迟future，我们来了解一下then。</p>
+<p><strong>使用then的延迟</strong></p>
+<p>then具有将一个future附加到另一个future的能力，这样一个future就能被另一个future所嵌套。展开构造函数的任务是对外部future进行展开的。</p>
+<blockquote>
+<p><strong>N3721提案</strong></p>
+<p>迎来第一个代码段之前，必须介绍一下<a href="https://isocpp.org/files/papers/N3721.pdf">N3721</a>提案。本节的大部分内容是关于“<code>std::future&lt;T&gt;</code>和相关API”的改进建议。奇怪的是，提案作者最初没有使用<code>get</code>获取future最后的结果。因此，我在示例添加了<code>res.get</code>，并将结果保存在变量<code>myResult</code>中，并修正了一些错别字。</p>
+</blockquote>
+<pre><code class="language-c++">#include &lt;future&gt;
+using namespace std;
+int main() {
+
+  future&lt;int&gt; f1 = async([]() {return123; });
+  future&lt;string&gt; f2 = f1.then([](future&lt;int&gt; f) {
+    return to_string(f.get()); // here .get() won't block
+    });
+
+  auto myResult = f2.get();
+
+}
+</code></pre>
+<p><code>to_string(f.get())</code>(第7行)和<code>f2.get()</code>(第10行)之间有细微的区别。正如我在代码片段中已经提到的：第一个调用是非阻塞/异步的，第二个调用是阻塞/同步的。<code>f2.get() </code>会一直等待，直到future链的结果可用。这种方法也适用于长链似的调用：<code>f1.then(…).then(…).then(…).then(…).then(…)</code>。最后，阻塞式调用<code>f2.get()</code>获取结果。</p>
+<p><strong>std::async , std::packaged_task和std::promise</strong></p>
+<p>关于<code>std::async</code>、<code>std::package_task</code>和<code>std::promise</code>的扩展没有太多可说的。那为什么还要提一下，是因为在C++ 20/23中这三种扩展都会返回扩展了的future。</p>
+<p>future的构成令人越来越兴奋了，现在我们可以组合异步任务了。</p>
+<p><strong>创建新future</strong></p>
+<p>C++20获得了四个用于创建新future的新函数。这些函数是<code>std::make_ready_future</code>、<code>std::make_execptional_future</code>、<code>std::when_all</code>和<code>std::when_any</code>。首先，让我们看看<code>std::make_ready_future</code>和<code>std::make_exceptional_future</code>。</p>
+<p><strong>std::make_ready_future和std::make_exceptional_future</strong></p>
+<p>这两个功能都立即创建了一个处于ready状态的future 。第一种情况下，future是有价值的；第二种情况下是出现了异常。一开始看起来很奇怪的事情，但细想却很有道理。C++11中，创建一个future需要promise。即使共享状态可用，这也是必要的。</p>
+<p>使用make_ready_future创建future</p>
+<pre><code class="language-c++">future&lt;int&gt; compute(int x) {
+  if (x &lt; 0) return make_ready_future&lt;int&gt;(-1);
+  if (x == 0) return make_ready_future&lt;int&gt;(0);
+  future&lt;int&gt; f1 = async([]() { return do_work(x); });
+  return f1;
+}
+</code></pre>
+<p>因此，如果(x &gt; 0)保持不变，则只能通过promise来计算结果。</p>
+<p>简短说明一下：这两个函数都是单子(monad)中返回的函数挂件。现在，让我们从future的合成开始说起。</p>
+<p><strong>std::when_any和std::when_all</strong></p>
+<p>这两种功能有很多共同之处。首先，来看看输入：</p>
+<pre><code class="language-c++">template &lt; class InputIt &gt;
+auto when_any(InputIt first, InputIt last)
+	-&gt; future&lt;when_any_result&lt;
+		std::vector&lt;typename std::iterator_traits&lt;InputIt&gt;::value_type&gt;&gt;&gt;;
+
+template &lt; class... Futures &gt;
+auto when_any(Futures&amp;&amp;... futures)
+	-&gt; future&lt;when_any_result&lt;std::tuple&lt;std::decay_t&lt;Futures&gt;...&gt;&gt;&gt;;
+
+template &lt; class InputIt &gt;
+auto when_all(InputIt first, InputIt last)
+	-&gt; future&lt;std::vector&lt;typename std::iterator_traits&lt;InputIt&gt;::value_type&gt;&gt;;
+
+template &lt; class... Futures &gt;
+auto when_all(Futures&amp;&amp;... futures)
+	-&gt; future&lt;std::tuple&lt;std::decay_t&lt;Futures&gt;...&gt;&gt;;
+</code></pre>
+<p>这两个函数都接受一对关于future范围的迭代器，或任意数量的future迭代器。二者最大的区别是，在使用迭代器对的情况下，future必须是相同类型的；而对于任意数量的future，可以使用不同类型的future，甚至可以混用<code>std::future</code>和<code>std::shared_future</code>。</p>
+<p>函数的输出，取决于是否使用了一对迭代器或任意数量的future(可变参数模板)。这两个函数都返回一个future。如果使用一对迭代器，将得到<code>std::vector</code>: <code>future&lt;vector&lt;future&lt;R&gt;&gt;&gt;</code>中的future。如果使用可变参数模板，会得到<code>std::tuple</code>: <code>future&lt;tuple&lt;future&lt;R0&gt;, future&lt;R1&gt;,…&gt;&gt;</code>。</p>
+<p>已经了解了它们的共性。如果所有输入future(when_all)或任何输入future(when_any)都处于ready状态，那么这两个函数返回的future也就处于ready状态。</p>
+<p>接下来的两个例子，会展示<code>std::when_all</code>和<code>std::when_any</code>的用法。</p>
+<p><strong>std::when_all</strong></p>
+<p>Future的组合与<code>std::when_all</code></p>
+<pre><code class="language-c++">#include &lt;future&gt;
+
+using namespace std;
+
+int main() {
+
+  shared_future&lt;int&gt; shared_future1 = async([] {return intResult(123); });
+  future&lt;string&gt; future2 = async([]() {return stringResult(&quot;hi&quot;); });
+
+  future&lt;tuple&lt;shared_future&lt;int&gt;, future&lt;string&gt;&gt;&gt;all_f =
+    when_all(shared_future1, future2);
+
+  future&lt;int&gt; result = all_f.then(
+    [](future&lt;tuple&lt;shared_future&lt;int&gt;, future&lt;string&gt;&gt;&gt; f) {
+      return doWork(f.get());
+    });
+
+  auto myResult = result.get();
+}
+</code></pre>
+<p><code>future all_f</code>(第10行)由future的<code>shared_future1</code>(第7行)和<code>future2</code>(第8行)组成。如果所有future都准备好了，则执行第13行获取future的结果。本例中，将执行第15行中的<code>all_f</code>。结果保存在future中，可以在第18行进行获取。</p>
+<p><strong>std::when_any</strong></p>
+<p>Future的组合与std::when_any</p>
+<pre><code class="language-c++">#include &lt;future&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+int main() {
+
+  vector&lt;future&lt;int&gt;&gt; v{ ..... };
+  auto future_any = when_any(v.begin(), v.end());
+
+  when_any_result&lt;vector&lt;future&lt;int&gt;&gt;&gt; result = future_any.get();
+
+  future&lt;int&gt;&amp; read_future = result.futures[result.index];
+
+  auto myResult = ready_future.get();
+}
+</code></pre>
+<p>when_any中的future可以在第11行中获取结果。<code>result</code>会提供已经准备就绪future的信息。如果不使用when_any_result，就没必要查询每个future是否处于ready状态了。</p>
+<p>如果它的某个输入future处于ready状态，那么future_any就处于ready状态。第11行中的<code>future_any.get()</code>会返回future的结果。通过使用<code>result.futures[result.index]</code>(第13行)，可以获取ready_future，并且由于使用<code>ready_future.get()</code>，也可以对任务的结果进行查询。</p>
+<p>如<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0701r1.html">P0701r1</a>中描述，“它们没想象的那样通用、有表现力或强大”，其既不是标准化的future，也不是并发的<a href="http://en.cppreference.com/w/cpp/experimental/concurrency">TS v1 future</a>。此外，执行者作为执行的基本构件，必须与新的future相统一。</p>
+<h2 id="统一的future"><a class="header" href="#统一的future">统一的Future</a></h2>
+<p>标准化和并发TSv1的future有什么缺点吗?</p>
+<p><strong>缺点</strong></p>
+<p>上述文件(P0701r1)很好地说明了future的不足之处。</p>
+<p><strong>future/promise不应该耦合到std::thread执行代理中</strong></p>
+<p>C++11只有一个executor:<code>std::thread</code>。因此，future和<code>std::thread</code>是不可分割的。这种情况在C++17和STL的并行算法中得到了改变，新的executor中变化更大，并可以使用它来配置future。例如，future可以在单独的线程中运行，也可以在线程池中运行，或者只是串行运行。</p>
+<p><strong>在哪里持续调用了.then ?</strong></p>
+<p>下面的例子中，有一个简单的延续。</p>
+<p>使用<code>std::future</code>的延续</p>
+<pre><code class="language-c++">future&lt;int&gt; f1 = async([]() { return 123; });
+future&lt;string&gt; f2 = f1.then([](future&lt;int&gt; f) {
+	return to_string(f.get());
+});
+</code></pre>
+<p>问题是：延续应该在哪里运行?有一些可能性:</p>
+<ol>
+<li>消费端：消费者执行代理总是执行延续。</li>
+<li>生产端：生产者执行代理总是执行延续。</li>
+<li>inline_executor语义：如果在设置延续时，共享状态已就绪，则使用者线程将执行该延续。如果在设置延续时，共享状态还没有准备好，则生产者线程将执行该延续。</li>
+<li>thread_executor语义：使用新<code>std::thread</code>执行延续。</li>
+</ol>
+<p>前两种可能性有一个显著的缺点：它们会阻塞。第一种情况下，使用者阻塞，直到生产者准备好为止。第二种情况下，生产者阻塞，直到消费者准备好。</p>
+<p>下面是文档<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0701r1.html">P0701r1</a>中的一些不错的executor传播用例:</p>
+<pre><code class="language-c++">auto i = std::async(thread_pool, f).then(g).then(h);
+// f, g and h are executed on thread_pool.
+
+auto i = std::async(thread_pool, f).then(g, gpu).then(h);
+// f is executed on thread_pool, g and h are executed on gpu.
+
+auto i = std::async(inline_executor, f).then(g).then(h);
+// h(g(f())) are invoked in the calling execution agent.
+</code></pre>
+<p><strong>将future传递给.then的延续是不明智的</strong></p>
+<p>因为传递给continuation的是future，而不是它的值，所以语法非常复杂。越多的传递会让表达式变得非常复杂。</p>
+<pre><code class="language-c++">std::future&lt;int&gt; f1 = std::async([]() { return 123; });
+std::future&lt;std::string&gt; f2 = f1.then([](std::future&lt;int&gt; f) {
+	return std::to_string(f.get());
+});
+</code></pre>
+<p>现在，我假设这个值可以传递，因为<code>std::future&lt;int&gt;</code>重载了<code>to_string</code>。</p>
+<p>使用<code>std::future</code>传递值的延续</p>
+<pre><code class="language-c++">std::future&lt;int&gt; f1 = std::async([]() { return 123; });
+std::future&lt;std::string&gt; f2 = f1.then(std::to_string);
+</code></pre>
+<p><strong>when_all和when_any的返回类型让人费解</strong></p>
+<p>介绍<code>std::when_all</code>和<code>std::when_any</code>的这两章，展示了它们相当复杂的使用方法。</p>
+<p><strong>future析构中的条件块必须去掉</strong></p>
+<p>触发即忘的future看起来非常有用，但也有一个很大的限制。由<code>std::async</code>创建的future会等待它的析构函数，直到对应的promise完成。看起来并发的东西，实际是串行运行的。根据文档P0701r1的观点，这是不可接受的，并且非常容易出错。</p>
+<p>我在参考章节中描述了触发即忘future的特殊行为。</p>
+<p><strong>当前值和future值应该易于组合</strong></p>
+<p>C++11中，没有简易的方法来创建future，必须从promise开始。</p>
+<p>在当前标准中创造future </p>
+<pre><code class="language-c++">std::promise&lt;std::string&gt; p;
+std::future&lt;std::string&gt; fut = p.get_future();
+p.set_value(&quot;hello&quot;);
+</code></pre>
+<p>这可能会因为并发技术规范v1中的<code>std::make_ready_future</code>函数而改变。</p>
+<p>使用并发TS v1标准创建future</p>
+<pre><code class="language-c++">std::future&lt;std::string&gt; fut = make_ready_future(&quot;hello&quot;);
+</code></pre>
+<p>使用future和非future参数将使我们的工作更加舒服。</p>
+<pre><code class="language-c++">bool f(std::string, double, int);
+
+std::future&lt;std::string&gt; a = /* ... */;
+std::future&lt;int&gt; c = /* ... */;
+
+std::future&lt;bool&gt; d1 = when_all(a, make_ready_future(3.14), c).then(f);
+// f(a.get(), 3.14, c.get())
+
+std::future&lt;bool&gt; d2 = when_all(a, 3.14, c).then(f);
+// f(a.get(), 3.14, c.get())
+</code></pre>
+<p>并发技术标准v1中，<code>d1</code>和<code>d2</code>都是不可能的。</p>
+<p><strong>五个新概念</strong></p>
+<p>提案<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1054r0.html">1054R0</a>提出了future和promise的5个新概念。</p>
+<ul>
+<li>FutureContinuation：使用future的值或异常作为参数调用的可调用对象。</li>
+<li>SemiFuture：它可以被绑定到一个执行器上，并产生一个<code>ContinuableFuture</code>的操作<code>(f = sf.via(exec))</code>。</li>
+<li>ContinuableFuture：它细化了SemiFuture，实例可以在<code>(f.then(c))</code>上附加一个<code>FutureContinuation</code>。当future处于ready状态时，就会在future关联执行器上执行。</li>
+<li>SharedFuture：它细化了ContinuableFuture，实例可以附加多个FutureContinuation。</li>
+<li>Promise：每一个promise都与一个future相关联，当future中设置好一个值或一个异常时，future处于ready状态。</li>
+</ul>
+<p>文章还对这些新概念进行了详细描述。</p>
+<p>future和promise的五个新概念</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct FutureContinuation
+{
+  // At least one of these two overloads exists:
+  auto operator()(T value);
+  auto operator()(exception_arg_t, exception_ptr exception);
+};
+
+template &lt;typename T&gt;
+struct SemiFuture
+{
+  template &lt;typename Executor&gt;
+  ContinuableFuture&lt;Executor, T&gt; via(Executor&amp;&amp; exec) &amp;&amp;;
+};
+
+template &lt;typename Executor, typename T&gt;
+struct ContinuableFuture
+{
+  template &lt;typename RExecutor&gt;
+  ContinuableFuture&lt;RExecutor, T&gt; via(RExecutor&amp;&amp; exec) &amp;&amp;;
+  
+  template &lt;typename Continuation&gt;
+  ContinuableFuture&lt;Executor, auto&gt; then(Continuation&amp;&amp; c) &amp;&amp;;
+};
+
+template &lt;typename Executor, typename T&gt;
+struct SharedFuture
+{
+  template &lt;typename RExecutor&gt;
+  ContinuableFuture&lt;RExecutor, auto&gt; via(RExecutor&amp;&amp; exec);
+  
+  template &lt;typename Continuation&gt;
+  SharedFuture&lt;Executor, auto&gt; then(Continuation&amp;&amp; c);
+};
+
+template &lt;typename T&gt;
+struct Promise
+{
+  void set_value(T value) &amp;&amp;;
+  
+  template &lt;typename Error&gt;
+  void set_exception(Error exception) &amp;&amp;;
+  
+  bool valid() const;
+};
+</code></pre>
+<p>根据这些概念，提出一些意见:</p>
+<ul>
+<li>可以使用值或异常调用FutureContinuation。它是一个可调用的单元，使用future的值或异常。</li>
+<li>所有future(SemiFuture 、ContinuableFuture和SharedFuture)都有一个方法，可以通过该方法指定一个执行器并返回一个ContinuableFuture，并且可以通过使用不同的执行程序将一种future类型转换为另一种类型。</li>
+<li>只有一个ContinuableFuture或SharedFuture有then方法用来继续。then方法可以接受FutureContinuation，并返回ContinuableFuture。</li>
+<li>SharedFuture是一个可复制的future 。</li>
+<li>Promise可以设置值或异常。</li>
+</ul>
+<p><strong>未完成的工作</strong></p>
+<p><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1054r0.html">提案1054R0</a>中为未来留下了几个需要完成的工作：</p>
+<ul>
+<li>future和promise还有前进空间。</li>
+<li>非并发执行代理使用future和promise时需要同步。</li>
+<li><code>std::future/std::promise</code>的互操作性.</li>
+<li>future的展开，支持包括<code>future&lt;future&lt;T&gt;&gt;</code>的更高级形式。</li>
+<li>when_all/when_any/when_n </li>
+<li>async </li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

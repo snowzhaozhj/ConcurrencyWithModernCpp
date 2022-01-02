@@ -1,0 +1,726 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>同步和顺序 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html" class="active"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>#同步和顺序</p>
+<p>虽然不能配置原子数据，但可以调整原子操作的同步和顺序。这在C#或Java的内存模型中是不可能的。</p>
+<p>C++中有六种不同的内存模型，那这些内存模型分别是什么呢?</p>
+<h2 id="c的六种内存序"><a class="header" href="#c的六种内存序">C++的六种内存序</a></h2>
+<p>我们已经知道C++有六种不同的内存序。原子操作默认的内存序是<code>std::memory_order_seq_cst</code>，这表示顺序一致。此外，也可以显式地指定其他五个中的一个。那么剩余几个是什么呢?</p>
+<p>C++中定义的内存序</p>
+<pre><code class="language-c++">enum memory_order{
+  memory_order_relaxed,
+  memory_order_consume,
+  memory_order_acquire,
+  memory_order_release,
+  memory_order_acq_rel,
+  memory_order_seq_cst
+}
+</code></pre>
+<p>对这六种内存序进行分类，需要回答两个问题:</p>
+<ol>
+<li>不同的原子操作应该使用哪种内存模型?</li>
+<li>6个内存序定义了哪些同步和顺序?</li>
+</ol>
+<p>接下来的内容就是回答这两个问题。</p>
+<h2 id="原子操作的种类"><a class="header" href="#原子操作的种类">原子操作的种类</a></h2>
+<p>这里有三种不同类型的原子操作：</p>
+<ul>
+<li>读(read)操作: <code>memory_order_acquire</code>和<code>memory_order_consume</code></li>
+<li>写(write)操作: <code>memory_order_release</code></li>
+<li>读改写(read-modify-write)操作: <code>memory_order_acq_rel</code>和<code>memory_order_seq_cst</code></li>
+</ul>
+<p><code>memory_order_relaxed</code>无同步和操作顺序，所以它不适用于这种分类方式。</p>
+<p>下表根据原子操作的读写特性对它们进行排序。</p>
+<table><thead><tr><th align="center">操作名称</th><th align="center">read</th><th align="center">write</th><th align="center">read-modify-write</th></tr></thead><tbody>
+<tr><td align="center">test_and_set</td><td align="center"></td><td align="center"></td><td align="center">yes</td></tr>
+<tr><td align="center">clear</td><td align="center"></td><td align="center">yes</td><td align="center"></td></tr>
+<tr><td align="center">is_lock_free</td><td align="center">yes</td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">load</td><td align="center">yes</td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">store</td><td align="center"></td><td align="center">yes</td><td align="center"></td></tr>
+<tr><td align="center">exchange</td><td align="center"></td><td align="center"></td><td align="center">yes</td></tr>
+<tr><td align="center">compare_exchange_strong</td><td align="center"></td><td align="center"></td><td align="center">yes</td></tr>
+<tr><td align="center">compare_exchange_weak</td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">fetch_add, +=</td><td align="center"></td><td align="center"></td><td align="center">yes</td></tr>
+<tr><td align="center">fetch_sub, -=</td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">fetch_or, |=</td><td align="center"></td><td align="center"></td><td align="center">yes</td></tr>
+<tr><td align="center">fetch_and, &amp;=</td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">fetch_xor, ^=</td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">++, --</td><td align="center"></td><td align="center"></td><td align="center">yes</td></tr>
+</tbody></table>
+<p>“读改写”操作还需要提供最新的值，不同线程上的<code>atomVar.fetch_sub(1)</code>操作序列一个接一个地无缝衔接或进行重复的计数。</p>
+<p>如果将原子操作<code>atomVar.load()</code>与“写”或“读改写”操作一起使用，那么“写”的部分将不起作用。结果就是：<code>atomVar.load(std::memory_order_acq_rel)</code>等价于<code>atomVar.load(std::memory_order_acquire)</code>，<code>atomVar.load(std::memory_order_release)</code>等价于<code>atomVar.load(std::memory_order_relax)</code>。</p>
+<h2 id="同步与顺序的不同"><a class="header" href="#同步与顺序的不同">同步与顺序的不同</a></h2>
+<p>大致说来，C++中有三种不同类型的同步和顺序:</p>
+<ul>
+<li>顺序一致: <code>memory_order_seq_cst</code></li>
+<li>获取-释放(Acquire-release)：<code>memory_order_consume</code> , <code>memory_order_acquire</code> ,<code> memory_order_release</code>和<code>memory_order_acq_rel</code></li>
+<li>自由序(Relaxed): <code>memory_order_relaxed</code></li>
+</ul>
+<p>顺序一致在线程之间建立全局顺序。获取-释放语义为不同线程之间，对同一原子变量进行读写操作时建立顺序。自由语序只保证了原子变量的修改顺序，修改顺序是指对一个特定原子变量的所有修改都以某种特定的顺序发生。因此，由特定线程读取原子对象时，不会看到“更旧”的值。</p>
+<p>不同的内存模型，及其对原子和非原子操作的影响，也使得C++内存模型好玩但又有挑战性。下面我们来讨论顺序一致、获得-释放语义和自由语义的同步和顺序。</p>
+<h3 id="顺序一致"><a class="header" href="#顺序一致">顺序一致</a></h3>
+<p>让我们深入地研究一下顺序一致，其关键是所有线程上的所有操作都遵从一个通用时钟。这个全球时钟让我们可以很直观的想象它的存在。</p>
+<p>顺序一致的直观性是有代价的，缺点是系统必须对线程进行同步。</p>
+<p>下面的程序在顺序一致性的帮助下，同步生产者和消费者线程。</p>
+<pre><code class="language-c++">// producerConsumer.cpp
+
+#include &lt;atomic&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;thread&gt;
+
+std::string work;
+std::atomic&lt;bool&gt; ready(false);
+
+void consumer(){
+  while(!ready.load()){}
+  std::cout &lt;&lt; work &lt;&lt; std::endl;
+}
+
+void producer(){
+  work = &quot;done&quot;;
+  ready = true;
+}
+
+int main(){
+  std::thread prod(producer);
+  std::thread con(consumer);
+  prod.join();
+  con.join();
+}
+</code></pre>
+<p>这个程序的输出：</p>
+<p><img src="../../../images/detail/memory-model/9.png" alt="" /></p>
+<p>由于顺序一致，程序执行结果是确定的，所以总是输出“done”。</p>
+<p>下图描述了操作的顺序。消费者线程在<code>while</code>循环中等待，等待原子变量<code>ready</code>被生产者线程设置为<code>true</code>。当这种情况发生时，消费者线程将继续其工作。</p>
+<p><img src="../../../images/detail/memory-model/10.png" alt="" /></p>
+<p>理解程序总是返回“done”并不难，只需要使用顺序一致的两个特点：一方面，两个线程以源码顺序执行指令；另一方面，每个线程以相同的顺序查看另一个线程的操作。也就是，两个线程遵循相同的时钟。<code>while(!ready.load()){}</code>循环中，这种同步也可以保持下去——用于同步生产者线程和消费者线程。</p>
+<p>通过使用内存序，可以更正式地解释这个过程。以下是正式版本:</p>
+<ol>
+<li><code>work= &quot;done&quot;</code>在序列中，位于<code>ready = true</code>之前
+⇒ <code>work= &quot;done&quot;</code>先行与<code>ready = true</code></li>
+<li><code>while(!ready.load()){}</code>序列位于<code>std::cout &lt;&lt; work &lt;&lt; std::endl</code>之前
+⇒ <code>while(!ready.load()){}</code>先行与<code>std::cout&lt;&lt; work &lt;&lt; std::endl</code></li>
+<li><code>ready= true</code>与<code>while(!ready.load()){}</code>同步
+⇒ <code>ready= true</code>(线程间)先行于<code>while (!ready.load()){}</code>
+⇒ <code>ready= true</code>先行于<code>while (!ready.load()){}</code></li>
+</ol>
+<p>最终的结论：因为先行关系是可以传递的，所以<code>work = &quot;done&quot;</code>先行于<code>ready= true</code>，且先行于<code>while(!ready.load()){}</code>，更先行于<code>std::cout&lt;&lt; work &lt;&lt; std::endl</code>。</p>
+<p>顺序一致中，一个线程可以看到另一个线程的操作，因此也可以看到所有其他线程的操作。如果使用原子操作的获取-释放语义，那么顺序一致就不成立了。这是与C#和Java不同的地方，也是容易产生疑惑的地方。</p>
+<h3 id="获取-释放语义"><a class="header" href="#获取-释放语义">获取-释放语义</a></h3>
+<p>获取-释放语义中，线程间不存在全局同步：只有同一原子变量上的原子操作才进行同步。比如：一个线程上的写操作与另一个线程上的读操作，只有作用于同一个原子变量时才进行同步。</p>
+<p>获取-释放语义的基本思想：释放操作与获取操作在同一原子上同步，并建立一个顺序。这意味着，在释放操作之后不能进行所有的读写操作，在获取操作之前不能进行所有的读写操作。</p>
+<p>什么是获取/释放操作？使用<code>load</code>或<code>test_and_set</code>读取原子变量是一个获取操作。还有，锁或互斥锁的释放与获取是同步的，线程的构造与调用间是同步的，线程的完成与汇入调用间的操作是同步的，任务可调用的完成与等待或获取future的调用操作是同步的。所以，获取和释放操作是成对的。</p>
+<p>下面这张图有助于对获取-释放语义的理解：</p>
+<p><img src="../../../images/detail/memory-model/11.png" alt="" /></p>
+<blockquote>
+<p><strong>内存模型——更深入地理解多线程</strong></p>
+<p>这应该是了解内存模型的主要原因。特别是，获取-释放语义可以更好地理解高级同步原语，比如互斥锁。同样的原理也适用于线程的启动和汇入。这两种操作都是获取-释放操作。接下来是<code>wait</code>和<code>notify_one</code>对条件变量的调用；<code>wait</code>是获取操作，<code>notify_one</code>是释放操作。那<code>notify_all</code>呢？当然，也是一个释放操作。</p>
+</blockquote>
+<p>现在，再看<code>std::atomic_flag</code>小节中的自旋锁。因为同步是使用<code>atomic_flag flag</code>完成的，所以可以使用获取-释放语义，进行更高效的实现。</p>
+<pre><code class="language-c++">// spinlockAcquireRelease.cpp
+
+#include &lt;atomic&gt;
+#include &lt;thread&gt;
+
+class Spinlock{
+  std::atomic_flag flag;
+public:
+  Spinlock():flag(ATOMIC_FLAG_INIT){}
+  
+  void lock(){
+    while(flag.test_and_set(std::memory_order_acquire));
+  }
+  
+  void unlock(){
+    flag.clear(std::memory_order_release);
+  }
+};
+
+Spinlock spin;
+
+void workOnResource(){
+	spin.lock();
+  // shared resource
+  spin.unlock();
+}
+
+int main(){
+  
+  std::thread t(workOnResource);
+  std::thread t2(workOnResource);
+  
+  t.join();
+  t2.join();
+}
+</code></pre>
+<p>第16行<code>flag.clear</code>清除标志，<code>test_and_set</code>在第12行调用一个获取操作，获取操作与释放操作同步。具有顺序一致的两个线程的同步(重量级同步)(<code>std::memory_order_seq_cst</code>)被更轻量级的和性能更强的获取-释放语义(<code>std::memory_order_acquire</code>和<code>std::memory_order_release</code>)所取代，且程序行为不受影响。</p>
+<p>虽然<code>flag.test_and_set(std::memory_order_acquire)</code>调用是一个&quot;读改写&quot;操作，但是获取语义已经足够了。因为<code>flag</code>是原子的，可以保证修改顺序。这也就意味着，对<code>flag</code>的所有修改，都可以某种特定的顺序进行。</p>
+<p>获得-释放语义是可传递的。如果两个线程(a,b)之间遵循获取-释放语义，且线程(b,c)之间也遵循获取-释放语义，那么在线程(a, c)之间也遵循获取-释放语义。</p>
+<h4 id="传递性"><a class="header" href="#传递性">传递性</a></h4>
+<p>释放与获取操作在同一个原子变量上同步，并建立顺序。如果它们作用于相同的原子变量，这些组件将以最高效的方式同步线程。如果两个线程没有共享的原子变量，会如何工作呢？不想使用顺序一致语义，因为代价过高，我们想要更轻量级的获取-释放语义。</p>
+<p>解决方式很简单，就是利用获取-释放语义的传递性，可以同步独立线程。</p>
+<p>下面的示例中，线程<code>t2</code>及其工作包<code>deliveryBoy</code>是两个独立线程<code>t1</code>和<code>t3</code>之间的连接线程。</p>
+<pre><code class="language-c++">// transitivity.cpp
+
+#include &lt;atomic&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+
+std::vector&lt;int&gt; mySharedWork;
+std::atomic&lt;bool&gt; dataProduced(false);
+std::atomic&lt;bool&gt; dataConsumed(false);
+
+void dataProducer(){
+  mySharedWork = {1,0,3};
+  dataProduced.store(true, std::memory_order_release);
+}
+
+void deliverBoy(){
+  while(!dataProduced.load(std::memory_order_acquire));
+  dataConsumed.store(true, std::memory_order_release);
+}
+
+void dataConsumer(){
+  while(!dataConsumed.load(std::memory_order_acquire));
+  mySharedWork[1] = 2;
+}
+
+int main(){
+  std::cout &lt;&lt; std::endl;
+  
+  std::thread t1(dataConsumer);
+  std::thread t2(deliverBoy);
+  std::thread t3(dataProducer);
+  
+  t1.join();
+  t2.join();
+  t3.join();
+  
+  for (auto v : mySharedWork){
+    std::cout &lt;&lt; v &lt;&lt; &quot; &quot;;
+  }
+  
+  std::cout &lt;&lt; &quot;\n\n&quot;;
+  
+}
+</code></pre>
+<p>程序的输出是唯一的，<code>mySharedWork</code>的值为<code>1, 2, 3</code>。</p>
+<p><img src="../../../images/detail/memory-model/12.png" alt="" /></p>
+<p>通过观察，得出两个结论：</p>
+<ol>
+<li>线程<code>t2</code>在第18行等待，直到线程<code>t3</code>将<code>dataProduced</code>设置为<code>true</code>(第14行)。</li>
+<li>线程<code>t1</code>在第23行等待，直到线程<code>t2</code>将<code>dataConsumed</code>设置为<code>true</code>(第19行)。</li>
+</ol>
+<p>用图来解释下：</p>
+<p><img src="../../../images/detail/memory-model/13.png" alt="" /></p>
+<p>图中主要部分是箭头。</p>
+<ul>
+<li>蓝色箭头是顺序关系，线程中的所有操作都是按源码顺序执行。</li>
+<li>红色的箭头是同步关系。原因是对同一原子变量的原子操作遵循的获取-释放语义。原子变量之间，以及线程同步发生在特定的点上。</li>
+<li>顺序关系建立了先行关系，再使用线程间的先行关系建立同步关系。</li>
+</ul>
+<p>剩下的部分就好理解了，线程间的先行指令顺序对应于箭头的方向。最后，能够保证<code>mySharedWork[1] == 2</code>。</p>
+<p>释放-获取操作是同步的(同一个原子变量)，所以可以很容易地同步线程，不过…… 我们还要看几个误解。</p>
+<h4 id="典型的误解"><a class="header" href="#典型的误解">典型的误解</a></h4>
+<p>写关于获取-释放语义误解的原因是什么?我的许多读者和学生已经发现了这些陷阱。让我们来看一个简单的例子。</p>
+<h5 id="等待"><a class="header" href="#等待">等待</a></h5>
+<p>以一个简单的程序作为基点。</p>
+<pre><code class="language-c++">// acquireReleaseWithWaiting.cpp
+
+#include &lt;atomic&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+
+std::vector&lt;int&gt; mySharedWork;
+std::atomic&lt;bool&gt; dataProduced(false);
+
+void dataProducer(){
+  mySharedWork = {1,0,3};
+  dataProduced.store(true, std::memory_order_release);
+}
+
+void dataConsumer(){
+  while(!dataProduced.load(std::memory_order_acquire));
+  mySharedWork[1] = 2;
+}
+
+int main(){
+  
+  std::cout &lt;&lt; std::endl;
+  
+  std::thread t1(dataConsumer);
+  std::thread t2(dataProducer);
+  
+  t1.join();
+  t2.join();
+  
+  for (auto v: mySharedWork){
+    std::cout &lt;&lt; v &lt;&lt; &quot; &quot;;
+  }
+    
+  std::cout &lt;&lt; &quot;\n\n&quot;;
+  
+}
+</code></pre>
+<p>第17行的消费者线程<code>t1</code>持续等待，直到第13行的消费者线程<code>t2</code>将数据设置为true。非原子变量<code>mySharedWork</code>受<code>dataProduced</code>的保护，访问是同步的。这意味着生产者线程<code>t2</code>初始化<code>mySharedWork</code>，然后消费者线程<code>t2</code>通过设置<code>mySharedWork[1]</code>为2来完成工作，是没有问题的。</p>
+<p><img src="../../../images/detail/memory-model/14.png" alt="" /></p>
+<p>下图显示了线程中的先行关系和线程之间的同步关系。同步在线程间建立了先行关系，其余顺序可以根据先行关系的传递性推理得出。</p>
+<p>最后，让<code>mySharedWork = {1, 0, 3} </code>先行于<code>mySharedWork[1] = 2 </code>。</p>
+<p><img src="../../../images/detail/memory-model/15.png" alt="" /></p>
+<p>有没有感觉这个推理过程中经常缺少什么？</p>
+<h5 id="如果"><a class="header" href="#如果">如果……</a></h5>
+<p>如果第17行中的消费者线程<code>t1</code>没有等待生产者线程<code>t2</code>，会发生什么?</p>
+<pre><code class="language-c++">// acquireReleaseWithoutWaiting.cpp
+
+#include &lt;atomic&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+
+std::vector&lt;int&gt; mySharedWork;
+std::atomic&lt;bool&gt; dataProduced(false);
+
+void dataProducer(){
+  mySharedWork = {1,0,3};
+  dataProduced.store(true, std::memory_order_release);
+}
+
+void dataConsumer(){
+ 	dataProduced.load(std::memory_order_acquire);
+  myShraedWork[1] = 2;
+}
+
+int main(){
+  
+  std::cout &lt;&lt; std::endl;
+  
+  std::thread t1(dataConsumer);
+  std::thread t2(dataProducer);
+  
+  t1.join();
+  t2.join();
+  
+  for (auto v : mySharedWork){
+    std::cout &lt;&lt; v &lt;&lt; &quot; &quot;;
+  }
+  
+  std::cout &lt;&lt; &quot;\n\n&quot;;
+  
+}
+</code></pre>
+<p>因为变量<code>mySharedWork</code>上存在数据竞争，所以该程序具有未定义行为。当程序运行时，将得到以下结果。</p>
+<p><img src="../../../images/detail/memory-model/16.png" alt="" /></p>
+<p>问题在哪里呢？<code>dataProduced.store(true, std::memory_order_release)</code>与<code>dataProduced.load(std::memory_order_acquire)</code>同步。不过，并不意味着获取操作要对释操作进行等待，而这正是下图中的内容。图中，<code>dataProduced.load(std::memory_order_acquire)</code>在指令<code>dataProduced.store(true, std::memory_order_release)</code>之前，所以这里没有同步关系。</p>
+<p><img src="../../../images/detail/memory-model/17.png" alt="" /></p>
+<h4 id="解决办法"><a class="header" href="#解决办法">解决办法</a></h4>
+<p>同步意味着：当<code>dataProduced.store(true, std::memory_order_release) </code>先行于<code>dataProduced.load(std::memory_order_acquire)</code>，那么<code>dataProduced.store(true, std::memory_order_release)</code>之前和<code>dataProduced.load(std::memory_order_acquire)</code>之后执行的操作是所有线程可见的。第一个程序中使用<code>while(! dataproduct .load(std::memory_order_acquire))</code>来保证同步关系。</p>
+<p>再描述一次，使用正式方式。</p>
+<p>当满足条件：<code>dataProduced.store(true, std::memory_order_release)</code>先行于<code>dataProduced.load(std::memory_order_acquire) </code>时，<code>dataProduced.store(true, std::memory_order_release)</code>之前执行的操作先行于所有<code>dataProduced.load(std::memory_order_acquire)</code>之后执行的操作。</p>
+<h4 id="释放顺序"><a class="header" href="#释放顺序">释放顺序</a></h4>
+<p>处理获取-释放语义时，释放顺序是一个相当高级的概念。因此，我们首先从以下的获取-释放语义示例开始说起。</p>
+<pre><code class="language-c++">// releaseSequence.cpp
+
+#include &lt;atomic&gt;
+#include &lt;thread&gt;
+#include &lt;iostream&gt;
+#include &lt;mutex&gt;
+
+std::atomic&lt;int&gt; atom{0};
+int somethingShared{0};
+
+using namespace std::chrono_literals;
+
+void writeShared(){
+  somethingShared = 2011;
+  atom.store(2, std::memory_order_release);
+}
+
+void readShared(){
+  while(!(atom.fetch_sub(1, std::memory_order_acquire) &gt; 0)){
+    std::this_thread::sleep_for(100ms);
+  }
+  std::cout &lt;&lt; &quot;somethingShared: &quot; &lt;&lt; somethingShared &lt;&lt; std::endl;
+}
+
+int main(){
+  
+  std::cout &lt;&lt; std::endl;
+  
+  std::thread t1(writeShared);
+  std::thread t2(readShared);
+  // std::thread t3(readShared);
+  
+  t1.join();
+  t2.join();
+  // t3.join();
+  
+  std::cout &lt;&lt; &quot;atom: &quot; &lt;&lt; atom &lt;&lt; std::endl;
+  
+  std::cout &lt;&lt; std::endl;
+  
+}
+</code></pre>
+<p>先看看没有线程<code>t3</code>的例子。第15行对原子进行存储操作，第19行对原子获取并同步线程，这里对非原子变量<code>somethingShared</code>的访问不存在数据竞争。</p>
+<p>如果打开<code>t3</code>线程的注释，会发生什么变化？现在就有可能出现“数据竞争”了。如前所述，<code>atom.fetch_sub(1, std::memory_order_acquire) </code>(第19行)与<code> atom.store(2, std::memory_order_release)</code>(第15行)间，<code>atom</code>变量遵循获取-释放语序；因此，在<code>somethingShared </code>变量的访问上没有数据竞争。</p>
+<p>但对于第二次调用<code>atom.fetch_sub(1, std::memory_order_acquire)</code>，获取-释放语序则不起作用了。第二次调用则是一个读改写操作，因为已经没有在对<code>std::memory_order_release</code>进行标记了。这也就时第二次调用与第一次调用并没有同步关系，所以会发生对共享变量的数据竞争。也许，释放顺序可能不会让数据竞争发生。这里，释放序列扩展到对<code>atom.fetch_sub(1, std::memory_order_acquire) </code>的第二次调用；因此，第二次调用<code>atom.fetch_sub(1, std::memory_order_acquire)</code>先行于第一次调用。</p>
+<p>最终，我们可能会得到如下的结果：</p>
+<p><img src="../../../images/detail/memory-model/18.png" alt="" /></p>
+<p>更正式的释放顺序的由N4659定义(<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/n4659.pdf">N4659: Working Draft, Standard for Programming Language C++</a>)。</p>
+<blockquote>
+<p><strong>释放顺序</strong></p>
+<p>释放顺序由一个释放操作A和一个原子对象M构成，修改M顺序会对最大连续子操作序列有所影响，也就是A的第一次调用和随后由相同线程执行的的<code>*</code>操作。这里<code>*</code>指的是对源子的读改写操作。</p>
+</blockquote>
+<p>如果仔细看了我的解释，可能会期待接下来出现自由语义；不过，我们还是来看下内存模型<code>std:: memory_order_consumption</code>，它与<code>std::memory_order_acquire</code>非常相似</p>
+<h4 id="stdmemory_order_consume"><a class="header" href="#stdmemory_order_consume">std::memory_order_consume</a></h4>
+<p><code>std::memory_order_consume </code>是六种内存序中最传奇的一个。原因有二：一，<code>std:: memory_order_consumption</code>非常难理解；二，因为目前没有编译器支持它，所以这个内存序可能在未来会进行修改。C++17中的情况更糟，官方的说法是：“释放-消费序的规范正在修改，暂不推荐使用<code>memory_order_consumption</code>。”</p>
+<p>为什么不支持<code>std:: memory_order_consumption</code>呢？答案是，编译器会将<code>std:: memory_order_consumption</code>映射为<code>std::memory_order_acquire</code>。这没毛病，因为两者都是加载或获取操作。<code>std::memory_order_consume</code>比<code>std::memory_order_acquire</code>需要的同步和顺序更弱。因此，释放-获排序可能比释放-消费序慢，但关键是内存序有良好的定义。</p>
+<p>将释放-消费序与释放-获取序进行比较，可以对其进行更好的了解。下一小节中，将讨论释放-获取序，以了解<code>std::memory_order_consume</code>和<code>std::memory_order_acquire</code>之间的关系。</p>
+<h4 id="释放-获取序"><a class="header" href="#释放-获取序">释放-获取序</a></h4>
+<p>首先，让使用下面的程序和两个线程<code>t1</code>和<code>t2</code>。<code>t1</code>扮演生产者的角色，<code>t2</code>扮演消费者的角色。原子变量<code>ptr</code>用于同步生产者和消费者。</p>
+<pre><code class="language-c++">// acquireRelease.cpp
+
+#include &lt;atomic&gt;
+#include &lt;thread&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+atomic&lt;string*&gt; ptr;
+int data;
+atomic&lt;int&gt; atoData;
+
+void producer(){
+  string *p = new string(&quot;C++11&quot;);
+  data = 2011;
+  atoData.store(2014, memory_order_relaxed);
+  ptr.store(p, memory_order_release);
+}
+
+void consumer(){
+  string *p2;
+  while(!(p2 = ptr.load(memory_order_acquire)));
+  cout &lt;&lt; &quot;*p2: &quot; &lt;&lt; *p2 &lt;&lt; endl;
+  cout &lt;&lt; &quot;data: &quot; &lt;&lt; data &lt;&lt; endl;
+  cout &lt;&lt; &quot;atoData: &quot; &lt;&lt; atoData.load(memory_order_relaxed) &lt;&lt; endl;
+}
+
+int main(){
+  
+  cout &lt;&lt; endl;
+  
+  thread t1(producer);
+  thread t2(consumer);
+  
+  t1.join();
+  t2.join();
+  
+  cout &lt;&lt; endl;
+  
+}
+</code></pre>
+<p>分析程序之前，进行一些修改。</p>
+<h4 id="释放-消费序"><a class="header" href="#释放-消费序">释放-消费序</a></h4>
+<p>将第21行中的内存顺序<code>std::memory_order_acquire</code>替换为<code>std:: memory_order_consumption</code>。</p>
+<pre><code class="language-c++">// acquireConsume.cpp
+
+#include &lt;atomic&gt;
+#include &lt;thread&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+atomic&lt;string*&gt; ptr;
+int data;
+atomic&lt;int&gt; atoData;
+
+void producer(){
+  string *p = new string(&quot;C++11&quot;);
+  data = 2011;
+  atoData.store(2014, memory_order_relaxed);
+  ptr.store(p, memory_order_release);
+}
+
+void consumer(){
+  string *p2;
+  while(!(p2 = ptr.load(memory_order_acquire)));
+  cout &lt;&lt; &quot;*p2: &quot; &lt;&lt; *p2 &lt;&lt; endl;
+  cout &lt;&lt; &quot;data: &quot; &lt;&lt; data &lt;&lt; endl;
+  cout &lt;&lt; &quot;atoData: &quot; &lt;&lt; atoData.load(memory_order_relaxed) &lt;&lt; endl;
+}
+
+int main(){
+  
+  cout &lt;&lt; endl;
+  
+  thread t1(producer);
+  thread t2(consumer);
+  
+  t1.join();
+  t2.join();
+  
+  cout &lt;&lt; endl;
+  
+}
+</code></pre>
+<p>现在程序存在有未定义的行为。不过这种情况只能是一种猜测，因为GCC 5.4编译器使用<code>std::memory_order_acquire</code>实现了<code> std::memory_order_consume</code> ，所以程序改动前和改动后是相同的。</p>
+<p>程序输出结果是相同的。</p>
+<p><img src="../../../images/detail/memory-model/19.png" alt="" /></p>
+<h4 id="释放-获取-vs-释放-消费"><a class="header" href="#释放-获取-vs-释放-消费">释放-获取 Vs. 释放-消费</a></h4>
+<p>解释一下，为什么第一个程序(acquireRelease.cpp)没有问题(定义良好)。</p>
+<p>因为存储操作使用<code>std::memory_order_release</code>，而加载操作使用<code>std::memory_order_acquire</code>，所以第16行上的存储操作与第21行中的加载操作同步。释放-获取序的约束是什么呢？释放-获取序确保在存储操作(第16行)前，所有操作的结果在加载操作(第21行)之后可用。同样，释放-获取操作对非原子变量(第14行)和原子变量<code>atoData</code>(第15行)的访问进行排序。虽然，<code>atoData</code>使用<code>std::memory_order_relax</code>排序，但这也没问题。</p>
+<p>关键的问题是：如果用<code>std::memory_order_consumption</code>替换<code>std::memory_order_acquire</code>会发生什么?</p>
+<h4 id="stdmemory_order_consume的数据依赖"><a class="header" href="#stdmemory_order_consume的数据依赖">std::memory_order_consume的数据依赖</a></h4>
+<p><code>std::memory_order_consume</code>需要处理原子上的数据依赖关系，数据依赖性以两种方式存在。首先，让我们看看线程中的携依赖和两个线程之间的依赖关系。两个依赖都引入了一个先行关系。“携依赖(carries-a-dependency-to)”和“先依赖序(dependency-order-before)”是什么意思？</p>
+<ul>
+<li>携依赖: 如果操作A的结果在操作B中作为操作数，则：A携依赖于B。</li>
+<li>先依赖序：存储操作(使用<code>std::memory_order_release</code>、<code>std::memory_order_acq_rel</code>或<code>std:: memory_seq_cst</code>)是按依赖序进行排序的——如果同一个线程中的后续操作C中加载了操作B的结果，则需要在加载操作B之前使用<code>std::memory_order_consume</code>。需要注意的是，操作B和C必须在同一个线程中。</li>
+</ul>
+<p>以我的经验，这两个定义不是很好懂，有用图可能会更直观一些。</p>
+<p><img src="../../../images/detail/memory-model/20.png" alt="" /></p>
+<p><code>ptr.store(p, std::memory_order_release)</code>是按先依赖序排列在<code>while (!(p2 = ptr.load(std::memory_order_consume))) </code>之前的，因为下行<code>std::cout &lt;&lt; &quot;*p2: &quot; &lt;&lt; p2 &lt;&lt; std::endl</code>可看作为加载操作的结果输出。此外，<code>while (!(p2 = ptr.load(std::memory_order_consume))</code>携依赖于<code>cout &lt;&lt; &quot;p2: &quot; &lt;&lt; *p2 &lt;&lt; &lt; std::endl</code>，因为<code>*p2</code>使用了<code>ptr</code>的结果进行输出。</p>
+<p>我们无法保证<code>data </code>和<code>atoData</code>的输出。这是因为两者与<code>ptr.load</code>操作没有携依赖关系。更糟糕的是：由于数据是非原子变量，因此存在竞争条件。原因是两个线程可以同时访问数据，并且线程<code>t1</code>要对数据进行修改。因此，程序具有未定义行为。</p>
+<p>最后，我们来了解自由语义。</p>
+<h3 id="自由语义"><a class="header" href="#自由语义">自由语义</a></h3>
+<p>自由语义是另一个极端。自由语义是所有内存模型中最弱的，只能保证原子的修改顺序，这意味着对原子的修改了，会以某种特定的顺序发生。</p>
+<h4 id="无同步和顺序"><a class="header" href="#无同步和顺序">无同步和顺序</a></h4>
+<p>这很容易理解。若没有规则，就无所谓违规。不过，程序应该具有定义良好的行为。这意味着，通常使用更强的内存序的同步和顺序可以控制自由语义的操作。这是怎么做到的呢？一个线程可以以任意顺序看到另一个线程的效果，因此必须确保程序中有一些点，在所有线程上的所有操作都是同步的。</p>
+<p>原子操作是一个计数器，其中操作序列无关紧要。计数器遵守的不是不同线程增加计数器的顺序；对计数器的关键观察是，所有增量都是原子性的，所有线程的任务都在最后完成。请看下面的例子：</p>
+<pre><code class="language-c++">// relaxed.cpp
+
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;atomic&gt;
+
+std::atomic&lt;int&gt; count = {0};
+
+void add(){
+  for (int n = 0; n &lt; 1000; ++n){
+    count.fetch_add(1, std::memory_order_relaxed);
+  }
+}
+
+int main(){
+  std::vector&lt;std::thread&gt; v;
+  
+  for (int n = 0; n &lt; 10; ++n){
+    v.emplace_back(add);
+  }
+  for (auto&amp; t : v){
+    t.join();
+  }
+  std::cout &lt;&lt; &quot;Final Counter value is &quot; &lt;&lt; count &lt;&lt; '\n';
+}
+</code></pre>
+<p>最重要的三行分别是13、24和26行。</p>
+<p>第13行，原子数计数使用自由语义进行递增，因此可以保证操作是原子的。<code>fetch_add</code>操作建立计数排序，<code>add</code>函数(第10-15行)是线程的任务包。在第21行，为每个线程分配任务包。</p>
+<p>线程创建是一个同步点，另一个同步点是第24行的<code>t.join()</code>。</p>
+<p>主线程在第24行与所有子线程同步，使用<code>t.join()</code>进行等待，直到它的所有子节点都完成。</p>
+<p>总之，第13行中的增量操作与第26行中计数器的读取之间存在先行关系。</p>
+<p>结果是程序总是返回10000。有些无聊吗？不，这才是令人放心的！</p>
+<p><img src="../../../images/detail/memory-model/21.png" alt="" /></p>
+<p>使用自由语义的原子计数器的另一个典型示例是<code>std::shared_ptr</code>的引用计数器。这只适用于增量操作，增加引用计数器的关键属性是操作是原子的。并且，增量操作的顺序并不重要，但这不适用于引用计数器的递减。这些操作需要遵循获取-释放语义的析构函数。</p>
+<blockquote>
+<p><strong>无等待的累加计算</strong></p>
+<p>仔细看下第10行中的add函数。增量操作中不涉及同步(第13行)，值1被添加到原子变量<code>count</code>中。</p>
+<p>因此，该算法不仅是无锁的，而且是无等待的。</p>
+</blockquote>
+<p><code>std::atomic_thread_fence</code>的基本思想是，没有原子操作的情况下，在线程之间建立同步和顺序。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/The-Details/Memory-Model/1.3-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/The-Details/Memory-Model/1.5-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/The-Details/Memory-Model/1.3-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/The-Details/Memory-Model/1.5-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

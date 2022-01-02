@@ -1,0 +1,769 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>原子操作 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html" class="active"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="原子操作"><a class="header" href="#原子操作">原子操作</a></h1>
+<p>原子操作是C++内存模型的基础。默认情况下，原子操作基于强内存模型的支持，所以理解强内存模型很有意义。</p>
+<p>##强/弱内存模型</p>
+<p>您可能已经从编程协议的章节中了解到：顺序一致语义是强内存模型，自由语义是弱内存模型。</p>
+<p>###强内存模型</p>
+<p>2004年，Java 5.0有了内存模型。2011年，C++添加了内存模型。在此之前，Java有个错误的内存模型，而C++则没有内存模型，而多线程编程已经有40~50年的历史了。在1979年时，<a href="https://en.wikipedia.org/wiki/Leslie_Lamport">Leslie Lamport</a> 就定义了顺序一致的概念。</p>
+<p>顺序一致有两个特点:</p>
+<ul>
+<li>指令按源码顺序执行。</li>
+<li>线程上的所有操作都遵循一个全局顺序。</li>
+</ul>
+<p>深入研究这两个特点之前，我想强调一下，这些声明只适用于原子操作，但影响并不仅对原子操作而言。</p>
+<p>下面图形显示了两个线程。每个线程分别将值存储到变量<code>x</code>或<code>y</code>中，获取另一个变量<code>y</code>或<code>x</code>，并存储在变量<code>res1</code>或<code>res2</code>中。</p>
+<p><img src="../../../images/detail/memory-model/3.png" alt="" /></p>
+<p>通常，原子操作是顺序一致的。问题是：这些语句以什么顺序执行?</p>
+<p>顺序一致的第一个特点：指令按照源码中的顺序执行。任何存储操作都无法在获取操作之前进行。</p>
+<p>顺序一致的第二个特点：所有线程的指令必须遵循全局顺序。上图中的情况，线程2看到线程1的操作的顺序与线程1执行它们的顺序相同。线程2按照线程1的源码顺序查看线程1的所有操作，从线程1的角度来看也是如此。可以将这个特性，想象成一个所有线程都必须遵循的全局时钟(全局时钟就是全局顺序)。时钟每发出一次滴答声，就会发生一个原子操作，但永远不知道执行的是哪个。</p>
+<p>解谜还没有结束。我们仍然需要观察，两个线程交错运行的方式。两个线程有以下六种交替运行的方式。</p>
+<p><img src="../../../images/detail/memory-model/4.png" alt="" /></p>
+<p>很简单，对吧？这就是顺序一致语义，也称为<strong>强内存模型</strong>。</p>
+<h3 id="弱内存模型"><a class="header" href="#弱内存模型">弱内存模型</a></h3>
+<p>我们再参考一下开发者和系统之间的协议。</p>
+<p>这个特殊的例子中，开发者使用了原子操作(开发者遵循协议)。系统保证了程序的行为，从而不会存在数据竞争。另外，系统可以在每个组合中执行四个操作。如果开发者使用自由语义，协议的基础部分就会发生巨大的变化。一方面，开发者可能很难理解两个线程之间的交错；另一方面，系统有更大的优化空间。</p>
+<p>使用自由语义(也称为弱内存模型)，可使这四种操作有更多的组合。有种很难理解的行为是，线程1可以以不同的顺序查看线程2的操作，这样全局顺序就不存在了。从线程1的角度来看，操作<code>res2= x.load()</code>可能在<code>y.store(1)</code>之前执行。甚至是，线程1或线程2没有按照源代码中的顺序执行。例如，线程2可以先执行<code>res2= x.load()</code>，再执行<code>y.store(1)</code>。</p>
+<p>“序列一致语义”和“自由语义”之间还有存在其他内存模型，其中最重要的是“获取-释放语义“。“获取-释放语义”中，开发人员需要遵守比“顺序一致语义”弱的规则。这样，系统有了更多优化空间。因为线程在特定同步点上进行同步，所以“获取-释放语义“是理解多线程编程中，同步和部分排序的关键。没有同步点，就不可能有(定义良好的)线程、任务或条件变量。</p>
+<p>上一节中，介绍了原子操作的默认行为——顺序一致(为每个原子操作指定内存顺序)。如果没有指定内存顺序，则应用保持顺序一致，这意味着<code>std::memory_order_seq_cst</code>将默认应用于每个原子操作。</p>
+<p>下面两端段代码是等价的：</p>
+<pre><code class="language-c++">x.store(1);
+res = x.load();
+</code></pre>
+<pre><code class="language-c++">x.store(1, std::memory_order_seq_cst);
+res = x.load(std::memory_order_seq_cst);
+</code></pre>
+<p>简单起见，本书使用第一种形式。现在，来深入了解C++内存模型原子性，先从<code>std::atomic_flag</code>开始吧。</p>
+<h2 id="原子标志"><a class="header" href="#原子标志">原子标志</a></h2>
+<p><code>std::atomic_flag</code>是原子布尔类型，可以对其状态进行设置和清除。为了简化说明，我将<code>clear</code>状态称为<code>false</code>，将<code>set</code>状态称为<code>true</code>。<code>clear</code>方法可将其状态设置为<code>false</code>。<code>test_and_set</code>方法，可以将状态设置回<code>true</code>，并返回先前的值。这里，没有方法获取当前值。使用<code>std::atomic_flag</code>时，必须使用常量<code>ATOMIC_FLAG_INIT</code>将<code>std::atomic_flag</code>初始化为<code>false</code>。</p>
+<blockquote>
+<p><strong>ATOMIC_FLAG_INIT</strong></p>
+<p><code>std::atomic_flag</code>需要初始化时，可以是这样：<code>std::atomic_flag flag = ATOMIC_FLAG_INIT</code>。</p>
+<p>不过，不能这样进行初始化：<code>std::atomic_flag flag(ATOMIC_FLAG_INIT) </code>。</p>
+</blockquote>
+<p><code>std::atomic_flag</code>有两个特点：</p>
+<ul>
+<li>无锁原子类型。程序是系统级别进程的话，执行的非阻塞算法就是无锁的。</li>
+<li>更高级别的线程构建块。</li>
+</ul>
+<p>除了<code>std::atomic_flag</code>之外，C++标准中的原子内部都会使用互斥锁。这些原子类型有一个<code>is_lock_free</code>成员函数，可用来检查原子内部是否使用了互斥锁。时下主流的微处理器架构上，都能得到“使用了互斥锁”的结果。如果想要无锁编程，那么就要使用该成员函数进行检查，确定是否使用了锁。</p>
+<blockquote>
+<p><strong><code>std::is_always_lock_free</code></strong></p>
+<p>可以使用<code>obj.is_lock_free()</code>，在运行时检查原子类型的实例<code>obj</code>是否无锁。在C++17中，可以通过<code>constexpr</code>(常量)<a href="https://zh.cppreference.com/w/cpp/atomic/atomic/is_always_lock_free"><code>atomic&lt;type&gt;::is_always_lock_free</code></a>，在编译时对每个原子类型进行检查，支持该操作的所有硬件实现都无锁时，才返回true。</p>
+</blockquote>
+<p><code>std::atomic_flag</code>的接口非常强大，能够构建自旋锁。自旋锁可以像使用互斥锁一样保护临界区。</p>
+<blockquote>
+<p><strong>自旋锁</strong></p>
+<p>自旋锁与互斥锁不同，它并不获取锁。而是，通过频繁地请求锁来获取临界区的访问权。不过，这会导致上下文频繁切换(从用户空间到内核空间)，虽然充分使用了CPU，但也浪费了非常多的时钟周期。线程短时间阻塞时，自旋锁非常有效。通常，会将自旋锁和互斥锁组合着使用。首先，在有限的时间内使用自旋锁；如果不成功，则将线程置于等待(休眠)状态。</p>
+<p>自旋锁不应该在单处理器系统上使用。否则，自旋锁就不仅浪费了资源，而且还会减慢程序处理的速度(最好的情况)，或出现死锁(最坏的情况)。</p>
+</blockquote>
+<p>下面的代码，使用<code>std::atomic_flag</code>实现了自旋锁。</p>
+<pre><code class="language-c++">// spinLock.cpp
+
+#include &lt;atomic&gt;
+#include &lt;thread&gt;
+
+class Spinlock{
+  std::atomic_flag flag = ATOMIC_FLAG_INIT;
+public:
+  
+  void lock(){
+    while(flag.test_and_set());
+  }
+  
+  void unlock(){
+    flag.clear();
+  }
+  
+};
+
+Spinlock spin;
+
+void workOnResource(){
+  spin.lock();
+  // shared resource
+  spin.unlock();
+}
+
+
+int main(){
+  
+  std::thread t(workOnResource);
+  std::thread t2(workOnResource);
+  
+  t.join();
+  t2.join();
+  
+}
+</code></pre>
+<p>线程<code>t</code>和<code>t2</code>(第31行和第32行)在争夺临界区的访问权。这里的自旋锁是如何工作的呢？自旋锁也有锁定和解锁的阶段。</p>
+<p>当线程<code>t</code>执行函数<code>workOnResource</code>时，可能会发生以下情况：</p>
+<ol>
+<li>线程<code>t</code>获取锁，若第11行的标志初始值为false，则锁调用成功。这种情况下，线程<code>t</code>的原子操作将其设置为true。所以，当<code>t</code>线程获取锁后，true将会让while陷入死循环，使得线程<code>t2</code>陷入了激烈的竞争当中。线程<code>t2</code>不能将标志设置为false，因此<code>t2</code>必须等待，直到线程<code>t1</code>执行<code>unlock</code>(解锁)并将标志设置为false(第14 - 16行)时，才能获取锁。</li>
+<li>线程<code>t</code>没有得到锁时，情况1中的<code>t2</code>一样，需要等待。</li>
+</ol>
+<p>我们将注意力放在<code>std::atomic_flag</code>的<code>test_and_set</code>成员函数上。<code>test_and_set</code>函数包含两个操作：读和写。原子操作就是对这两种操作进行限制。如果没有限制，线程将对共享资源同时进行读和写(第24行)，根据定义，这就属于“数据竞争”，程序还会有未定义行为发生。</p>
+<p>将自旋锁的主动等待和互斥锁的被动等待做一下比较。</p>
+<h3 id="自旋锁-vs-互斥锁"><a class="header" href="#自旋锁-vs-互斥锁">自旋锁 vs. 互斥锁</a></h3>
+<p>如果函数<code>workOnResource</code>在第24行停顿2秒，那CPU负载会发生怎样的变化?</p>
+<pre><code class="language-c++">// spinLockSleep.cpp
+
+#include &lt;atomic&gt;
+#include &lt;thread&gt;
+
+class Spinlock{
+  std::atomic_flag flag = ATOMIC_FLAG_INIT;
+public:
+  
+  void lock(){
+    while(flag.test_and_set());
+  }
+  
+  void unlock(){
+    flag.clear();
+  }
+  
+};
+
+Spinlock spin;
+
+void workOnResource(){
+  spin.lock();
+  std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+  spin.unlock();
+}
+
+int main(){
+  
+  std::thread t(workOnResource);
+  std::thread t2(workOnResource);
+  
+  t.join();
+  t2.join();
+  
+}
+</code></pre>
+<p>如下图所示，四个核中每次有一个是跑满了的。</p>
+<p><img src="../../../images/detail/memory-model/5.png" alt="" /></p>
+<p>我的PC上有一个核的负载达到100%，每次不同的核芯执行”忙等待“。</p>
+<p>我现在用互斥锁来替换自旋锁。让我们看下会发生什么。</p>
+<pre><code class="language-c++">// mutex.cpp
+
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+
+std::mutex mut;
+
+void workOnResource(){
+  mut.lock();
+  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+  mut.unlock();
+}
+
+int main(){
+  
+  std::thread t(workOnResource);
+  std::thread t2(workOnResource);
+  
+  t.join();
+  t2.join();
+  
+}
+</code></pre>
+<p>虽然执行了好几次，但是并没有观察到任何一个核上有显著的负载。</p>
+<p>这样就能看出二者的区别了吧。</p>
+<p><img src="../../../images/detail/memory-model/6.png" alt="" /></p>
+<p>接下来，了解下<code>std::atomic</code>模板。</p>
+<h2 id="stdatomic模板"><a class="header" href="#stdatomic模板"><code>std::atomic</code>模板</a></h2>
+<p><code>std::atomic</code>有各种变体。</p>
+<p>直接使用模板类：<code>std::atomic&lt;bool&gt;</code>和<code>std::atomic&lt;user-defined type&gt;</code>。</p>
+<p>部分特化可用于指针类：<code>std::atomic&lt;T*&gt;</code>。</p>
+<p>完全特化只能用于整型：<code>std::atomic&lt;integral type&gt;</code>。</p>
+<p>布尔原子类型和用户定义原子类型具有相同的接口，原子指针扩展了布尔原子类型，以及整数原子类型的接口。因其扩展了原子指针的接口，所以同样适用于整数原子类型。</p>
+<p>不过，不保证<code>std::atomic</code>的各种变体都是无锁的。</p>
+<p>先从最简单的<code>std::atomic&lt;bool&gt;</code>开始吧。</p>
+<h3 id="stdatomicbool"><a class="header" href="#stdatomicbool"><code>std::atomic&lt;bool&gt;</code></a></h3>
+<p><code>std::atomic&lt;bool&gt;</code>的功能比<code>std::atomic_flag</code>强大很多。并且，可以显式地将其设置为true或false。</p>
+<blockquote>
+<p><strong>原子类型不可为volatile</strong></p>
+<p>C#和Java中的<code>volatile</code>与C++中的<code>volatile</code>不同，这也是<code>volatile</code>和<code>std::atomic</code>之间的区别。</p>
+<ul>
+<li><code>volatile</code>：表示不允许对特定的对象进行读写优化。</li>
+<li><code>std::atomic</code>：用来定义线程安全的原子变量。</li>
+</ul>
+<p><code>volatile</code>在Java和C#中，与<code>std::atomic</code>在C++中的含义相同。另外，在C++多线程语义中，没有<code>volatile</code>。</p>
+<p><code>volatile</code>多应用于嵌入式编程中，表示可以(独立于常规程序流)进行更改的对象，例如：表示外部设备的对象(内存映射I/O)。由于这些对象可以更改，并且会直接写入主存中，因此不会在缓存中进行优化存储。</p>
+</blockquote>
+<p>这对于同步两个线程已经足够了，可以用<code>std::atomic&lt;bool&gt;</code>实现条件变量。</p>
+<p>因此，先使用条件变量。</p>
+<pre><code class="language-c++">// conditionVariable.cpp
+
+#include &lt;condition_variable&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+
+std::vector&lt;int&gt; mySharedWork;
+std::mutex mutex_;
+std::condition_variable condVar;
+
+bool dataReady{false};
+
+void waitingForWork(){
+  std::cout &lt;&lt; &quot;Waiting &quot; &lt;&lt; std::endl;
+  std::unique_lock&lt;std::mutex&gt; lck(mutex_);
+  condVar.wait(lck, []{return dataReady;});
+  mySharedWork[1] = 2;
+  std::cout &lt;&lt; &quot;Work done &quot; &lt;&lt; std::endl;
+}
+
+void setDataReady(){
+  mySharedWork = {1, 0, 3};
+  {
+    std::lock_guard&lt;std::mutex&gt; lck(mutex_);
+    dataReady = true;
+  }
+  std::cout &lt;&lt; &quot;Data prepared&quot; &lt;&lt; std::endl;
+  condVar.notify_one();
+}
+
+int main(){
+  std:cout &lt;&lt; std::endl;
+  
+  std::thread t1(waitingForWork);
+  std::thread t2(setDataReady);
+  
+  t1.join();
+  t2.join();
+  
+  for (auto v : mySharedWork){
+    std::cout &lt;&lt; v &lt;&lt; &quot; &quot;;
+  }
+  
+  std::cout &lt;&lt; &quot;\n\n&quot;;
+}
+</code></pre>
+<p>简单说一下这段代码。线程<code>t1</code>在(第17行)等待线程<code>t2</code>的通知。两个线程使用相同的条件变量<code>condVar</code>，并在同一个互斥锁上进行同步。工作流如下所示：</p>
+<ul>
+<li>
+<p>线程t1</p>
+<ul>
+<li>获取锁<code>lck</code>时，等待数据准备好的通知 <code>condVar.wait(lck, []{ return dataReady; })</code> 。</li>
+<li>得到通知后，执行<code>mySharedWork[1] = 2</code>。</li>
+</ul>
+</li>
+<li>
+<p>线程t2</p>
+<ul>
+<li>准备数据<code>mySharedWork = {1, 0, 3}</code></li>
+<li>将非原子布尔类型的<code>dataReady</code>置为true。</li>
+<li>通过<code>condVar.notify_one</code>发布通知。</li>
+</ul>
+</li>
+</ul>
+<p>线程<code>t2</code>将<code>dataReady</code>设置为true，线程<code>t1</code>使用Lambda表达式对<code>dataReady</code>进行检查。不过，条件变量可能会出现两种不好的情况:</p>
+<ol>
+<li>伪唤醒：接受者在没有收到通知时被唤醒。</li>
+<li>未唤醒：接收方在未处于等待状态时获得通知。</li>
+</ol>
+<p>使用<code>std::atomic&lt;bool&gt; </code>进行实现：</p>
+<pre><code class="language-c++">// atomicCondition.cpp
+
+#include &lt;atomic&gt;
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+
+std::vector&lt;int&gt; mySharedWork;
+std::atomic&lt;bool&gt; dataReady(false);
+
+void waitingForWork(){
+  std::cout &lt;&lt; &quot;Waiting &quot; &lt;&lt; std::endl;
+  while(!dataReady.load()){
+    std::this_thread::sleep_for(std::chrono::milliseconds(5)); 
+  }
+  mySharedWork[1] = 2;
+  std::cout &lt;&lt; &quot;Work done &quot; &lt;&lt; std::endl;
+}
+
+void setDataReady(){
+  mySharedWork = {1,0,3};
+  dataReady = true;
+  std::cout &lt;&lt; &quot;Data prepared&quot; &lt;&lt; std::endl;
+}
+
+int main(){
+  
+  std::cout &lt;&lt; std::endl;
+  
+  std::thread t1(waitingForWork);
+  std::thread t2(setDataReady);
+  
+  t1.join();
+  t2.join();
+  
+  for (auto v : mySharedWork){
+    std::cout &lt;&lt; v &lt;&lt; &quot; &quot;; 
+  }
+  
+  std::cout &lt;&lt; &quot;\n\n&quot;;
+}
+</code></pre>
+<p>如何保证第17行在第14行之后执行？或者说，线程<code>t1</code>在线程<code>t2</code>执行<code>mySharedWork ={1,0,3}</code>(第22行)后，执行<code>mySharedWork[1] = 2</code>(第17行)。</p>
+<ul>
+<li>第22行先于第23行执行。</li>
+<li>第14行先于第17行执行。</li>
+<li>第14、23行与第14行同步</li>
+<li>因为同步建立了先行关系，并且先行关系可以传递，所以<code>mySharedWork = {1,0,3}</code>先于<code>mySharedWork[1] = 2</code>执行。</li>
+</ul>
+<p>很容易理解，对吧？简单起见，忽略同步创建的线程间先行关系，以及线程间已建立的先行关系。如果对这里的细节感兴趣，可以参考这里：<a href="http://en.cppreference.com/w/cpp/atomic/memory_order">内存序(memory_order)</a>。</p>
+<p>两段程序产生了相同的结果。</p>
+<p><img src="../../../images/detail/memory-model/7.png" alt="" /></p>
+<blockquote>
+<p><strong>推拉原理</strong></p>
+<p>条件变量的同步与<code>std::atomic&lt;bool&gt;</code>之间有一个关键性的区别。条件变量会让线程等待通知(<code>condVar.notify()</code>)。检查<code>std::atomic&lt;bool&gt;</code>的线程，只是为了确定发送方是否完成了其工作(<code>dataRead = true</code>)。</p>
+<p>条件变量通知等待线程对应为&quot;推原则(push principle)&quot;，而原子布尔值的重复轮询对应为&quot;拉原则(pull principle)&quot;。</p>
+</blockquote>
+<p><code>std::atomic&lt;bool&gt;</code>和<code>std::atomic</code>的其他全/偏特化都支持的原子操作：<code>compare_exchange_strong</code>和<code>compare_exchange_strong</code>。</p>
+<blockquote>
+<p><strong>compare_exchange_strong和compare_exchange_weak</strong> </p>
+<p>compare_exchange_strong的声明为<code>bool compare_exchange_strong(T&amp; expected, T&amp; desired)</code>。此操作为比较和交换，因此也称为比较-交换(compare and swap，CAS)操作。这种操作在许多编程语言中都有用到，并且是非阻塞算法的基础。当然，C++中的行为可能会与其他语言不同。<code>atomicValue.compare_exchange_strong(expected, desired)</code>具有以下行为。</p>
+<ul>
+<li>如果<code>atomicValue</code>的值与期望值(expected)的比较返回true，则将<code>atomicValue</code>设置为所需值(desired)。</li>
+<li>如果比较返回false，则将expected值设置为<code>atomicValue</code>的值。</li>
+</ul>
+<p>compare_exchange_strong称为<strong>strong</strong>的原因显而易见。当然，还有一个compare_exchange_weak，<strong>weak</strong>版本可能会伪失败。这意味着，虽然<code>*atomicValue == expected</code>成立，但<code>atomicValue</code>没有被设置成<code>desired</code>，函数返回<code>false</code>，因此必须在循环中进行检查：<code>while (!atomicValue.compare_exchange_weak(expected, desired))</code>。弱形式的存在原因是，因为一些处理器(硬件)不支持原子比较交换指令。循环调用时，也应该首选弱形式。在某些平台上，弱形式运行得更快。</p>
+<p>CAS操作对于<a href="https://lumian2015.github.io/lockFreeProgramming/aba-problem.html">ABA问题</a>，解决方式是开放的。先描述一下这个问题：读取一个值两次，每次都返回相同的值A；因此得出结论，在这两者之间没有变化。但是，两次读取过程中数值可能已经更改为B了。</p>
+</blockquote>
+<p>弱版本允许伪失败，也就是说，即使它们是相等的，结果也和<code>*this !=expected</code>一样。当比较-交换操作处于循环中时，弱版本可能在某些平台上具有更好的性能。</p>
+<p>除了布尔值之外，还有指针、整型和用户定义类型的原子操作。</p>
+<p>所有<code>std::atomic</code>的变种类型都支持CAS操作。</p>
+<h3 id="用户定义类型的原子操作stdatomicuser-defined-type"><a class="header" href="#用户定义类型的原子操作stdatomicuser-defined-type">用户定义类型的原子操作<code>std::atomic&lt;user-defined type&gt;</code></a></h3>
+<p>因为<code>std::atomic</code>是模板类，所以可以使用自定义的原子类型。</p>
+<p>使用自定义类型用于原子类型<code>std::atomic&lt;user-defined type&gt;</code>时，有很多限制。原子类型<code>std::atomic&lt;user-defined type</code>&gt;与<code>std::atomic&lt;bool&gt;</code>具有相同的接口。</p>
+<p>以下是自定义类型成为原子类型的限制：</p>
+<ul>
+<li>自定义类型对所有基类和有非静态成员的复制赋值操作必须非常简单。这意味着不能定义复制赋值操作符，但是可以使用<a href="http://en.cppreference.com/w/cpp/keyword/default">default</a>让编译器来完成这个操作符的定义。</li>
+<li>自定义的类型不能有虚方法或虚基类</li>
+<li>自定义的类型必须可按位比较，这样才能使用C函数<a href="http://en.cppreference.com/w/cpp/string/byte/memcpy">memcpy</a>或<a href="http://en.cppreference.com/w/cpp/string/byte/memcmp">memcmp</a>。</li>
+</ul>
+<p>主流平台都可以对<code>std::atomic&lt;user-defined type&gt;</code>进行原子操作，前提是用户定义类型的大小不大于<code>int</code>。</p>
+<blockquote>
+<p><strong>编译时检查类型属性</strong></p>
+<p>可以使用以下函数在编译时，检查自定义类型的类型属性：<code>std::is_trivially_copy_constructible</code>, <code>std:: is_polymorphic</code>和<code>std::is_trivial</code>。这些函数都是类型特征库(<a href="http://en.cppreference.com/w/cpp/header/type_traits">type-traits library</a>)的一部分。</p>
+</blockquote>
+<p><strong><code>std::atomic&lt;T*&gt;</code></strong></p>
+<p><code>std::atomic&lt;T*&gt;</code>是<code>std::atomic</code>类模板的偏特化类型。原子指针<code>std::atomic&lt;T*&gt;</code>支持与<code>std::atomic&lt;bool&gt;</code> 或<code>std::atomic&lt;user-defined type&gt;</code>相同的成员函数。它的行为就像一个普通的指针<code>T*</code>。<code>std::atomic&lt;T*&gt; </code>支持指针运算和前后递增或前后递减操作。</p>
+<p>看个简单的例子。</p>
+<pre><code class="language-c++">int intArray[5];
+std::atomic&lt;int*&gt; p(intArray);
+p++;
+assert(p.load() == &amp;intArray[1]);
+p+=1;
+assert(p.load() == &amp;intArray[2]);
+--p;
+assert(p.load() == &amp;intArray[1]);
+</code></pre>
+<p>在C++11中，有原子整型。</p>
+<p><strong><code>std::atomic&lt;integral type&gt;</code></strong></p>
+<p>对于每个整数类型，都有相应的全特化<code>std::atomic&lt;integral type&gt;</code>版本。</p>
+<p>对于哪些整型存做了全特化？让我们来看一下:</p>
+<ul>
+<li>字符类型: char , char16_t , char32_t 和 wchar_t</li>
+<li>标准有符号整型: signed char , short , int , long 和 long long</li>
+<li>标准无符号整型: unsigned char , unsigned short , unsigned int , unsigned long 和 unsigned long long</li>
+<li>还有很多整型，都定义在<a href="http://en.cppreference.com/w/cpp/header/cstdint"><code>&lt;cstdint&gt;</code></a>中</li>
+<li>int8_t , int16_t , int32_t 和 int64_t (8, 16, 32 和 64位的有符号整型)</li>
+<li>uint8_t , uint16_t , uint32_t 和 uint64_t (8, 16, 32 和 64位的无符号整型)</li>
+<li>int_fast8_t , int_fast16_t , int_fast32_t 和 int_fast64_t (8, 16, 32 和 64位的高速有符号整型)</li>
+<li>uint_fast8_t , uint_fast16_t , uint_fast32_t 和 uint_fast64_t (8, 16, 32 和 64 位的高速无符号整型)</li>
+<li>int_least8_t , int_least16_t , int_least32_t 和 int_least64_t (8, 16, 32 和 64 位的最小有符号整型)</li>
+<li>uint_least8_t , uint_least16_t , uint_least32_t 和 uint_least64_t (8, 16, 32 和 64 位的最小无符号整型)</li>
+<li>intmax_t 和 uintmax_t (最大有符号整数和无符号整数)</li>
+<li>intptr_t 和 uintptr_t (用于存放有符号整数和无符号整数指针)</li>
+</ul>
+<p><code>std::atomic&lt;integral type&gt;</code>支持复合赋值运算符<code>+=</code>、<code>-=</code>、<code>&amp;=</code>、<code>|=</code>和<code>^=</code>，以及相应操作的方法：<code>fetch_add</code>、<code>fetch_sub</code>、<code>fetch_and</code>、<code>fetch_or</code>和<code>fetch_xor</code>。复合赋值运算符返回新值，而fetch操作返回旧值。此外，复合赋值运算符还支持前增量和后增量，以及前减量和后减量(++x, x++，--x和x--)。</p>
+<p>更深入的研究前需要了解一些前提：原子操作没有原子乘法、原子除法，也没有移位操作。这不是重要的限制，因为这些操作很少需要，并且很容易实现。下面就是是实现原子<code>fetch_mult</code>的例子。</p>
+<pre><code class="language-c++">// fetch_mult.cpp
+
+#include &lt;atomic&gt;
+#include &lt;iostream&gt;
+
+template &lt;typename T&gt;
+T fetch_mult(std::atomic&lt;T&gt;&amp; shared, T mult){
+  T oldValue = shared.load();
+  while(!shared.compare_exchange_strong(oldValue, oldValue * mult));
+  return oldValue;
+}
+
+int main(){
+  std::atomic&lt;int&gt; myInt{5};
+  std::cout &lt;&lt; myInt &lt;&lt; std::endl;
+  fetch_mult(myInt, 5);
+  std::cout &lt;&lt; myInt &lt;&lt; std::endl;
+}
+</code></pre>
+<p>值得一提的是，第9行的乘法只在<code>oldValue == shared</code>成立时才会发生。因为在第8行中有两条读取<code>oldValue</code>的指令，我将乘法放在<code>while</code>循环中，以确保乘法能顺利执行。</p>
+<p><img src="../../../images/detail/memory-model/8.png" alt="" /></p>
+<blockquote>
+<p><strong>fetch_mult无锁</strong></p>
+<p><code>fetch_mult</code>(第6行)将<code>std::atomic</code>变量与<code>mult</code>相乘。关键在读取旧值<code>T oldValue = shared Load</code>(第8行)和比较第9行中的新值之间，有一个窗口时间。因此，其他线程总是可以介入并更改<code>oldValue</code>。如果线程间有糟糕的交错，就会发现每个线程可能都有自己的结果。</p>
+<p>该算法是无锁的，但不是无等待的。</p>
+</blockquote>
+<h3 id="类型别名"><a class="header" href="#类型别名">类型别名</a></h3>
+<p>对于所有<code>std::atomic&lt;bool&gt;</code>和<code>std::atomic&lt;integral type&gt;</code>(如果integral类型可用)，C++标准提供类型别名。</p>
+<p><code>std::atomic&lt;bool&gt;</code>和<code>std::atomic&lt;integral type&gt;</code>的类型别名如下：</p>
+<table><thead><tr><th align="center">类型别名</th><th align="center">具体定义</th></tr></thead><tbody>
+<tr><td align="center"><code>std::atomic_bool</code></td><td align="center"><code>std::atomic&lt;bool&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_char</code></td><td align="center"><code>std::atomic&lt;char&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_schar</code></td><td align="center"><code>std::atomic&lt;signed char&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uchar</code></td><td align="center"><code>std::atomic&lt;unsigned char&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_short</code></td><td align="center"><code>std::atomic&lt;short&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_ushort</code></td><td align="center"><code>std::atomic&lt;unsigned short&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int</code></td><td align="center"><code>std::atomic&lt;int&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint</code></td><td align="center"><code>std::atomic&lt;unsigned int&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_long</code></td><td align="center"><code>std::atomic&lt;long&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_ulong</code></td><td align="center"><code>std::atomic&lt;unsigned long&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_llong</code></td><td align="center"><code>std::atomic&lt;long long&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_ullong</code></td><td align="center"><code>std::atomic&lt;unsigned long long&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_char16_t</code></td><td align="center"><code>std::atomic&lt;char16_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_char32_t</code></td><td align="center"><code>std::atomic&lt;char32_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_wchar_t</code></td><td align="center"><code>std::atomic&lt;wchar_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int8_t</code></td><td align="center"><code>std::atomic&lt;std::int8_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint8_t</code></td><td align="center"><code>std::atomic&lt;std::uint8_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int16_t</code></td><td align="center"><code>std::atomic&lt;std::int16_t</code>&gt;</td></tr>
+<tr><td align="center"><code>std::atomic_uint16_t</code></td><td align="center"><code>std::atomic&lt;std::uint16_t</code>&gt;</td></tr>
+<tr><td align="center"><code>std::atomic_int32_t</code></td><td align="center"><code>std::atomic&lt;std::int32_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint32_t</code></td><td align="center"><code>std::atomic&lt;std::uint32_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int64_t</code></td><td align="center"><code>std::atomic&lt;std::int64_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint64_t</code></td><td align="center"><code>std::atomic&lt;std::uint64_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int_least8_t</code></td><td align="center"><code>std::atomic&lt;std::int_least8_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint_least8_t</code></td><td align="center"><code>std::atomic&lt;std::uint_least8_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int_least16_t</code></td><td align="center"><code>std::atomic&lt;std::int_least16_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint_least16_t</code></td><td align="center"><code>std::atomic&lt;std::uint_least16_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int_least32_t</code></td><td align="center"><code>std::atomic&lt;std::int_least32_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint_least32_t</code></td><td align="center"><code>std::atomic&lt;std::uint_least32_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int_least64_t</code></td><td align="center"><code>std::atomic&lt;std::int_least64_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint_least64_t</code></td><td align="center"><code>std::atomic&lt;std::uint_least64_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int_fast8_t</code></td><td align="center"><code>std::atomic&lt;std::int_fast8_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint_fast8_t</code></td><td align="center"><code>std::atomic&lt;std::uint_fast8_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int_fast16_t</code></td><td align="center"><code>std::atomic&lt;std::int_fast16_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint_fast16_t</code></td><td align="center"><code>std::atomic&lt;std::uint_fast16_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int_fast32_t</code></td><td align="center"><code>std::atomic&lt;std::int_fast32_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint_fast32_t</code></td><td align="center"><code>std::atomic&lt;std::uint_fast32_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_int_fast64_t</code></td><td align="center"><code>std::atomic&lt;std::int_fast64_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uint_fast64_t</code></td><td align="center"><code>std::atomic&lt;std::uint_fast64_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_intptr_t</code></td><td align="center"><code>std::atomic&lt;std::intptr_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uintptr_t</code></td><td align="center"><code>std::atomic&lt;std::uintptr_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_size_t</code></td><td align="center"><code>std::atomic&lt;std::size_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_ptrdiff_t</code></td><td align="center"><code>std::atomic&lt;std::ptrdiff_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_intmax_t</code></td><td align="center"><code>std::atomic&lt;std::intmax_t&gt;</code></td></tr>
+<tr><td align="center"><code>std::atomic_uintmax_t</code></td><td align="center"><code>std::atomic&lt;std::uintmax_t&gt;</code></td></tr>
+</tbody></table>
+<h3 id="所有原子操作"><a class="header" href="#所有原子操作">所有原子操作</a></h3>
+<p>这是关于所有原子操作的列表。</p>
+<table><thead><tr><th align="center">成员函数</th><th align="center">描述</th></tr></thead><tbody>
+<tr><td align="center">test_and_set</td><td align="center">(原子性地)将标记设置为true，并返回旧值</td></tr>
+<tr><td align="center">clear</td><td align="center">(原子性地)将标记设置为false</td></tr>
+<tr><td align="center">is_lock_free</td><td align="center">检查原子是否无锁</td></tr>
+<tr><td align="center">load</td><td align="center">(原子性地)返回原子变量的值</td></tr>
+<tr><td align="center">store</td><td align="center">(原子性地)将原子变量的值替换为非原子值</td></tr>
+<tr><td align="center">exchange</td><td align="center">(原子性地)用新值替换值，返回旧值</td></tr>
+<tr><td align="center">compare_exchange_strong</td><td align="center">(原子性地)比较并交换值</td></tr>
+<tr><td align="center">compare_exchange_weak</td><td align="center">(原子性地)比较并交换值</td></tr>
+<tr><td align="center">fetch_add , +=</td><td align="center">(原子性地)加法</td></tr>
+<tr><td align="center">fetch_sub , -=</td><td align="center">(原子性地)减法</td></tr>
+<tr><td align="center">fetch_or , |=</td><td align="center">(原子性地)逻辑或</td></tr>
+<tr><td align="center">fetch_and , &amp;=</td><td align="center">(原子性地)逻辑与</td></tr>
+<tr><td align="center">fetch_xor , ^=</td><td align="center">(原子性地)逻辑异或</td></tr>
+<tr><td align="center">++ , --</td><td align="center">(原子性地)自加和自减</td></tr>
+</tbody></table>
+<p>原子类型没有复制构造函数或复制赋值操作符，但支持从内置类型进行赋值和隐式转换。复合赋值运算符返回新值，fetch操作返回旧值。复合赋值运算符返回值，而不是所赋值对象的引用。</p>
+<p>隐式转换为基础类型</p>
+<pre><code class="language-c++">std::atomic&lt;long long&gt; atomOb(2011);
+atomObj = 2014;
+long long nonAtomObj = atomObj;
+</code></pre>
+<p>每个方法都支持内存序参数。默认的内存序是<code>std::memory_order_seq_cst</code>，也可以使用<code>std::memory_order_relaxed</code>, <code>std::memory_order_consume</code>, <code>std::memory_order_acquire</code>, <code>std::memory_order_release</code>或<code>std::memory_order_acq_rel</code>。<code>compare_exchange_strong</code>和 <code>compare_exchange_weak</code>可以传入两个内存序，一个是在比较成功的情况下所使用的内存序，另一个是在比较失败的情况下使用的。</p>
+<p>如果只显式地提供一个内存序，那么成功和失败的情况都会使用该内存序。</p>
+<p>当然，并不是所有操作对所有原子类型都可用。下表显示了所有原子类型支持的原子操作。</p>
+<table><thead><tr><th align="center">函数名</th><th align="center">atomic_flag</th><th align="center"><code>atomic&lt;bool&gt;</code></th><th align="center"><code>atomic&lt;user&gt;</code></th><th align="center"><code>atomic&lt;T*&gt;</code></th><th align="center"><code>atomic&lt;integral&gt;</code></th></tr></thead><tbody>
+<tr><td align="center">test_and_set</td><td align="center">yes</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">clear</td><td align="center">yes</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">is_lock_free</td><td align="center"></td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td></tr>
+<tr><td align="center">load</td><td align="center"></td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td></tr>
+<tr><td align="center">store</td><td align="center"></td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td></tr>
+<tr><td align="center">exchange</td><td align="center"></td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td></tr>
+<tr><td align="center">compare_exchange_strong</td><td align="center"></td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td><td align="center">yes</td></tr>
+<tr><td align="center">compare_exchange_weak</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">fetch_add, +=</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center">yes</td><td align="center">yes</td></tr>
+<tr><td align="center">fetch_sub, -=</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">fetch_or, |=</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center">yes</td></tr>
+<tr><td align="center">fetch_and, &amp;=</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">fetch_xor, ^=</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td></tr>
+<tr><td align="center">++, --</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center">yes</td><td align="center">yes</td></tr>
+</tbody></table>
+<h3 id="原子函数"><a class="header" href="#原子函数">原子函数</a></h3>
+<p>为了与C语言兼容，这些函数使用的是指针而不是引用。所以，<code>std::atomic_flag</code>和类模板<code>std::atomic</code>的功能也可以与原子函数一起使用。</p>
+<p><code>std::atomic_flag</code>的原子函数有：<code>std::atomic_flag_clear()</code>、<code>std::atomic_flag_clear_explicit</code>、<code>std::atomic_flag_test_and_set()</code>和<code>std::atomic_flag_test_set_explicit()</code>。所有函数的第一个参数都是指向<code>std::atomic_flag</code>的指针。另外，以<code>_explicit</code>为后缀的函数需要传入内存序。</p>
+<p>对于每个<code>std::atomic</code>类型，都有相应的原子函数。原子函数遵循一个简单的命名约定：只在前面添加前缀<code>atomic_</code>。例如，<code>std::atomic</code>上的方法调用<code>at.store()</code>变成<code>std::atomic_store()</code>， <code>std::atomic_store_explicit()</code>。</p>
+<p>可以在<a href="http://en.cppreference.com/w/cpp/atomic">atomic</a>了解所有的重载。</p>
+<p><code>std::shared_ptr</code>算是个例外，其原子函数只能在原子类型上使用。</p>
+<h3 id="stdshared_ptr"><a class="header" href="#stdshared_ptr">std::shared_ptr</a></h3>
+<p><code>std::shared_ptr </code>是唯一可以使用原子操作的非原子数据类型。说明一下这样设计的动机。</p>
+<p>C++委员会了解到，智能指针需要在多线程中提供最小原子性保证的必要性，所以做出了这样的设计。先来解释“最小原子性保证”，也就是<code>std::shared_ptr</code>的控制块是线程安全的，这意味着增加和减少引用计数器的是原子操作，也就能保证资源只被销毁一次了。</p>
+<p><code>std::shared_ptr</code>的声明由<a href="http://www.boost.org/doc/libs/1_57_0/libs/smart_ptr/shared_ptr.htm#ThreadSafety">Boost</a>提供：</p>
+<ol>
+<li><code>shared_ptr</code>实例可以被多个线程同时“读”(仅<code>const</code>方式访问)。</li>
+<li>不同的<code>shared_ptr</code>实例可以被多个线程同时“写”(通过操作符<code>=</code>或<code>reset</code>等操作访问)(即使这些实例是副本，但在底层共享引用计数)。</li>
+</ol>
+<p>为了使这两个表述更清楚，举一个简单的例子。当在一个线程中复制<code>std::shared_ptr</code>时，一切正常。</p>
+<pre><code class="language-c++">std::shared_ptr&lt;int&gt; ptr = std::make_shared&lt;int&gt;(2011);
+
+for (auto i = 0; i &lt; 10; i++){
+  std::thread([ptr]{
+    std::shared_ptr&lt;int&gt; localPtr(ptr);
+    localPtr = std::make_shared&lt;int&gt;(2014);
+  }).detach();
+}
+</code></pre>
+<p>先看第5行，通过对<code>std::shared_ptr localPtr</code>使用复制构造，只使用控制块，这是线程安全的。第6行更有趣一些，为<code>localPtr</code>设置了一个新的<code>std::shared_ptr</code>。从多线程的角度来看，这不是问题：Lambda函数(第4行)通过复制绑定<code>ptr</code>。因此，对<code>localPtr</code>的修改在副本上进行。</p>
+<p>如果通过引用获得<code>std::shared_ptr</code>，情况会发生巨变。</p>
+<pre><code class="language-c++">std::shared_ptr&lt;int&gt; ptr = std::make_shared&lt;int&gt;(2011);
+
+for (auto i = 0; i &lt; 10; i++){
+  std::thread([&amp;ptr]{
+    ptr = std::make_shared&lt;int&gt;(2014);
+  }).detach();
+}
+</code></pre>
+<p>Lambda函数通过引用，绑定了第4行中的<code>std::shared_ptr ptr</code>。这意味着，赋值(第5行)可能触发底层的并发读写，所以该段程序具有未定义行为(数据竞争)。</p>
+<p>诚然，最后一个例子并不容易实现，但在多线程环境下使用<code>std::shared_ptr</code>也需要特别注意。同样需要注意的是，<code>std::shared_ptr</code>是C++中唯一存在原子操作的非原子数据类型。</p>
+<h3 id="stdshared_ptr的原子操作"><a class="header" href="#stdshared_ptr的原子操作">std::shared_ptr的原子操作</a></h3>
+<p><code>std::shared_ptr</code>的原子操作<code>load</code>、<code>store</code>、<code>compare_and_exchange</code>有专用的方法，甚至可以指定内存序。下面是<code>std::shared_ptr</code>的原子函数。</p>
+<p><code>std::shared_ptr</code>的原子函数列表</p>
+<hr />
+<p><code>std::atomic_is_lock_free(std::shared_ptr)</code>
+<code>std::atomic_load(std::shared_ptr)</code>
+<code>std::atomic_load_explicit(std::shared_ptr)</code>
+<code>std::atomic_store(std::shared_ptr)</code>
+<code>std::atomic_store_explicit(std::shared_ptr)</code>
+<code>std::atomic_exchange(std::shared_ptr)</code>
+<code>std::atomic_exchange_explicit(std::shared_ptr)</code>
+<code>std::atomic_compare_exchange_weak(std::shared_ptr)</code>
+<code>std::atomic_compare_exchange_strong(std::shared_ptr)</code>
+<code>std::atomic_compare_exchange_weak_explicit(std::shared_ptr)</code>
+<code>std::atomic_compare_exchange_strong_explicit(std::shared_ptr)</code></p>
+<hr />
+<p>更多详情信息，请访问<a href="http://en.cppreference.com/w/cpp/memory/shared_ptr">cppreference.com</a>。现在，可以非常容易以线程安全的方式，修改引用绑定的共享指针了。</p>
+<p><code>std::shared_ptr</code>数据竞争的解决实现</p>
+<pre><code class="language-c++">std::shared_ptr&lt;int&gt; ptr = std::make_shared&lt;int&gt;(2011);
+
+for (auto i = 0; i &lt; 10; i++){
+  std::thread([&amp;ptr]{
+    auto localPtr = std::make_shared&lt;int&gt;(2014);
+    std::atomic_store(&amp;ptr, localPtr);
+  }).detach();
+}
+</code></pre>
+<p><code>auto localPtr = std::make_shared&lt;int&gt;(2014)</code>对<code>std::shared_ptr ptr</code>的更新是线程安全的。这样就完了吗？不！最后，我们需要了解下原子智能指针。</p>
+<blockquote>
+<p><strong>原子智能指针(Atomic Smart Pointers)</strong></p>
+<p>原子智能指针的故事还没有结束。C++20中，我们很有可能看到两个新的智能指针:<code>std::atomic&lt;std::shared_ptr&gt;</code>和<code>std::atomic&lt;std::weak_ptr&gt;</code>。想要了解的读者可以翻到本书的原子智能指针章节，了解更多的细节。</p>
+</blockquote>
+<p>原子变量及其原子操作是内存模型的基础件，它们为原子和非原子建立同步和顺序约束。下面，让我们更深入地了解同步和顺序约束。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/The-Details/Memory-Model/1.2-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/The-Details/Memory-Model/1.4-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/The-Details/Memory-Model/1.2-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/The-Details/Memory-Model/1.4-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

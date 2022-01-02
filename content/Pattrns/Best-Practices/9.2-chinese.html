@@ -1,0 +1,653 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>多线程 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html" class="active"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="多线程"><a class="header" href="#多线程">多线程</a></h1>
+<h2 id="线程"><a class="header" href="#线程">线程</a></h2>
+<p>线程是编写并发程序的基础件。</p>
+<p><strong>减少线程的创建</strong></p>
+<p>一个线程的开销有多大?非常巨大！这就是最佳实践背后的问题。让我们先看看线程的大小，而不是创建它的成本。</p>
+<p><strong>线程大小</strong></p>
+<p><code>std::thread</code>是对本机操作系统线程的包装，这意味着需要对Windows线程和<a href="https://en.wikipedia.org/wiki/POSIX_Threads">POSIX thread</a>的大小进行了解：</p>
+<ul>
+<li>Windows：<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms686774(v=vs.85).aspx">线程堆栈大小</a>给了我答案：1MB。</li>
+<li>POSIX：pthread手册页为我提供了i386和x86_64架构的答案：2MB。下面有支持POSIX架构的线程堆栈大小：</li>
+</ul>
+<p><img src="../../../images/Patterns/Best-Practices/5.png" alt="" /></p>
+<p><strong>创建耗时</strong></p>
+<p>我不知道创建一个线程需要多少时间，所以我在Linux和Windows上做了一个简单的性能测试。</p>
+<p>我在台式机上使用GCC 6.2.1，在笔记本电脑上使用cl.exe(Visual Studio 2017)进行性能测试。我用最大优化来编译程序，这意味着在Linux上的优化标志为<code>O3</code>和Windows为<code>Ox</code>。</p>
+<p>下面是我的程序。</p>
+<pre><code class="language-c++">// threadCreationPerformance.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+
+static const long long numThreads = 1'000'000;
+
+int main() {
+  auto start = std::chrono::system_clock::now();
+
+  for (volatile int i = 0; i &lt; numThreads; ++i) std::thread([] {}).detach();
+
+  std::chrono::duration&lt;double&gt; dur = std::chrono::system_clock::now() - start;
+  std::cout &lt;&lt; &quot;time: &quot; &lt;&lt; dur.count() &lt;&lt; &quot; seconds&quot; &lt;&lt; std::endl;
+}
+</code></pre>
+<p>该程序创建了100万个线程，这些线程执行第13行中的空Lambda函数。以下是在Linux和Windows测试的结果:</p>
+<p><strong>Linux</strong></p>
+<p><img src="../../../images/Patterns/Best-Practices/6.png" alt="" /></p>
+<p>这意味着在Linux上创建一个线程大约需要14.5秒/ 1000000 = 14.5微秒。</p>
+<p><strong>Windows</strong></p>
+<p><img src="../../../images/Patterns/Best-Practices/7.png" alt="" /></p>
+<p>在Windows上创建线程大约需要44秒/ 1000000 = 44微秒。</p>
+<p>换句话说，在Linux上一秒钟可创建大约69000个线程，在Windows上一秒钟可创建23000个线程。</p>
+<p><strong>使用任务而不是线程</strong></p>
+<pre><code class="language-c++">// asyncVersusThread.cpp
+
+#include &lt;future&gt;
+#include &lt;thread&gt;
+#include &lt;iostream&gt;
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  int res;
+  std::thread t([&amp;] {res = 2000 + 11; });
+  t.join();
+  std::cout &lt;&lt; &quot;res: &quot; &lt;&lt; res &lt;&lt; std::endl;
+
+  auto fut = std::async([] {return 2000 + 11; });
+  std::cout &lt;&lt; &quot;fut.get(): &quot; &lt;&lt; fut.get() &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>有很多原因让我们优先选择任务而不是线程：</p>
+<ul>
+<li>可以使用一个安全的通信通道来返回结果。如果使用共享变量，则必须同步的对它进行访问。</li>
+<li>调用者可以很容易的得到返回值、通知和异常。</li>
+</ul>
+<p>通过扩展版future，我们可构建future，以及高度复杂的工作流。这些工作流基于<code>continuation then</code>，以及<code>when_any</code>和<code>when_all</code>的组合。</p>
+<p><strong>如果要分离线程，一定要非常小心</strong></p>
+<p>下面的代码片段需要我们关注一下。</p>
+<pre><code class="language-c++">std::string s{&quot;C++11&quot;}
+
+std::thread t([&amp;s]{ std::cout &lt;&lt; s &lt;&lt; std::endl; });
+t.detach();
+</code></pre>
+<p>线程<code>t</code>与它的创建者的生命周期是分离的，所以两个竞态条件会导致未定义行为。</p>
+<ol>
+<li>线程可能比其创建者的生命周期还长，结果是<code>t</code>引用了一个不存在的<code>std::string</code>。 </li>
+<li>因为输出流<code>std::cout</code>的生存期与主线程的生存期绑定在一起，所以程序在线程<code>t</code>开始工作之前，输出流就可能关闭了。</li>
+</ol>
+<p><strong>考虑使用自动汇入的线程</strong></p>
+<p>如果<code>t.join()</code>和<code>t.detach()</code>都没有调用，则具有可调用单元的线程<code>t</code>被称为可汇入的，这时进行销毁的话，析构函数会抛出<code>std::terminate</code>异常。为了不忘记<code>t.join()</code>，可以对<code>std::thread</code>进行包装。这个包装器在构造函数中检查给定线程是否仍然可连接，并将给定线程在析构函数中进行汇入操作。</p>
+<p>我们不必自己构建这个包装器，可以使用Anthony Williams的scoped_thread，或是<a href="https://github.com/Microsoft/GSL">核心准则支持的库</a>的<code>gsl::joining_thread</code>。</p>
+<h2 id="数据共享"><a class="header" href="#数据共享">数据共享</a></h2>
+<p>随着可变数据的数据共享，也就开启了多线程编程的挑战。</p>
+<p><strong>通过复制传递数据</strong></p>
+<pre><code class="language-c++">std::string s{&quot;C++11&quot;}
+
+std::thread t1([s]{ ... }); // do something with s
+t1.join();
+
+std::thread t2([&amp;s]{ ... }); // do something with s
+t2.join();
+
+// do something with s
+</code></pre>
+<p>如果将<code>std::string s</code>之类的数据通过复制传递给线程<code>t1</code>，则创建者线程和创建的线程<code>t1</code>使用独立的数据。线程<code>t2</code>相反，通过引用获取<code>std::string s</code>，这意味着必须同步对创建者线程和已创建线程<code>t2</code>中的<code>s</code>的访问。这里非常容易出错。</p>
+<p><strong>使用<code>std::shared_ptr</code>在非关联线程之间共享所有权</strong></p>
+<p>试想，有一个在非关联的线程之间共享的对象存在。接下来的问题是，对象的所有者是谁？谁负责这个对象的内存管理？现在，可以在内存泄漏(如果不释放内存)和未定义行为(因为多次调用delete)之间进行选择。大多数情况下，未定义行为会使运行时崩溃。</p>
+<p>下面的程序展示了这个看似无解的问题。</p>
+<pre><code class="language-c++">// threadSharesOwnership.cpp
+
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+
+using namespace std::literals::chrono_literals;
+
+struct MyInt {
+  int val{ 2017 };
+  ~MyInt() {
+    std::cout &lt;&lt; &quot;Good Bye&quot; &lt;&lt; std::endl;
+  }
+};
+
+void showNumber(MyInt* myInt) {
+  std::cout &lt;&lt; myInt-&gt;val &lt;&lt; std::endl;
+}
+
+void threadCreator() {
+  MyInt* tmpInt = new MyInt;
+
+  std::thread t1(showNumber, tmpInt);
+  std::thread t2(showNumber, tmpInt);
+
+  t1.detach();
+  t2.detach();
+}
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  threadCreator();
+  std::this_thread::sleep_for(1s);
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>这个例子很简单，主线程休眠1秒钟(第34行)，以确保它比子线程<code>t1</code>和<code>t2</code>的生命周期长。当然，这不是恰当的同步，但帮我阐明了观点。程序的关键是：谁负责删除第20行中的<code>tmpInt</code> ?线程<code>t1</code>(第22行)？还是线程<code>t2</code>(第23行)？或函数本身(主线程)？因为无法预测每个线程运行多长时间，所以这个程序应该会有内存泄漏。因此，第10行中的<code>MyInt</code>的析构函数永远不会被调用:</p>
+<p><img src="../../../images/Patterns/Best-Practices/8.png" alt="" /></p>
+<p>如果使用<code>std::shared_ptr</code>，则生命周期问题就很容易处理。</p>
+<p><img src="../../../images/Patterns/Best-Practices/9.png" alt="" /></p>
+<pre><code class="language-c++">// threadSharesOwnershipSharedPtr.cpp
+
+#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;thread&gt;
+
+using namespace std::literals::chrono_literals;
+
+struct MyInt {
+  int val{ 2017 };
+  ~MyInt() {
+    std::cout &lt;&lt; &quot;Good Bye&quot; &lt;&lt; std::endl;
+  }
+};
+
+void showNumber(std::shared_ptr&lt;MyInt&gt; myInt) {
+  std::cout &lt;&lt; myInt-&gt;val &lt;&lt; std::endl;
+}
+
+void threadCreator() {
+  auto sharedPtr = std::make_shared&lt;MyInt&gt;();
+
+  std::thread t1(showNumber, sharedPtr);
+  std::thread t2(showNumber, sharedPtr);
+
+  t1.detach();
+  t2.detach();
+}
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  threadCreator();
+  std::this_thread::sleep_for(1s);
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>对源代码进行两个小的必要的修改：首先，第21行中的指针变成了<code>std::shared_ptr</code>，然后，第16行中的函数<code>showNumber</code>接受了一个智能指针，而不是普通指针。</p>
+<p><strong>尽量减少持有锁的时间</strong>.</p>
+<p>如果持有锁，那么只有单个线程可以进入临界区。</p>
+<pre><code class="language-c++">void setDataReadyBad(){
+  std::lock_guard&lt;std::mutex&gt; lck(mutex_);
+  mySharedWork = {1, 0, 3};
+  dataReady = true;
+  std::cout &lt;&lt; &quot;Data prepared&quot; &lt;&lt; std::endl;
+  condVar.notify_one();
+} // unlock the mutex
+
+void setDataReadyGood(){
+  mySharedWork = {1, 0, 3};
+  {
+  	std::lock_guard&lt;std::mutex&gt; lck(mutex_);
+    dataReady = true;
+  } // unlock the mutex
+  std::cout &lt;&lt; &quot;Data prepared&quot; &lt;&lt; std::endl;
+  condVar.notify_one();
+}
+</code></pre>
+<p>函数<code>setDataReadyBad</code>和<code>setDataReadyGood</code>是条件变量的通知组件。可变的数据是必要的，以防止伪唤醒和未唤醒的发生。由于<code>dataReady</code>是一个非原子变量，因此必须使用锁<code>lck</code>对其进行同步。为了使锁的生命周期尽可能短，可以在函数<code>setDataReadyGood</code>中使用一个范围<code>({…}) </code>。</p>
+<p><strong>将互斥量放入锁中</strong></p>
+<p>不应该使用没有锁的互斥量。</p>
+<pre><code class="language-c++">std::mutex m;
+m.lock();
+// critical section
+m.unlock();
+</code></pre>
+<p>临界区内可能会发生意外，或者忘记解锁。如果不解锁，则想要获取该互斥锁的另一个线程将被阻塞，最后程序将死锁。</p>
+<p>由于锁可以自动处理底层的互斥量，因此死锁的风险大大降低了。根据RAII习惯用法，锁在构造函数中自动绑定互斥量，并在析构函数中释放互斥量。</p>
+<pre><code class="language-c++">{
+  std::mutex m,
+  std::lock_guard&lt;std::mutex&gt; lockGuard(m);
+  // critical section
+} // unlock the mutex
+</code></pre>
+<p><code>({…})</code>范围确保锁的生命周期自动结束，所以底层的互斥量会被解锁。</p>
+<p><strong>最多锁定一个互斥锁</strong></p>
+<p>有时在某个时间点需要多个互斥锁，这种情况下，可能会引发死锁的竞态条件。因此，可能的话，应该尽量避免同时持有多个互斥锁。</p>
+<p><strong>给锁起个名字</strong></p>
+<p>如果使用没有名称的锁，比如<code>std::lock_guard</code>，那么将立即销毁。</p>
+<pre><code class="language-c++">{
+  std::mutex m,
+  std::lock_guard&lt;std::mutex&gt;{m};
+  // critical section
+}
+</code></pre>
+<p>这个看起来无害的代码片段中，<code>std::lock_guard</code>立即被销毁。因此，下面的临界区是不同步执行的。C++标准的锁遵循所有相同的模式，会在构造函数中锁定互斥锁，并在析构函数中解锁，这种模式称为RAII。</p>
+<p>下面例子的行为令人惊讶:</p>
+<pre><code class="language-c++">// myGuard.cpp
+
+#include &lt;mutex&gt;
+#include &lt;iostream&gt;
+
+template &lt;typename T&gt;
+class MyGuard {
+  T&amp; myMutex;
+public:
+  MyGuard(T&amp; m) :myMutex(m) {
+    myMutex.lock();
+    std::cout &lt;&lt; &quot;lock&quot; &lt;&lt; std::endl;
+  }
+  ~MyGuard() {
+    myMutex.unlock();
+    std::cout &lt;&lt; &quot;unlock&quot; &lt;&lt; std::endl;
+  }
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  std::mutex m;
+  MyGuard&lt;std::mutex&gt; {m};
+  std::cout &lt;&lt; &quot;CRITICAL SECTION&quot; &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p><code>MyGuard</code>在其构造函数和析构函数中调用<code>lock</code>和<code>unlock</code>。由于临时变量的原因，对构造函数和析构函数的调用发生在第25行。特别是，这意味着析构函数的调用发生在第25行，而不是第31行。因此，第26行中的临界段没有同步执行。</p>
+<p>这个程序的截图显示了，解锁的发生在输出CRITICAL SECTION之前。</p>
+<p><img src="../../../images/Patterns/Best-Practices/10.png" alt="" /></p>
+<p><strong>使用std::lock或std::scoped_lock原子地锁定更多的互斥对象</strong></p>
+<p>如果一个线程需要多个互斥对象，那么必须非常小心地将互斥对象以相同的顺序进行锁定。如果不这样，一个糟糕的线程交叉就可能导致死锁。</p>
+<pre><code class="language-c++">void deadLock(CriticalData&amp; a, CriticalData&amp; b){
+  std::lock_guard&lt;std::mutex&gt; guard1(a.mut);
+  // some time passes
+  std::lock_guard&lt;std::mutex&gt; guard2(b.mut);
+  // do something with a and b
+}
+
+...
+  
+std::thread t1([&amp;]{deadLock(c1,c2);});
+std::thread t2([&amp;]{deadLock(c2,c1);});
+
+...
+  
+</code></pre>
+<p>线程<code>t1</code>和<code>t2</code>需要两个<code>CriticalData</code>，而<code>CriticalData</code>用自己的<code>mut</code>来控制同步访问。不幸的是，因为这两个调用参数<code>c1</code>和<code>c2</code>的顺序不同，所以产生了一个竞态，从而会导致死锁。当线程<code>t1</code>可以锁定第一个互斥对象<code>a.mut</code>，而没锁住第二个<code>b.mut </code>，这样线程<code>t2</code>锁住了第二个线程，而阻塞等待<code>a.mut</code>解锁，就会产生出一个死锁的状态。</p>
+<p>现在有了<code>std::unique_lock</code>，可以对互斥锁进行延迟锁定。函数<code>std::lock</code>可以原子地对任意数量的互斥锁进行锁定。</p>
+<pre><code class="language-c++">void deadLock(CriticalData&amp; a, CriticalData&amp; b){
+  unique_lock&lt;mutex&gt; guard1(a.mut,defer_lock);
+  // some time passes
+  unique_lock&lt;mutex&gt; guard2(b.mut,defer_lock);
+  std::lock(guard1,guard2);
+  // do something with a and b
+}
+
+...
+  
+std::thread t1([&amp;]{deadLock(c1,c2);});
+std::thread t2([&amp;]{deadLock(c2,c1);});
+
+...
+  
+</code></pre>
+<p>C++17有一个新锁<code>std::scoped_lock</code>，它可以获得任意数量的互斥锁并自动锁定它们。这样，工作流变得更加简单了：</p>
+<pre><code class="language-c++">void deadLock(CriticalData&amp; a, CriticalData&amp; b){
+  std::scoped_lock(a.mut, b.mut);
+  // do something with a and b
+}
+
+...
+  
+std::thread t1([&amp;]{deadLock(c1,c2);});
+std::thread t2([&amp;]{deadLock(c2,c1);});
+
+...
+</code></pre>
+<p><strong>不要在持有锁时，调用未知代码</strong></p>
+<p>在持有互斥锁的同时，调用<code>unknownFunction</code>会导致未定义行为。</p>
+<pre><code class="language-c++">std::mutex m;
+{
+  std::lock_guard&lt;std::mutex&gt; lockGuard(m);
+  sharedVariable= unknownFunction();
+}
+</code></pre>
+<p>我只能对<code>unknownFunction</code>进行推测数。如果<code>unknownFunction</code>：</p>
+<ul>
+<li>试图锁定互斥量<code>m</code>，这就是未定义行为。大多数情况下，会出现死锁。</li>
+<li>启动一个试图锁定互斥锁<code>m</code>的新线程，就会出现死锁。</li>
+<li>锁定另一个互斥锁<code>m2</code>可能会陷入死锁，因为需要同时锁定了两个互斥锁<code>m</code>和<code>m2</code>。</li>
+<li>不要直接或间接尝试锁住互斥锁，虽然一切可能都没什么问题。“可能”是因为你的同事，可以修改函数或函数是动态链接的，这样就会得到一个与已知版本不同的函数。对于可能发生的事情，所有一切都是可能的。</li>
+<li>可能会出现性能问题，因为不知道<code>unknownFunction</code>函数需要多长时间。</li>
+</ul>
+<p>要解决这些问题，请使用局部变量。</p>
+<pre><code class="language-c++">auto tempVar = unknownFunction();
+std::mutex m,
+{
+  std::lock_guard&lt;std::mutex&gt; lockGuard(m);
+  sharedVariable = tempVar;
+}
+</code></pre>
+<p>这种方式解决了所有的问题。<code>tempVar</code>是一个局部变量，因此不会成为数据竞争的受害者，所以可以在没有同步机制的情况下调用<code>unknownFunction</code>。此外，将<code>tempVar</code>的值赋给<code>sharedVariable</code>，可以将持有锁的时间降到最低。</p>
+<h2 id="条件变量"><a class="header" href="#条件变量">条件变量</a></h2>
+<p>通过通知同步线程是一个简单的概念，但是条件变量使这个任务变得非常具有挑战性。主要原因是条件变量没有状态：</p>
+<ul>
+<li>如果条件变量得到了通知，则可能是错误的(伪唤醒)。</li>
+<li>如果条件变量在准备就绪之前得到通知，则通知丢失(未唤醒)。</li>
+</ul>
+<p><strong>不要使用没有谓词的条件变量</strong></p>
+<p>使用没有谓词的条件变量，通常是竞争条件之一。</p>
+<pre><code class="language-c++">// conditionVariableLostWakeup.cpp
+
+#include &lt;condition_variable&gt;
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+
+std::mutex mutex_;
+std::condition_variable condVar;
+
+void waitingForWork() {
+  std::unique_lock&lt;std::mutex&gt; lck(mutex_);
+  condVar.wait(lck);
+  // do the work
+}
+
+void setDataReady() {
+  condVar.notify_one();
+}
+
+int main() {
+
+  std::thread t1(setDataReady);
+  std::thread t2(waitingForWork);
+
+  t1.join();
+  t2.join();
+
+}
+</code></pre>
+<p>如果线程<code>t1</code>在线程<code>t2</code>之前运行，就会出现死锁。<code>t1</code>在<code>t2</code>接收之前发送通知，通知就会丢失。这种情况经常发生，因为线程<code>t1</code>在线程<code>t2</code>之前启动，而线程<code>t1</code>需要执行的工作更少。</p>
+<p>在工作流中添加一个布尔变量<code>dataReady</code>可以解决这个问题。<code>dataReady</code>还可以防止伪唤醒，因为等待的线程会检查通知是否来自于正确的线程。</p>
+<pre><code class="language-c++">// conditionVarialbleLostWakeupSolved.cpp
+
+#include &lt;condition_variable&gt;
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+
+std::mutex mutex_;
+std::condition_variable condVar;
+
+bool dataReady{ false };
+
+void waitingForWork() {
+  std::unique_lock&lt;std::mutex&gt; lck(mutex_);
+  condVar.wait(lck, [] { return dataReady; });
+  // do the work
+}
+
+void setDataReady() {
+  {
+    std::lock_guard&lt;std::mutex&gt; lck(mutex_);
+    dataReady = true;
+  }
+  condVar.notify_one();
+}
+
+int main() {
+
+  std::thread t1(setDataReady);
+  std::thread t2(waitingForWork);
+
+  t1.join();
+  t2.join();
+
+}
+</code></pre>
+<p><strong>使用Promise和Future代替条件变量</strong></p>
+<p>对于一次性通知，promise和future则是更好的选择。conditioVarialbleLostWakeupSolved.cpp的工作流程，可以使用promise和future直接实现。</p>
+<pre><code class="language-c++">// notificationWithPromiseAndFuture.cpp
+
+#include &lt;future&gt;
+#include &lt;utility&gt;
+
+void waitingForWork(std::future&lt;void&gt;&amp;&amp; fut) {
+  fut.wait();
+  // do the work
+}
+
+void setDataReady(std::promise&lt;void&gt;&amp;&amp; prom) {
+  prom.set_value();
+}
+
+int main() {
+
+  std::promise&lt;void&gt; sendReady;
+  auto fut = sendReady.get_future();
+
+  std::thread t1(waitingForWork, std::move(fut));
+  std::thread t2(setDataReady, std::move(sendReady));
+
+  t1.join();
+  t2.join();
+
+}
+</code></pre>
+<p>工作流程被简化到极致。promise<code>prom.set_value()</code>会发送future<code>fut.wait()</code>正在等待的通知。因为没有临界区，程序不需要互斥量和锁。因为不可能发生丢失唤醒或虚假唤醒，所以有没有谓词也没有关系。</p>
+<p>如果工作流要求多次使用条件变量，那么promise和future就是不二之选。</p>
+<h2 id="promise和future"><a class="header" href="#promise和future">Promise和Future</a></h2>
+<p>promise和future常被用作线程或条件变量的替代物。</p>
+<p><strong>尽可能使用std::async</strong></p>
+<p>如果可能，应该使用<code>std::async</code>来执行异步任务。</p>
+<pre><code class="language-c++">auto fut = std::async([]{ return 2000 + 11; });
+// some time passes
+std::cout &lt;&lt; &quot;fut.get(): &quot; &lt;&lt; fut.get() &lt;&lt; std::endl;
+</code></pre>
+<p>通过调用<code>auto fut = std::async([]{ return 2000 + 11; })</code>，相当于对C++运行时说：“运行这个”。调用者不关心它是否立即执行，以及是运行在同一个线程上，还有是运行在线程池上，或是运行在<a href="https://en.wikipedia.org/wiki/Graphics_processing_unit">GPU</a>上。调用者只对future的结果感兴趣：<code>fut.get()</code>。</p>
+<p>从概念上看，线程只是运行作业的实现细节。对于线程而言，使用者应该只指定做什么，而不应该指定如何做。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/Pattrns/Best-Practices/9.1-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/Pattrns/Best-Practices/9.3-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/Pattrns/Best-Practices/9.1-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/Pattrns/Best-Practices/9.3-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

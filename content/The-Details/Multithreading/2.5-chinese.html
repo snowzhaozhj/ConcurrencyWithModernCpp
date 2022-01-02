@@ -1,0 +1,1003 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>任务 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html" class="active"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="任务"><a class="header" href="#任务">任务</a></h1>
+<p>除了线程之外，C++还有可以异步处理任务，这种方式处理任务需要包含<code>&lt;future&gt;</code>头文件。任务由一个参数化工作包和两个组件组成：promise和future，两者构建一条数据通道。promise执行工作包并将结果放入数据通道，对应的future可以获取结果，两个通信端可以在不同的线程中运行。特别的是future可以在之后的某个时间点获取结果，所以通过promise计算结果与通过future查询结果的步骤是分开的。</p>
+<blockquote>
+<p><strong>将任务视为通信端间的数据通道</strong></p>
+<p>任务的行为类似于通信点之间的数据通道。数据通道的一端称为promise，另一端称为future。这些端点可以存在于相同的线程中，也可以存在于不同的线程中。promise将其结果放入数据通道，future会在晚些时候把结果取走。</p>
+</blockquote>
+<p><img src="../../../images/detail/multithreading/22.png" alt="" /></p>
+<h2 id="任务-vs-线程"><a class="header" href="#任务-vs-线程">任务 vs. 线程</a></h2>
+<p>任务与线程有很大的不同。</p>
+<pre><code class="language-c++">// asyncVersusThread.cpp
+
+#include &lt;future&gt;
+#include &lt;thread&gt;
+#include &lt;iostream&gt;
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  int res;
+  std::thread t([&amp;] {res = 2000 + 11; });
+  t.join();
+  std::cout &lt;&lt; &quot;res: &quot; &lt;&lt; res &lt;&lt; std::endl;
+
+  auto fut = std::async([] {return 2000 + 11; });
+  std::cout &lt;&lt; &quot;fut.get(): &quot; &lt;&lt; fut.get() &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>线程<code>t</code>和<code>std::async</code>异步调用函数同时计算2000和11的和。主线程通过共享变量<code>res</code>获取其线程<code>t</code>的计算结果，并在第14行中显示它。第16行中，使用<code>std::async</code>在发送方(<code>promise</code>)和接收方(<code>future</code>)之间创建数据通道。future 变量使用<code>fut.get()</code>(第17行)，通过数据通道获得计算结果。<code>fut.get </code>为阻塞调用。</p>
+<p>下面是程序输出的结果：</p>
+<p><img src="../../../images/detail/multithreading/23.png" alt="" /></p>
+<p>基于这个程序，我想强调线程和任务之间的区别。</p>
+<p>任务 vs. 线程</p>
+<table><thead><tr><th align="center">标准</th><th align="center">线程</th><th align="center">任务</th></tr></thead><tbody>
+<tr><td align="center">构成元素</td><td align="center">创建线程和子线程</td><td align="center">promise和future</td></tr>
+<tr><td align="center">通讯方式</td><td align="center">共享变量</td><td align="center">通信通道</td></tr>
+<tr><td align="center">创建线程</td><td align="center">必定创建</td><td align="center">可选</td></tr>
+<tr><td align="center">同步方式</td><td align="center">通过<code>join()</code>(等待)</td><td align="center">使用<code>get</code>阻塞式调用</td></tr>
+<tr><td align="center">线程中的异常</td><td align="center">子线程和创建线程终止</td><td align="center">返回promise的值</td></tr>
+<tr><td align="center">通信类型</td><td align="center">变量值</td><td align="center">变量值、通知和异常</td></tr>
+</tbody></table>
+<p>线程需要包含<code>&lt;thread&gt;</code>头文件，任务需要包含<code>&lt;future&gt;</code>头文件。</p>
+<p>创建线程和子线程之间的通信需要使用共享变量，任务通过其隐式的数据通道保护数据通信。因此，任务不需要互斥锁之类的保护机制。</p>
+<p>虽然，可以使用共享变量(的可变)来在子线程及其创建线程之间进行通信，但任务的通信方式更为明确。future只能获取一次任务的结果(通过调用<code>fut.get()</code>)，多次调用它会导致未定义的行为(而<code>std::shared_future</code>可以查询多次)。</p>
+<p>创建线程需要等待子线程汇入。而使用<code>fut.get()</code>时，该调用将一直阻塞，直到获取结果为止。</p>
+<p>如果子线程中抛出异常，创建的线程将终止，创建者和整个进程也将终止。相反，promise可以将异常发送给future，而future必须对异常进行处理。</p>
+<p>一个promise可以对应于一个或多个future。它可以发送值、异常，或者只是通知，可以使用它们替换条件变量。</p>
+<p><code>std::async </code>是创建future最简单的方法。</p>
+<p><strong>std::async</strong></p>
+<p><code>std::async</code>的行为类似于异步函数调用，可调用带有参数的函数。<code>std::async</code>是一个可变参数模板，因此可以接受任意数量的参数。对<code>std::async</code>的调用会返回一个future 的对象<code>fut</code>。可以通过<code>fut.get()</code>获得结果。</p>
+<blockquote>
+<p><strong>std::async应该首选</strong></p>
+<p>C++运行时决定<code>std::async</code>是否在独立的线程中执行，决策可能取决于可用的CPU内核的数量、系统的利用率或工作包的大小。通过使用<code>std::async</code>，只需要指定运行的任务，C++运行时会自动管理线程。</p>
+</blockquote>
+<p>可以指定<code>std::async</code>的启动策略。</p>
+<p>##启动策略</p>
+<p>使用启动策略，可以显式地指定异步调用应该在同一线程(<code>std::launch::deferred</code>)中执行，还是在不同线程(<code>std::launch::async</code>)中执行。</p>
+<blockquote>
+<p><strong><a href="%5Bhttps://zh.wikipedia.org/wiki/%E5%8F%8A%E6%97%A9%E6%B1%82%E5%80%BC%5D(https://zh.wikipedia.org/wiki/%E5%8F%8A%E6%97%A9%E6%B1%82%E5%80%BC)">及早求值</a>与<a href="%5Bhttps://zh.wikipedia.org/wiki/%E6%83%B0%E6%80%A7%E6%B1%82%E5%80%BC%5D(https://zh.wikipedia.org/wiki/%E6%83%B0%E6%80%A7%E6%B1%82%E5%80%BC)">惰性求值</a></strong></p>
+<p>及早求值与惰性求值是计算结果表达式的两种策略。在<a href="https://en.wikipedia.org/wiki/Eager_evaluation">及早求值</a>的情况下，立即计算表达式，而在<a href="https://en.wikipedia.org/wiki/Lazy_evaluation">惰性求值</a> 的情况下，仅在需要时才计算表达式。及早求值通常称为贪婪求值，而惰性求值通常称为按需调用。使用惰性求值，可以节省时间和计算资源。</p>
+</blockquote>
+<p>调用<code>auto fut = std::async(std::launch::deferred，…)</code>的特殊之处在于，promise可能不会立即执行，调用<code>fut.get()</code>时才执行对应的promise 。这意味着，promise只在future调用<code>fut.get()</code>时计算得到结果。</p>
+<pre><code class="language-c++">// asyncLazy.cpp
+
+#include &lt;chrono&gt;
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  auto begin = std::chrono::system_clock::now();
+
+  auto asyncLazy = std::async(std::launch::deferred,
+    [] {return std::chrono::system_clock::now(); });
+
+  auto asyncEager = std::async(std::launch::async,
+    [] {return std::chrono::system_clock::now(); });
+
+  std::this_thread::sleep_for(std::chrono::seconds(1));
+
+  auto lazyStart = asyncLazy.get() - begin;
+  auto eagerStart = asyncEager.get() - begin;
+
+  auto lazyDuration = std::chrono::duration&lt;double&gt;(lazyStart).count();
+  auto eagerDuration = std::chrono::duration&lt;double&gt;(eagerStart).count();
+
+  std::cout &lt;&lt; &quot;asyncLazy evaluated after : &quot; &lt;&lt; lazyDuration
+    &lt;&lt; &quot; seconds.&quot; &lt;&lt; std::endl;
+  std::cout &lt;&lt; &quot;asyncEager  evaluated after : &quot; &lt;&lt; eagerDuration
+    &lt;&lt; &quot; seconds.&quot; &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>两个<code>std::async</code>调用(第13行和第16行)都返回当前时间点。但是，第一个调用是<code>lazy</code>，第二个调用是<code>eager</code>。第21行中的<code>asyncLazy.get()</code>调用触发了第13行promise的执行——短睡一秒(第19行)。这对于<code>asyncEager</code>来说是不存在的，<code>asyncEager.get()</code>会立即获取执行结果。</p>
+<p>下面就是该程序输出的结果：</p>
+<p><img src="../../../images/detail/multithreading/24.png" alt="" /></p>
+<p>不必把future绑定到变量上。</p>
+<h2 id="a-href5bhttpszhwikipediaorgwikie5b084e5be8ce4b88de790865dhttpszhwikipediaorgwikie5b084e5be8ce4b88de79086发后即忘afire-and-forget"><a class="header" href="#a-href5bhttpszhwikipediaorgwikie5b084e5be8ce4b88de790865dhttpszhwikipediaorgwikie5b084e5be8ce4b88de79086发后即忘afire-and-forget"><a href="%5Bhttps://zh.wikipedia.org/wiki/%E5%B0%84%E5%BE%8C%E4%B8%8D%E7%90%86%5D(https://zh.wikipedia.org/wiki/%E5%B0%84%E5%BE%8C%E4%B8%8D%E7%90%86)">发后即忘</a>(Fire and Forget)</a></h2>
+<p>发后即忘是比较特殊的future。因为其future不受某个变量的约束，所以只是在原地执行。对于一个发后即忘的future，相应的promise运行在一个不同的线程中，所以可以立即开始(这是通过<code>std::launch::async</code>策略完成的)。</p>
+<p>我们对普通的future和发后即忘的future进行比较。</p>
+<pre><code class="language-c++">auto fut= std::async([]{ return 2011; });
+std::cout &lt;&lt; fut.get() &lt;&lt; std::endl;
+
+std::async(std::launch::async,
+						[]{ std::cout &lt;&lt; &quot;fire and forget&quot; &lt;&lt; std::endl; });
+</code></pre>
+<p>发后即忘的future看起来很有美好，但有一个很大的缺点。<code>std::async</code>创建的future会等待promise完成，才会进行析构。这种情况下，等待和阻塞就没有太大的区别了。future的析构函数会中阻塞程序的进程，当使用发后即忘的future时，这一点变得更加明显，看起来程序上是并发的，但实际上是串行运行的。</p>
+<pre><code class="language-c++">// fireAndForgetFutures.cpp
+
+#include &lt;chrono&gt;
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  std::async(std::launch::async, [] {
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::cout &lt;&lt; &quot;first thread&quot; &lt;&lt; std::endl;
+    });
+
+  std::async(std::launch::async, [] {
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::cout &lt;&lt; &quot;second thread&quot; &lt;&lt; std::endl; }
+  );
+
+  std::cout &lt;&lt; &quot;main thread&quot; &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>程序在线程中执行两个promise，这样就会产生发后即忘的future。future在析构函数中阻塞线程，直到相关的promise完成。promise是按照源代码顺序执行的，执行顺序与执行时间无关。</p>
+<p><img src="../../../images/detail/multithreading/25.png" alt="" /></p>
+<p><code>std::async</code>是一种方便的机制，可用于在分解较大的计算任务。</p>
+<h2 id="并行计算"><a class="header" href="#并行计算">并行计算</a></h2>
+<p>标量乘积的计算可分布在四个异步调用中。</p>
+<pre><code class="language-c++">// dotProductAsync.cpp
+
+#include &lt;iostream&gt;
+#include &lt;future&gt;
+#include &lt;random&gt;
+#include &lt;vector&gt;
+#include &lt;numeric&gt;
+
+using namespace std;
+
+static const int NUM = 100000000;
+
+long long getDotProduct(vector&lt;int&gt;&amp; v, vector&lt;int&gt;&amp; w) {
+
+  auto vSize = v.size();
+
+  auto future1 = async([&amp;] {
+    return inner_product(&amp;v[0], &amp;v[vSize / 4], &amp;w[0], 0LL);
+    });
+
+  auto future2 = async([&amp;] {
+    return inner_product(&amp;v[vSize / 4], &amp;v[vSize / 2], &amp;w[vSize / 4], 0LL);
+    });
+
+  auto future3 = async([&amp;] {
+    return inner_product(&amp;v[vSize / 2], &amp;v[vSize * 3 / 4], &amp;w[vSize / 2], 0LL);
+    });
+
+  auto future4 = async([&amp;] {
+    return inner_product(&amp;v[vSize * 3 / 4], &amp;v[vSize], &amp;w[vSize * 3 / 4], 0LL);
+    });
+
+  return future1.get() + future2.get() + future3.get() + future4.get();
+}
+
+
+int main() {
+
+  cout &lt;&lt; endl;
+
+  random_device seed;
+
+  // generator
+  mt19937 engine(seed());
+
+  // distribution
+  uniform_int_distribution&lt;int&gt; dist(0, 100);
+
+  // fill the vector
+  vector&lt;int&gt; v, w;
+  v.reserve(NUM);
+  w.reserve(NUM);
+  for (int i = 0; i &lt; NUM; ++i) {
+    v.push_back(dist(engine));
+    w.push_back(dist(engine));
+  }
+
+  cout &lt;&lt; &quot;getDotProduct(v, w): &quot; &lt;&lt; getDotProduct(v, w) &lt;&lt; endl;
+
+  cout &lt;&lt; endl;
+
+}
+</code></pre>
+<p>该程序使用了随机库和时间库，创建两个向量<code>v</code>和<code>w</code>并用随机数填充(第50-56行)，每个向量添加(第53 - 56行)1亿个元素。第54和55行中的<code>dist(engine)</code>生成均匀分布在0到100之间的随机数。标量乘积的计算在<code>getDotProduct</code>中进行(第13 - 34行)。内部实现中，<code>std::async</code>使用标准库算法<code>std::inner_product</code>。最后，使用future获取结果进行相加，就得到了最终结果。</p>
+<p><img src="../../../images/detail/multithreading/26.png" alt="" /></p>
+<p><code>std::packaged_task</code>通常也用于并发。</p>
+<p><strong>std::packaged_task</strong></p>
+<p><code>std::packaged_task</code>是用于异步调用的包装器。通过<code>pack.get_future() </code>可以获得相关的future。可以使用可调用操作符<code>pack(pack())</code>执行<code>std::packaged_task</code>。</p>
+<p>处理<code>std::packaged_task</code>通常包括四个步骤:</p>
+<p>I. 打包:</p>
+<pre><code class="language-c++">std::packaged_task&lt;int(int, int)&gt; sumTask([](int a, int b){ return a + b; });
+</code></pre>
+<p>II. 创建future:</p>
+<pre><code class="language-c++">std::future&lt;int&gt; sumResult= sumTask.get_future();
+</code></pre>
+<p>III. 执行计算:</p>
+<pre><code class="language-c++">sumTask(2000, 11);
+</code></pre>
+<p>IV. 查询结果:</p>
+<pre><code class="language-c++">sumResult.get();
+</code></pre>
+<p>下面的示例，展示了这四个步骤。</p>
+<pre><code class="language-c++">// packagedTask.cpp
+
+#include &lt;utility&gt;
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;deque&gt;
+
+class SumUp {
+public:
+  int operator()(int beg, int end) {
+    long long int sum{ 0 };
+    for (int i = beg; i &lt; end; ++i) sum += i;
+    return static_cast&lt;int&gt;(sum);
+  }
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  SumUp sumUp1;
+  SumUp sumUp2;
+  SumUp sumUp3;
+  SumUp sumUp4;
+
+  // wrap the task
+  std::packaged_task&lt;int(int, int)&gt; sumTask1(sumUp1);
+  std::packaged_task&lt;int(int, int)&gt; sumTask2(sumUp2);
+  std::packaged_task&lt;int(int, int)&gt; sumTask3(sumUp3);
+  std::packaged_task&lt;int(int, int)&gt; sumTask4(sumUp4);
+
+  // create the futures
+  std::future&lt;int&gt; sumResult1 = sumTask1.get_future();
+  std::future&lt;int&gt; sumResult2 = sumTask2.get_future();
+  std::future&lt;int&gt; sumResult3 = sumTask3.get_future();
+  std::future&lt;int&gt; sumResult4 = sumTask4.get_future();
+
+  // push the task on the container
+  std::deque&lt;std::packaged_task&lt;int(int, int)&gt;&gt; allTasks;
+  allTasks.push_back(std::move(sumTask1));
+  allTasks.push_back(std::move(sumTask2));
+  allTasks.push_back(std::move(sumTask3));
+  allTasks.push_back(std::move(sumTask4));
+
+  int begin{ 1 };
+  int increment{ 2500 };
+  int end = begin + increment;
+
+  // preform each calculation in a separate thread
+  while (!allTasks.empty()) {
+    std::packaged_task&lt;int(int, int)&gt; myTask = std::move(allTasks.front());
+    allTasks.pop_front();
+    std::thread sumThread(std::move(myTask), begin, end);
+    begin = end;
+    end += increment;
+    sumThread.detach();
+  }
+  
+  // pick up the results
+  auto sum = sumResult1.get() + sumResult2.get() +
+    sumResult3.get() + sumResult4.get();
+
+  std::cout &lt;&lt; &quot;sum of 0 .. 10000 = &quot; &lt;&lt; sum &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>这段程序的是计算从0到10000的整数和。创建四个<code>std::packaged_task</code>的对象，并且每个<code>std::packaged_task</code>有自己的线程，并使用future来汇总结果。当然，也可以直接使用<a href="https://de.wikipedia.org/wiki/Gau%C3%9Fsche_Summenformel">Gaußschen Summenformel</a>(高斯求和公式)。真奇怪，我没有找到英文网页。(译者注：打开网页就是最熟悉的高斯求和公式，也就是<a href="%5Bhttps://baike.baidu.com/item/%E9%AB%98%E6%96%AF%E7%AE%97%E6%B3%95/4727683%5D(https://baike.baidu.com/item/%E9%AB%98%E6%96%AF%E7%AE%97%E6%B3%95/4727683)">等差数列求和公式</a>。翻了下维基百科，确实没有相关的英文页面。)</p>
+<p><strong>I. 打包任务</strong>：程序将工作包打包进<code>std::packaged_task</code>(第28 - 31行)的实例中，工作包就是<code>SumUp</code>的实例(第9 - 16行)，使用函数操作符完成任务(第11 - 15行)。函数操作符将<code>beg</code>到<code>end - 1</code>的所有整数相加并返回结果。第28 - 31行中的<code>std::packaged_task</code>实例可以处理需要两个<code>int</code>参数的函数调用，并返回一个<code>int: int(int, int)</code>类型的任务包。</p>
+<p><strong>II.创建future</strong>：第34到37行中，使用<code>std::packaged_task</code>创建future对象，这时<code>std::packaged_task</code>对象属于通信通道中的promise。future的类型有明确定义：<code>std::future&lt;int&gt; sumResult1 = sumTask1.get_future()</code>，也可以让编译器来确认future的具体类型：<code>auto  sumResult1 sumTask1.get_future()</code>。</p>
+<p><strong>III. 进行计算</strong>：开始计算。将任务包移动到<a href="http://en.cppreference.com/w/cpp/container/deque"><code>std::deque</code></a>(第40 - 44行)中，while循环(第51 - 58行)会执行每个任务包。为此，将<code>std::deque</code>的队头任务包移动到一个<code>std::packaged_task</code>实例中(第52行)，并将这个实例移动到一个新线程中(第54行)，并让这个线程在后台运行(第57行)。因为<code>packaged_task</code>对象不可复制的，所以会在52和54行中使用<code>move</code>语义。这个限制不仅适用于所有的promise实例，但也适用于future和线程实例。但有一个例外：<code>std::shared_future</code>。</p>
+<p><strong>IV. 查询结果</strong>：最后一步中，从每个future获取计算的结果，并把它们加起来(第61行)。</p>
+<p><img src="../../../images/detail/multithreading/27.png" alt="" /></p>
+<p>下表展示<code>std::packaged_task pack</code>的接口</p>
+<table><thead><tr><th align="center">成员函数</th><th align="center">函数描述</th></tr></thead><tbody>
+<tr><td align="center"><code>pack.swap(pack2)</code>和<code>std::swap(pack, pack2)</code></td><td align="center">交换对象</td></tr>
+<tr><td align="center"><code>pack.valid()</code></td><td align="center">检查对象中的函数是否合法</td></tr>
+<tr><td align="center"><code>pack.get_future()</code></td><td align="center">返回future</td></tr>
+<tr><td align="center"><code>pack.make_ready_at_thread_exit(ex)</code></td><td align="center">执行的函数，如果线程还存在，那么结果还是可用的</td></tr>
+<tr><td align="center"><code>pack.reset()</code></td><td align="center">重置任务的状态，擦除之前执行的结果</td></tr>
+</tbody></table>
+<p>与<code>std::async</code>或<code>std::promise</code>相比，<code>std::packaged_task</code>可以复位并重复使用。下面的程序展示了<code>std::packaged_task</code>的“特殊”使用方式。</p>
+<pre><code class="language-c++">// packagedTaskReuse.cpp
+
+#include &lt;functional&gt;
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+
+void calcProducts(std::packaged_task&lt;int(int, int)&gt;&amp; task,
+  const std::vector&lt;std::pair&lt;int, int&gt;&gt;&amp; pairs) {
+  for (auto&amp; pair : pairs) {
+    auto fut = task.get_future();
+    task(pair.first, pair.second);
+    std::cout &lt;&lt; pair.first &lt;&lt; &quot; * &quot; &lt;&lt; pair.second &lt;&lt; &quot; = &quot; &lt;&lt; fut.get()&lt;&lt;
+      std::endl;
+    task.reset();
+  }
+}
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  std::vector&lt;std::pair&lt;int, int&gt;&gt; allPairs;
+  allPairs.push_back(std::make_pair(1, 2));
+  allPairs.push_back(std::make_pair(2, 3));
+  allPairs.push_back(std::make_pair(3, 4));
+  allPairs.push_back(std::make_pair(4, 5));
+
+  std::packaged_task&lt;int(int, int)&gt; task{ [](int fir, int sec) {
+    return fir * sec; }
+  };
+
+  calcProducts(task, allPairs);
+
+  std::cout &lt;&lt; std::endl;
+  
+  std::thread t(calcProducts, std::ref(task), allPairs);
+  t.join();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>函数<code>calcProduct</code>(第9行)有两个参数：<code>task</code>和<code>pairs</code>。使用任务包<code>task</code>来计算<code>pairs</code>中的每个整数对的乘积(第13行)，并在第16行重置任务<code>task</code>。这样，<code>calcProduct</code>就能在主线程(第34行)和另外开启的线程(第38行)中运行。下面是程序的输出。</p>
+<p><img src="../../../images/detail/multithreading/28.png" alt="" /></p>
+<p><strong>std::promise和std::future</strong></p>
+<p><code>std::promise</code>和<code>std::future</code>可以完全控制任务。</p>
+<p>promise和future是一对强有力的组合。promise可以将值、异常或通知放入数据通道。一个promise可以对应多个<code>std::shared_future</code>对象。</p>
+<p>下面是<code>std::promise</code>和<code>std::future</code>用法的示例。两个通信端点都可以在不同的的线程中，因此通信可以在线程间发生。</p>
+<pre><code class="language-c++">// promiseFuture.cpp
+
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;utility&gt;
+
+void product(std::promise&lt;int&gt;&amp;&amp; intPromise, int a, int b) {
+  intPromise.set_value(a * b);
+}
+
+struct Div {
+
+  void operator()(std::promise&lt;int&gt;&amp;&amp; intPromise, int a, int b) const {
+    intPromise.set_value(a / b);
+  }
+
+};
+
+int main() {
+  
+  int a = 20;
+  int b = 10;
+
+  std::cout &lt;&lt; std::endl;
+
+  // define the promises
+  std::promise&lt;int&gt; prodPromise;
+  std::promise&lt;int&gt; divPromise;
+
+  // get the futures
+  std::future&lt;int&gt; prodResult = prodPromise.get_future();
+  std::future&lt;int&gt; divResult = divPromise.get_future();
+
+  // calculate the result in a separate thread
+  std::thread prodThread(product, std::move(prodPromise), a, b);
+  Div div;
+  std::thread divThread(div, std::move(divPromise), a, b);
+
+  // get the result
+  std::cout &lt;&lt; &quot;20*10 = &quot; &lt;&lt; prodResult.get() &lt;&lt; std::endl;
+  std::cout &lt;&lt; &quot;20/10 = &quot; &lt;&lt; divResult.get() &lt;&lt; std::endl;
+
+  prodThread.join();
+
+  divThread.join();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>将函数<code>product</code>(第8 -10行)、<code>prodPromise</code>(第32行)以及数字<code>a</code>和<code>b</code>放入线程<code>Thread prodThread</code>(第36行)中。<code>prodThread</code>的第一个参数需要一个可调用的参数，上面程序中就是函数乘积函数。函数需要一个类型右值引用的promise(<code>std::promise&lt;int&gt;&amp;&amp; intPromise</code>)和两个数字。<code>std::move</code>(第36行)创建一个右值引用。剩下的就简单了，<code>divThread</code>(第38行)将<code>a</code>和<code>b</code>分开传入。</p>
+<p>future通过<code>prodResult.get()</code>和<code>divResult.get()</code>获取结果</p>
+<p><img src="../../../images/detail/multithreading/29.png" alt="" /></p>
+<p><strong>std::promise</strong></p>
+<p><code>std::promise</code>允许设置一个值、一个通知或一个异常。此外，promise可以以延迟的方式提供结果。</p>
+<p><code>std::promise prom</code>的成员函数</p>
+<table><thead><tr><th align="center">成员函数</th><th align="center">函数描述</th></tr></thead><tbody>
+<tr><td align="center"><code>prom.swap(prom2)</code>和<code>std::swap(prom, prom2)</code></td><td align="center">交换对象</td></tr>
+<tr><td align="center"><code>prom.get_future()</code></td><td align="center">返回future</td></tr>
+<tr><td align="center"><code>prom.set_value(val)</code></td><td align="center">设置值</td></tr>
+<tr><td align="center"><code>prom.set_exception(ex)</code></td><td align="center">设置异常</td></tr>
+<tr><td align="center"><code>prom.set_value_at_thread_exit(val)</code></td><td align="center">promise退出前存储该值</td></tr>
+<tr><td align="center"><code>prom.set_exception_at_thread_exit(ex)</code></td><td align="center">promise退出前存储该异常</td></tr>
+</tbody></table>
+<p>如果多次对promise设置值或异常，则会抛出<code>std::future_error</code>。</p>
+<p><strong>std::future</strong></p>
+<p><code>std::future</code>可以完成的事情有：</p>
+<ul>
+<li>从promise中获取值。</li>
+<li>查询promise值是否可获取。</li>
+<li>等待promise通知，这种等待可以用一个时间段或一个绝对的时间点来完成。</li>
+<li>创建共享future(<code>std::shared_future</code>)。</li>
+</ul>
+<p>future实例<code>fut</code>的成员函数</p>
+<table><thead><tr><th align="center">成员函数</th><th align="center">函数描述</th></tr></thead><tbody>
+<tr><td align="center"><code>fut.share()</code></td><td align="center">返回<code>std::shared_future</code></td></tr>
+<tr><td align="center"><code>fut.get()</code></td><td align="center">返回可以是值或异常</td></tr>
+<tr><td align="center"><code>fut.valid()</code></td><td align="center">检查当前实例是否可用调用<code>fut.get()</code>。使用get()之后，返回false</td></tr>
+<tr><td align="center"><code>fut.wait()</code></td><td align="center">等待结果</td></tr>
+<tr><td align="center"><code>fut.wait_for(relTime)</code></td><td align="center">在<code>relTime</code>时间段内等待获取结果，并返回<code>std:: future_status</code>实例</td></tr>
+<tr><td align="center"><code>fut.wait_until(absTime)</code></td><td align="center">在<code>absTime</code>时间点前等待获取结果，并返回<code>std:: future_status</code>实例</td></tr>
+</tbody></table>
+<p>与<code>wait</code>不同，<code>wait_for</code>和<code>wait_until</code>会返回future的状态。</p>
+<p><strong>std::future_status</strong></p>
+<p>future和共享future的<code>wait_for</code>和<code>wait_until</code>成员函数将返回其状态。有三种可能:</p>
+<pre><code class="language-c++">enum class future_status {
+  ready,
+  timeout,
+  deferred
+};	
+</code></pre>
+<p>下表描述了每种状态:</p>
+<table><thead><tr><th align="center">状态</th><th align="center">描述</th></tr></thead><tbody>
+<tr><td align="center">deferred</td><td align="center">函数还未运行</td></tr>
+<tr><td align="center">ready</td><td align="center">结果已经准备就绪</td></tr>
+<tr><td align="center">timeout</td><td align="center">结果超时得到，视为过期</td></tr>
+</tbody></table>
+<p>使用<code>wait_for</code>或<code>wait_until</code>可以一直等到相关的promise完成。</p>
+<pre><code class="language-c++">// waitFor.cpp
+
+#include &lt;iostream&gt;
+#include &lt;future&gt;
+#include &lt;thread&gt;
+#include &lt;chrono&gt;
+
+using namespace std::literals::chrono_literals;
+
+void getAnswer(std::promise&lt;int&gt; intPromise) {
+  std::this_thread::sleep_for(3s);
+  intPromise.set_value(42);
+}
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  std::promise&lt;int&gt; answerPromise;
+  auto fut = answerPromise.get_future();
+
+  std::thread prodThread(getAnswer, std::move(answerPromise));
+
+  std::future_status status{};
+  do {
+    status = fut.wait_for(0.2s);
+    std::cout &lt;&lt; &quot;... doing something else&quot; &lt;&lt; std::endl;
+  } while (status != std::future_status::ready);
+
+  std::cout &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; &quot;The Answer: &quot; &lt;&lt; fut.get() &lt;&lt; '\n';
+
+  prodThread.join();
+
+  std::cout &lt;&lt; std::endl;
+}
+</code></pre>
+<p>在future<code>fut</code>在等待promise时，可以执行其他操作。</p>
+<p><img src="../../../images/detail/multithreading/30.png" alt="" /></p>
+<p>如果多次获取future<code>fut</code>的结果，会抛出<code>std::future_error</code>异常。</p>
+<p>promise和future是一对一的关系，而<code>std::shared_future</code>支持一个promise 对应多个future。</p>
+<p><strong>std::shared_future</strong></p>
+<p>创建<code>std::shared_future </code>的两种方式：</p>
+<ol>
+<li>通过promise实例<code>prom</code>创建<code>std::shared_future</code>:<code> std::shared_future&lt;int&gt; fut = prom.get_future()</code>。</li>
+<li>使用<code>fut</code>的<code>fut.share()</code>进行创建。执行了<code>fut.share()</code>后，<code>fut.valid()</code>会返回false。</li>
+</ol>
+<p>共享future是与相应的promise相关联的，可以获取promise的结果。共享future与<code>std::future</code>有相同的接口。</p>
+<p>除了有<code>std::future</code>的功能外，<code>std::shared_future</code>还允许和其他future查询关联promise的值。</p>
+<p><code>std::shared_future</code>的操作很特殊，下面的代码中就直接创建了一个<code>std::shared_future</code>。</p>
+<pre><code class="language-c++">// sharedFuture.cpp
+
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;utility&gt;
+
+std::mutex coutMutex;
+
+struct Div {
+
+  void operator()(std::promise&lt;int&gt;&amp;&amp; intPromise, int a, int b) {
+    intPromise.set_value(a / b);
+  }
+
+};
+
+struct Requestor {
+
+  void operator()(std::shared_future&lt;int&gt; shaFut) {
+
+    // lock std::cout
+    std::lock_guard&lt;std::mutex&gt; coutGuard(coutMutex);
+
+    // get the thread id
+    std::cout &lt;&lt; &quot;threadId(&quot; &lt;&lt; std::this_thread::get_id() &lt;&lt; &quot;): &quot;;
+
+    std::cout &lt;&lt; &quot;20/10= &quot; &lt;&lt; shaFut.get() &lt;&lt; std::endl;
+
+  }
+
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  // define the promises
+  std::promise&lt;int&gt; divPromise;
+
+  // get the futures
+  std::shared_future&lt;int&gt; divResult = divPromise.get_future();
+
+  // calculate the result in a separate thread
+  Div div;
+  std::thread divThread(div, std::move(divPromise), 20, 10);
+
+  Requestor req;
+  std::thread sharedThread1(req, divResult);
+  std::thread sharedThread2(req, divResult);
+  std::thread sharedThread3(req, divResult);
+  std::thread sharedThread4(req, divResult);
+  std::thread sharedThread5(req, divResult);
+
+  divThread.join();
+
+  sharedThread1.join();
+  sharedThread2.join();
+  sharedThread3.join();
+  sharedThread4.join();
+  sharedThread5.join();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>promise和future的工作包都是函数对象。第46行中将<code>divPromise</code>移动到线程<code>divThread</code>中执行，因此会将<code>std::shared_future</code>复制到5个线程中(第49 - 53行)。与只能移动的<code>std::future</code>对象不同，可以<code>std::shared_future</code>对象可以进行复制。</p>
+<p>主线程在第57到61行等待子线程完成它们的任务。</p>
+<p><img src="../../../images/detail/multithreading/31.png" alt="" /></p>
+<p>前面提到过，可以通过使用<code>std::future</code>的成员函数创建<code>std::shared_future</code>。我们把上面的代码改一下。</p>
+<pre><code class="language-c++">// sharedFutureFromFuture.cpp
+
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;utility&gt;
+
+std::mutex coutMutex;
+
+struct Div {
+
+  void operator()(std::promise&lt;int&gt;&amp;&amp; intPromise, int a, int b) {
+    intPromise.set_value(a / b);
+  }
+
+};
+
+struct Requestor {
+
+  void operator()(std::shared_future&lt;int&gt; shaFut) {
+
+    // lock std::cout
+    std::lock_guard&lt;std::mutex&gt; coutGuard(coutMutex);
+
+    // get the thread id
+    std::cout &lt;&lt; &quot;threadId(&quot; &lt;&lt; std::this_thread::get_id() &lt;&lt; &quot;): &quot;;
+
+    std::cout &lt;&lt; &quot;20/10= &quot; &lt;&lt; shaFut.get() &lt;&lt; std::endl;
+
+  }
+
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::boolalpha &lt;&lt; std::endl;
+
+  // define the promises
+  std::promise&lt;int&gt; divPromise;
+
+  // get the futures
+  std::future&lt;int&gt; divResult = divPromise.get_future();
+
+  std::cout &lt;&lt; &quot;divResult.valid(): &quot; &lt;&lt; divResult.valid() &lt;&lt; std::endl;
+
+  // calculate the result in a separate thread
+  Div div;
+  std::thread divThread(div, std::move(divPromise), 20, 10);
+
+  std::cout &lt;&lt; &quot;divResult.valid(): &quot; &lt;&lt; divResult.valid() &lt;&lt; std::endl;
+
+  std::shared_future&lt;int&gt; sharedResult = divResult.share();
+
+  std::cout &lt;&lt; &quot;divResult.valid(): &quot; &lt;&lt; divResult.valid() &lt;&lt; &quot;\n\n&quot;;
+
+  Requestor req;
+  std::thread sharedThread1(req, sharedResult);
+  std::thread sharedThread2(req, sharedResult);
+  std::thread sharedThread3(req, sharedResult);
+  std::thread sharedThread4(req, sharedResult);
+  std::thread sharedThread5(req, sharedResult);
+
+  divThread.join();
+
+  sharedThread1.join();
+  sharedThread2.join();
+  sharedThread3.join();
+  sharedThread4.join();
+  sharedThread5.join();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p><code>std::future</code>(第44行和第50行)前两次调用<code>divResult.valid()</code>都返回true。第52行执行<code>divResult.share()</code>之后，因为该操作使得状态转换为共享，所以在执行到第54行时，程序会返回false。</p>
+<p><img src="../../../images/detail/multithreading/32.png" alt="" /></p>
+<h2 id="异常"><a class="header" href="#异常">异常</a></h2>
+<p>如果<code>std::async</code>或<code>std::packaged_task</code>的工作包抛出错误，则异常会存储在共享状态中。当future<code>fut</code>调用<code>fut.get()</code>时，异常将重新抛出。</p>
+<p><code>std::promise prom</code>提供了相同的功能，但是它有一个成员函数<code>prom.set_value(std::current_exception())</code>可以将异常设置为共享状态。</p>
+<p>数字除以0是未定义的行为，函数<code>executeDivision</code>显示计算结果或异常。</p>
+<pre><code class="language-c++">// promiseFutureException.cpp
+
+#include &lt;exception&gt;
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;utility&gt;
+
+#ifdef WIN32
+#include &lt;string&gt;
+#endif
+
+struct Div {
+  void operator()(std::promise&lt;int&gt;&amp;&amp; intPromise, int a, int b){
+    try {
+      if (b == 0) {
+        std::string errMess = std::string(&quot;Illegal division by zero: &quot;) +
+          std::to_string(a) + &quot;/&quot; + std::to_string(b);
+        throw std::runtime_error(errMess);
+      }
+      intPromise.set_value(a / b);
+    }
+    catch (...) {
+      intPromise.set_exception(std::current_exception());
+    }
+  }
+};
+
+void executeDivision(int nom, int denom) {
+  std::promise&lt;int&gt; divPromise;
+  std::future&lt;int&gt; divResult = divPromise.get_future();
+
+  Div div;
+  std::thread divThread(div, std::move(divPromise), nom, denom);
+
+  // get the result or the exception
+  try {
+    std::cout &lt;&lt; nom &lt;&lt; &quot;/&quot; &lt;&lt; denom &lt;&lt; &quot; = &quot; &lt;&lt; divResult.get() &lt;&lt; std::endl;
+  }
+  catch (std::runtime_error&amp; e) {
+    std::cout &lt;&lt; e.what() &lt;&lt; std::endl;
+  }
+
+  divThread.join();
+}
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  executeDivision(20, 0);
+  executeDivision(20, 10);
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>这个程序中，promise会处理分母为0的情况。如果分母为0，则在第24行中将异常设置为返回值：<code>intPromise.set_exception(std::current_exception())</code>。future需要在try-catch中处理异常(第37 - 42行)。</p>
+<p>下面是程序的输出。</p>
+<p><img src="../../../images/detail/multithreading/33.png" alt="" /></p>
+<blockquote>
+<p><strong>std::current_exception和std::make_exception_ptr</strong></p>
+<p><code>std::current_exception()</code>捕获当前异常对象，并创建一个
+<code>std:: exception_ptr</code>。<code>std::exception_ptr</code>保存异常对象的副本或引用。如果在没有异常处理时调用该函数，则返回一个空的<a href="http://en.cppreference.com/w/cpp/error/current_exception"><code>std::exception_ptr</code></a>。</p>
+<p>为了不在try/catch中使用<code>intPromise.set_exception(std::current_exception())</code>检索抛出的异常，可以直接调用<code>intPromise.set_exception(std::make_exception_ptr(std::runtime_error(errMess)))</code>。</p>
+</blockquote>
+<p>如果在<code>std::promise</code>销毁之前没有调用设置类的成员函数，或是在<code>std::packaged_task</code>调用它，那么<code>std::future_error</code>异常和错误代码<code>std::future_errc::broken_promise</code>将存储在共享future中。</p>
+<h2 id="通知"><a class="header" href="#通知">通知</a></h2>
+<p>任务是条件变量的一种替代方式。如果使用promise和future来同步线程，它们与条件变量有很多相同之处。大多数时候，promise和future是更好的选择。</p>
+<p>在看例子之前，先了解下任务和条件变量的差异。</p>
+<table><thead><tr><th align="center">对比标准</th><th align="center">条件变量</th><th align="center">任务</th></tr></thead><tbody>
+<tr><td align="center">多重同步</td><td align="center">Yes</td><td align="center">No</td></tr>
+<tr><td align="center">临界区保护</td><td align="center">Yes</td><td align="center">No</td></tr>
+<tr><td align="center">接收错误处理机制</td><td align="center">No</td><td align="center">Yes</td></tr>
+<tr><td align="center">伪唤醒</td><td align="center">Yes</td><td align="center">No</td></tr>
+<tr><td align="center">未唤醒</td><td align="center">Yes</td><td align="center">No</td></tr>
+</tbody></table>
+<p>与promise和future相比，条件变量的优点是可以多次同步线程，而promise只能发送一次通知，因此必须使用更多promise和future对，才能模拟出条件变量的功能。如果只同步一次，那条件变量正确的使用方式或许将更具大的挑战。promise和future对不需要共享变量，所以不需要锁，并且不大可能出现伪唤醒或未唤醒的情况。除了这些，任务还可以处理异常。所以，在同步线程上我会更偏重于选择任务，而不是条件变量。</p>
+<p>还记得使用条件变量有多难吗？如果忘记了，这里展示了两个线程同步所需的关键部分。</p>
+<pre><code class="language-c++">void waitingForWork(){
+  std::cout &lt;&lt; &quot;Worker: Waiting for work.&quot; &lt;&lt; std::endl;
+  
+  std::unique_lock&lt;std::mutex&gt; lck(mutex_);
+  condVar.wait(lck, []{ return dataReady; });
+  doTheWork();
+  std::cout &lt;&lt; &quot;Work done.&quot; &lt;&lt; std::endl;
+}
+
+void setDataReady(){
+  std::lock_guard&lt;std::mutex&gt; lck(mutex_);
+  dataReady=true;
+  std::cout &lt;&lt; &quot;Sender: Data is ready.&quot; &lt;&lt; std::endl;
+  condVar.notify_one();
+}
+</code></pre>
+<p>函数<code>setDataReady</code>为同步通知，函数<code>waitingForWork</code>为同步等待。</p>
+<p>使用任务完成相同的工作流程。</p>
+<pre><code class="language-c++">// promiseFutureSynchronise.cpp
+
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+
+
+void doTheWork() {
+  std::cout &lt;&lt; &quot;Processing shared data.&quot; &lt;&lt; std::endl;
+}
+
+void waitingForWork(std::future&lt;void&gt;&amp;&amp; fut) {
+
+  std::cout &lt;&lt; &quot;Worker: Waiting for work.&quot; &lt;&lt; std::endl;
+  fut.wait();
+  doTheWork();
+  std::cout &lt;&lt; &quot;Work done.&quot; &lt;&lt; std::endl;
+
+}
+
+void setDataReady(std::promise&lt;void&gt;&amp;&amp; prom) {
+
+  std::cout &lt;&lt; &quot;Sender: Data is ready.&quot; &lt;&lt; std::endl;
+  prom.set_value();
+
+}
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  std::promise&lt;void&gt; sendReady;
+  auto fut = sendReady.get_future();
+
+  std::thread t1(waitingForWork, std::move(fut));
+  std::thread t2(setDataReady, std::move(sendReady));
+
+  t1.join();
+  t2.join();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>是不是非常简单？</p>
+<p>通过<code>sendReady</code>(第32行)获得了一个future<code>fut</code>(第33行)，promise使用其返回值<code>void (std::promise&lt;void&gt; sendReady)</code>进行通信，并且只能够发送通知。两个通信端点分别移动到线程<code>t1</code>和<code>t2</code>中(第35行和第36行)，调用<code>fut.wait()</code>(第15行)等待promise的通知(<code>prom.set_value()</code>(第24行))。</p>
+<p>程序结构和输出，与条件变量章节程序的输出一致。</p>
+<p><img src="../../../images/detail/multithreading/34.png" alt="" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/The-Details/Multithreading/2.4-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/The-Details/Multithreading/2.4-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

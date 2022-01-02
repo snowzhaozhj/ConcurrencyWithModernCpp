@@ -1,0 +1,481 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>关于执行 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html" class="active"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="关于执行"><a class="header" href="#关于执行">关于执行</a></h1>
+<p>Executor是C++中执行的基本构造块，在执行中扮演如同容器分配器的角色。异步、标准模板库的并行算法、future的协同、任务块的运行、<a href="https://en.cppreference.com/w/cpp/experimental">网络TS(技术规范，technical specification)</a>的提交、调度或延迟调用等功能都会使用到异步执行。此外，因为没有标准化的执行方式，所以“执行”是编程时的基本关注点。</p>
+<p>下面是提案<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0761r2.pdf">P0761</a>的示例。</p>
+<p>parallel_for的实现</p>
+<pre><code class="language-c++">void parallel_for(int facility, int n, function&lt;void(int)&gt; f) {
+	if(facility == OPENMP) {
+		#pragma omp parallel for
+		for(int i = 0; i &lt; n; ++i) {
+			f(i);
+		}
+	}
+	else if(facility == GPU) {
+		parallel_for_gpu_kernel&lt;&lt;&lt;n&gt;&gt;&gt;(f);
+	}
+	else if(facility == THREAD_POOL) {
+		global_thread_pool_variable.submit(n, f);
+	}
+}
+</code></pre>
+<p>这个parallel_for有一些问题：</p>
+<ul>
+<li>parallel_for这样看起来简单的函数，维护起来其实非常复杂。如果支持新的算法或新的并行范例，会变得越来越复杂。(译者：这里指的是分支中不同平台的实现，如果有新算法或新平台，则函数体会变得越来越臃肿。)</li>
+<li>函数的每个分支的同步属性也不同。OpenMP可能会阻塞运行，直到所有的派生线程完成，GPU通常异步运行的，线程池可能阻塞或不阻塞。不完全的同步可能会导致数据竞争或死锁。</li>
+<li>parallel_for的限制太多。例如，没有办法使用自定义的线程池替换全局线程池：<code>global_thread_pool_variable.submit(n, f); </code></li>
+</ul>
+<h2 id="路漫漫其修远兮"><a class="header" href="#路漫漫其修远兮">路漫漫其修远兮</a></h2>
+<p>2018年10月，已经提交了很多关于executor的提案了，许多设计非常开放，真期望它们能成为C++23的一部分，或有可能用C++20对单向执行进行标准化。本章主要是基于对executor的<a href="%5D(http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0761r2.pdf)">P0761号提案</a>的设计建议，和在<a href="http://open-std.org/JTC1/SC22/WG21/docs/papers/2018/p0443r7.html">P0443</a>和<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1244r0.html">P1244</a>提案中的描述进行的。P0443(统一的executor)中提出了单向执行，它可能是C++20的一部分，P1244(统一的executor的从属执行)提出了从属执行，它可能是C++23的一部分。本章还提到了相对较新的<a href="http://open-std.org/JTC1/SC22/WG21/docs/papers/2018/p1055r0.pdf">P1055</a>提案，“适当executor提案”。</p>
+<h2 id="executor是什么"><a class="header" href="#executor是什么">Executor是什么?</a></h2>
+<p>什么是executor?executor由一组关于在何处、何时以及如何运行可调用单元的规则组成。</p>
+<ul>
+<li>何处: 可调用项可以在内部或外部处理器上运行，并且结果是从内部或外部处理器中进行读取。</li>
+<li>何时: 可调用项可以立即运行，也可以延迟运行。</li>
+<li>如何: 可调用项的可以在CPU或GPU上运行，甚至可以以向量化的方式执行。</li>
+</ul>
+<p>更正式地说，每个executor都具有与所执行函数相关联的属性。</p>
+<p><strong>Executor属性</strong></p>
+<p>可以通过两种方式，将这些属性与executor关联起来：<code>execution::require</code>或<code>execution::prefer </code></p>
+<ol>
+<li>方向性：执行函数可以是“触发即忘”(<code>execution::oneway</code>)、返回一个future(<code>execution::twoway</code>)或返回一个continuation(<code>execution::then</code>)。</li>
+<li>基数性：执行函数可以创建一个(<code>execution::single</code>)或多个执行代理(<code>execution::bulk</code>)。</li>
+<li>阻塞性：函数可阻塞也可不阻塞，有三个互斥的阻塞属性:<code>execution::blocking.never</code>，<code>execution::blocking.possibly</code>和<code>execution::blocking.always</code>。</li>
+<li>持续性：任务可能是由客户端上的线程执行(<code>execution::continuation</code>)，也可能不执行(<code>execution::not_continuation</code>)。</li>
+<li>可溯性：指定跟踪未完成的工作(<code>exection::outstanding_work</code>),或不跟踪(<code>execution::outstanding_work.untracked</code>)。</li>
+<li>批量进度保证：指定在批量属性，<code>execution::bulk_sequenced_execution</code>、<code>execution::bulk_parallel_execution</code>和<code>execution::bulk_unsequenced_execution</code>，这些属性是互斥的，通过使用这些属性创建的执行代理，可以保证任务的进度。</li>
+<li>执行线程映射：将每个执行代理映射到一个新线程(<code>execution::new_thread_execution_mapping</code>)，或者不映射(<code>execution::thread_execution_mapping</code>)。</li>
+<li>分配器：将分配器(<code>execution::allocator</code>)与executor关联起来。</li>
+</ol>
+<p>也可以自己来定义属性。</p>
+<blockquote>
+<p>Executor是基础构建块</p>
+<p>因为executor是执行的构建块，C++的并发性和并行性特性在很大程度上依赖于它们。这也适用于扩展future，网络的<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4734.pdf">N4734</a>扩展，甚至是适用于STL的并行算法，以及C++20/23中的新并发特性，如门闩和栅栏、协程、事务性内存和任务块。</p>
+</blockquote>
+<h2 id="举个例子"><a class="header" href="#举个例子">举个例子</a></h2>
+<p><strong>使用Executor</strong></p>
+<p>下面的代码片段，展示了executor的用法:</p>
+<p><strong>std::async</strong></p>
+<pre><code class="language-c++">// get an executor through some means
+my_executor_type my_executor = ...
+  
+// launch an async using my executor
+auto future = std::async(my_executor, [] {
+	std::cout &lt;&lt; &quot;Hello world, from a new execution agent!&quot; &lt;&lt; std::endl;
+});
+</code></pre>
+<p><strong>STL算法std::for_each</strong></p>
+<pre><code class="language-c++">// get an executor through some means
+my_executor_type my_executor = ...
+  
+// execute a parallel for_each &quot;on&quot; my executor
+std::for_each(std::execution::par.on(my_executor),
+							 data.begin(), data.end(), func);
+</code></pre>
+<p><strong>网络技术规范：允许客户端连接默认系统Executor</strong></p>
+<pre><code class="language-c++">// obtain an acceptor (a listening socket) through some means
+tcp::acceptor my_acceptor = ...
+  
+// perform an asynchronous operation to accept a new connection
+acceptor.async_accept(
+  [](std::error_code ec, tcp::socket new_connection)
+    {
+    	...
+    }
+  );
+</code></pre>
+<p><strong>网络技术规范：允许客户端连接带有线程池的Executor</strong></p>
+<pre><code class="language-c++">// obtain an acceptor (a listening socket) through some means
+tcp::acceptor my_acceptor = ...
+  
+// obtain an executor for a specific thread pool
+auto my_thread_pool_executor = ...
+  
+// perform an asynchronous operation to accept a new connection
+acceptor.async_accept(
+    std::experimental::net::bind_executor(my_thread_pool_executor,
+    [](std::error_code ec, tcp::socket new_connection)
+      {
+      	...
+      }
+    )
+  );
+</code></pre>
+<p>网络技术规范<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/n4734.pdf">N4734</a>的<code>std::experimental::net::bind_executor</code>函数允许使用特定的executor。本例中，程序在线程池中执行Lambda函数。</p>
+<p>要使用executor ，必须进行获取。</p>
+<p><strong>获取Executor</strong></p>
+<p>获取Executor的方法有很多。</p>
+<p><strong>源于自执行上下文static_thread_pool</strong></p>
+<pre><code class="language-c++">// create a thread pool with 4 threads
+static_thread_pool pool(4);
+
+// get an executor from the thread pool
+auto exec = pool.executor();
+
+// use the executor on some long-running task
+auto task1 = long_running_task(exec);
+</code></pre>
+<p><strong>源自执行策略std:: Execution::par</strong></p>
+<pre><code class="language-c++">// get par's associated executor
+auto par_exec = std::execution::par.executor();
+
+// use the executor on some long-running task
+auto task2 = long_running_task(par_exec);
+</code></pre>
+<p>**源于系统的Executor **</p>
+<p>通常使用线程执行的默认程序。如果有变量没有指定，那就可以使用它。</p>
+<p><strong>源于Executor适配器</strong></p>
+<pre><code class="language-c++">// get an executor from a thread pool
+auto exec = pool.executor();
+
+// wrap the thread pool's executor in a logging_executor
+logging_executor&lt;decltype(exec)&gt; logging_exec(exec);
+
+// use the logging executor in a parallel sort
+std::sort(std::execution::par.on(logging_exec), my_data.begin(), my_data.end());
+</code></pre>
+<p>logging_executo是循环executor的包装器。</p>
+<h2 id="executor的目标"><a class="header" href="#executor的目标">Executor的目标</a></h2>
+<p>提案<a href="http://open-std.org/JTC1/SC22/WG21/docs/papers/2018/p1055r0.pdf">P1055</a>中，executor的目的是什么呢?</p>
+<ol>
+<li>批量化：权衡可调用单元的转换成本和大小。</li>
+<li>异构化：允许可调用单元在异构上下文中运行，并能返回结果。</li>
+<li>有序化：可指定调用顺序，可选的顺序有：后进先出<a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">LIFO</a>、先进先出<a href="https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics)">FIFO</a> 、优先级或耗时顺序，甚至是串行执行。</li>
+<li>可控化：可调用的对象必须是特定计算资源的目标，可以延迟，也可以取消。</li>
+<li>持续化：需要可调用信号来控制异步，这些信号必须指示结果是否可用、是否发生了错误、何时完成或调用方是否希望取消，并且显式启动或停止可调用项也应该是可以的。</li>
+<li>层级化：层次结构允许在不增加用例复杂性的情况下添加功能。</li>
+<li>可用化：易实现和易使用，应该是主要目标。</li>
+<li>组合化：允许用户扩展executor的功能。</li>
+<li>最小化：executor中不应该存在任何库外添加的内容。</li>
+</ol>
+<h2 id="术语"><a class="header" href="#术语">术语</a></h2>
+<p>提案<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0761r2.pdf">P0761</a>为可执行单元定义了一些执行的新术语:</p>
+<ul>
+<li>执行资源：能够执行可调用的硬件和/或软件，执行单元可以是SIMD，也可以是管理大量线程集合的运行时。CPU或GPU的执行资源是异构的，所以它们有不同的限制。</li>
+<li>执行上下文：是一个程序对象，表示特定的执行资源集合和这些资源中的执行代理。典型的例子是线程池、分布式运行时或异构运行时。</li>
+<li>执行代理：特定执行单元的上下文，该上下文映射到执行资源上的单个可调用单元。典型的例子是CPU线程或GPU执行单元。</li>
+<li>执行器：与特定上下文关联的执行对象。提供一个或多个执行函数，用于创建可调用函数对象的执行代理。</li>
+</ul>
+<h2 id="执行函数"><a class="header" href="#执行函数">执行函数</a></h2>
+<p>执行程序可提供一个或多个执行函数，用于创建可调用对象的执行代理。执行程序至少支持以下六个功能中的一个。</p>
+<table><thead><tr><th align="center">名称</th><th align="center">基数性</th><th align="center">方向性</th></tr></thead><tbody>
+<tr><td align="center">execute</td><td align="center">单个</td><td align="center">oneway</td></tr>
+<tr><td align="center">twoway_execute</td><td align="center">单个</td><td align="center">twoway</td></tr>
+<tr><td align="center">then_execute</td><td align="center">单个</td><td align="center">then</td></tr>
+<tr><td align="center">bulk_execute</td><td align="center">批量</td><td align="center">oneway</td></tr>
+<tr><td align="center">bulk_twoway_execute</td><td align="center">批量</td><td align="center">twoway</td></tr>
+<tr><td align="center">bulk_then_execute</td><td align="center">批量</td><td align="center">then</td></tr>
+</tbody></table>
+<p>每个执行函数都有两个属性：基数性和方向性。</p>
+<ul>
+<li>基数性
+<ul>
+<li>单个: 创建一个执行代理</li>
+<li>批量 : 创建一组执行代理</li>
+</ul>
+</li>
+<li>方向性
+<ul>
+<li>oneway : 创建执行代理，但不返回结果</li>
+<li>twoway : 创建一个执行代理，并返回一个可用于等待执行完成的future</li>
+<li>then : 创建一个执行代理，并返回一个可用于等待执行完成的future。给定的future准备好后，执行代理开始执行。</li>
+</ul>
+</li>
+</ul>
+<p>让我更简单的解释一下执行功能，他们都有一个可执行单元。</p>
+<p><strong>基数性：单个</strong></p>
+<p>单个基数性很简单，单向执行函数是以“触发即忘”的方式执行，返回void。它非常类似于“触发即忘”的future，但它不会自动阻止future的销毁。twoway执行函数返回future，可以使用它来获取结果。类似于<code>std::promise</code>，它将返回关联<code>std::future</code>的句柄。这种情况下，执行代理仅在提供的future准备好时才运行。</p>
+<p><strong>基数性：批量</strong></p>
+<p>批量基数性的情况比较复杂。这些函数创建一组执行代理，每个执行代理调用给定的可调用单元<code>f</code>，它们返回一个结果代理。<code>f</code>的第一个参数是<code>shape</code>参数，它是一个整型，代表代理类型的索引。进一步的参数是结果代理，如果是twoway执行器，那么就和所有代理共享<code>shape</code>代理。用于创建共享代理的参数，其生存期与代理的生存期绑定在一起。因为它们能够通过执行可调用单元产生相应的价值，所以称为代理。客户端负责通过这个结果代理，消除结果的歧义。</p>
+<p>使用bulk_then_execute函数时，可调用单元<code>f</code>将其之前的future作为附加参数。因为没有代理是所有者，所以可调用单元<code>f</code>可通过引用获取结果、共享参数和前次结果。</p>
+<p><strong>execution::require</strong></p>
+<p>如何确保执行程序支持特定的执行功能?</p>
+<p>在特殊情况下，你需要对其有所了解。</p>
+<pre><code class="language-c++">void concrete_context(const my_oneway_single_executor&amp; ex)
+{
+  auto task = ...;
+  ex.execute(task);
+}
+</code></pre>
+<p>通常情况下，可以使用函数<code>execution::require</code>来申请。</p>
+<pre><code class="language-c++">template&lt;class Executor&gt;
+void generic_context(const Executor&amp; ex)
+{
+  auto task = ...;
+  // ensure .toway_execute() is available with execution::require()
+  execution::require(ex, execution::single, execution::twoway).toway_execute(task);
+}
+</code></pre>
+<h2 id="实现原型"><a class="header" href="#实现原型">实现原型</a></h2>
+<p>基于提案<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0443r5.html">P0443R5</a>，executor提案有了具体的实现原型。这个实现原型，可以帮助我们更深入地了解了批量基数。</p>
+<pre><code class="language-c++">// executor.cpp
+
+#include &lt;atomic&gt;
+#include &lt;experimental/thread_pool&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+
+namespace execution = std::experimental::execution;
+using std::experimental::static_thread_pool;
+using std::experimental::executors_v1::future;
+
+int main() {
+
+  static_thread_pool pool{ 4 };
+  auto ex = pool.executor();
+
+  // One way, single
+  ex.execute([] {std::cout &lt;&lt; &quot;We made it!&quot; &lt;&lt; std::endl; });
+
+  std::cout &lt;&lt; std::endl;
+
+  // Two way, single
+  future&lt;int&gt; f1 = ex.twoway_execute([] {return 42; });
+  f1.wait();
+  std::cout &lt;&lt; &quot;The result is: &quot; &lt;&lt; f1.get() &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+  // One way, bulk.
+  ex.bulk_execute([](int n, int&amp; sha) {
+    std::cout &lt;&lt; &quot;part &quot; &lt;&lt; n &lt;&lt; &quot;: &quot; &lt;&lt; &quot;shared: &quot; &lt;&lt; sha &lt;&lt; &quot;\n&quot;;
+    }, 8,
+    [] {return 0; }
+    );
+
+  std::cout &lt;&lt; std::endl;
+
+  // Two way, bulk, void result
+  future&lt;void&gt; f2 = ex.bulk_twoway_execute(
+    [](int n, std::atomic&lt;short&gt;&amp; m) {
+      std::cout &lt;&lt; &quot;async part &quot; &lt;&lt; n;
+      std::cout &lt;&lt; &quot; atom: &quot; &lt;&lt; m++ &lt;&lt; std::endl;
+    }, 8,
+    [] {},
+      [] {
+      std::atomic&lt;short&gt; atom(0);
+      return std::ref(atom);
+    }
+    );
+  f2.wait();
+  std::cout &lt;&lt; &quot;bulk result available&quot; &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+  // Two way, bulk, non-void result.
+  future&lt;double&gt; f3 = ex.bulk_twoway_execute(
+    [](int n, double&amp;, int&amp;) {
+      std::cout &lt;&lt; &quot;async part &quot; &lt;&lt; n &lt;&lt; &quot; &quot;;
+      std::cout &lt;&lt; std::this_thread::get_id() &lt;&lt; std::endl;
+    }, 8,
+    [] {
+      std::cout &lt;&lt; &quot;Result factory: &quot;
+        &lt;&lt; std::this_thread::get_id() &lt;&lt; std::endl;
+      return 123.456; },
+      [] {
+        std::cout &lt;&lt; &quot;Shared Parameter: &quot;
+          &lt;&lt; std::this_thread::get_id() &lt;&lt; std::endl;
+        return 0; }
+      );
+  f3.wait();
+  std::cout &lt;&lt; &quot;bulk result is &quot; &lt;&lt; f3.get() &lt;&lt; std::endl;
+  
+}
+</code></pre>
+<p>该程序使用具有四个线程的线程池进行执行(第14行和第15行)。第18行和第23行使用单基数的执行函数，并创建两个单基数的代理。第二个是twoway执行函数，因此返回一个结果。</p>
+<p>第30、39和56行中的执行函数具有批量基数性。每个函数创建8个代理(第32、43和60行)。第一种情况中，可调用单元会显示索引<code>n</code>和共享值<code>sha</code>，<code>sha</code>是由共享代理在第33行创建的。下一个执行函数<code>bulk_twoway_execute</code>更有趣。虽然它的结果代理返回void，但共享状态是原子变量<code>atom</code>。每个代理将其值增加1(第42行)。通过结果代理，最后一个执行函数(第56到69行)返回123.456。有趣的是，在可调用的执行、结果和共享代理的执行中涉及到多少线程呢？程序的输出显示结果和共享代理运行在同一个线程中，而其他代理运行在不同的线程中。</p>
+<p><img src="../../../images/detail/The-Future-CPP-20-23/2.png" alt="" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

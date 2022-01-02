@@ -1,0 +1,627 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>单例模式：线程安全的初始化 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html" class="active"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="单例模式线程安全的初始化"><a class="header" href="#单例模式线程安全的初始化">单例模式：线程安全的初始化</a></h1>
+<p>开始研究之前，说明一下：我个人并不提倡使用单例模式。</p>
+<blockquote>
+<p><strong>对于单例模式的看法</strong></p>
+<p>我只在案例研究中使用单例模式，因为它是以线程安全的方式，初始化变量的典型例子。先来了解一下单例模式的几个严重缺点：</p>
+<ul>
+<li>单例是一个经过乔装打扮的全局变量。因此，测试起来非常困难，因为它依赖于全局的状态。</li>
+<li>通过<code>MySingleton::getInstance()</code>可以在函数中使用单例，不过函数接口不会说明内部使用了单例，并隐式依赖于对单例。</li>
+<li>若将静态对象<code>x</code>和<code>y</code>放在单独的源文件中，并且这些对象的构造方式相互依赖，因为无法保证先初始化哪个静态对象，将陷入<a href="https://isocpp.org/wiki/faq/ctors">静态初始化混乱顺序</a>的情况。这里要注意的是，单例对象是<strong>静态对象</strong>。</li>
+<li>单例模式是惰性创建对象，但不管理对象的销毁。如果不销毁不需要的东西，那就会造成内存泄漏。</li>
+<li>试想一下，当子类化单例化，可能实现吗？这意味着什么?</li>
+<li>想要实现一个线程安全且快速的单例，非常具有挑战性。</li>
+</ul>
+<p>关于单例模式的详细讨论，请参阅Wikipedia中有关<a href="https://en.wikipedia.org/wiki/Singleton_pattern">单例模式</a>的文章。</p>
+</blockquote>
+<p>我想在开始讨论单例的线程安全初始化前，先说点别的。</p>
+<p>##双重检查的锁定模式</p>
+<p><a href="http://www.cs.wustl.edu/%7Eschmidt/PDF/DC-Locking.pdf">双重检查锁定</a>模式是用线程安全的方式，初始化单例的经典方法。听起来像是最佳实践或模式之类的方法，但更像是一种<a href="https://en.wikipedia.org/wiki/Anti-pattern">反模式</a>。它假设传统实现中有相关的保障机制，而Java、C#或C++内存模型不再提供这种保障。这样，创建单例是原子操作就是一个错误的假设，这样看起来是线程安全的解决方案并不安全。</p>
+<p>什么是双重检查锁定模式？实现线程安全单例的，首先会想到用锁来保护单例的初始化过程。</p>
+<pre><code class="language-c++">std::mutex myMutex;
+
+class MySingleton {
+public:
+  static MySingleton&amp; getInstance() {
+    std::lock_guard&lt;mutex&gt; myLock(myMutex);
+    if (!instance) instance = new MySingleton();
+    return *instance;
+  }
+private:
+  MySingleton() = default;
+  ~MySingleton() = default;
+  MySingleton(const MySingleton&amp;) = delete;
+  MySingleton&amp; operator= (const MySingleton&amp;) = delete;
+  static MySingleton* instance;
+};
+
+MySingleton* MySingleton::instance = nullptr;
+</code></pre>
+<p>程序有毛病么？有毛病：是因为性能损失太大；没毛病：是因为实现的确线程安全。第7行的锁会对单例的每次访问进行保护，这也适用于读取。不过，构造<code>MySingleton</code>之后，就没有必要读取了。这里双重检查锁定模式就发挥了其作用，再看一下<code>getInstance</code>函数。</p>
+<pre><code class="language-c++">static MySingleton&amp; getInstance() {
+  if (!instance) { // check
+    lock_guard&lt;mutex&gt; myLock(myMutex); // lock
+    if (!instance) instance = new MySingleton(); // check
+  }
+  return *instance;
+}
+</code></pre>
+<p>第2行没有使用锁，而是使用指针比较。如果得到一个空指针，则申请锁的单例(第3行)。因为，可能有另一个线程也在初始化单例，并且到达了第2行或第3行，所以需要额外的指针在第4行进行比较。顾名思义，其中两次是检查，一次是锁定。</p>
+<p>牛B不？牛。线程安全？不安全。</p>
+<p>问题出在哪里？第4行中的<code>instance= new MySingleton()</code>至少包含三个步骤：</p>
+<ol>
+<li>为<code>MySingleton</code>分配内存。</li>
+<li>初始化<code>MySingleton</code>对象。</li>
+<li>引用完全初始化的<code>MySingleton</code>对象。</li>
+</ol>
+<p>能看出问在哪了么？</p>
+<p>C++运行时不能保证这些步骤按顺序执行。例如，处理器可能会将步骤重新排序为序列1、3和2。因此，在第一步中分配内存，在第二步中实例引用一个非初始化的单例。如果此时另一个线程<code>t2</code>试图访问该单例对象并进行指针比较，则比较成功。其结果是线程<code>t2</code>引用了一个非初始化的单例，并且程序行为未定义。</p>
+<h2 id="性能测试"><a class="header" href="#性能测试">性能测试</a></h2>
+<p>我要测试访问单例对象的开销。对引用测试时，使用了一个单例对象，连续访问4000万次。当然，第一个访问的线程会初始化单例对象，四个线程的访问是并发进行的。我只对性能数字感兴趣，因此我汇总了这四个线程的执行时间。使用一个带范围(<code>Meyers Singleton</code>)的静态变量、一个锁<code>std::lock_guard</code>、函数<code>std::call_once</code>和<code>std::once_flag</code>以及具有顺序一致和获取-释放语义的原子变量进行性能测试。</p>
+<p>程序在两台电脑上运行。读过上一节的朋友肯定知道，我的Linux(GCC)电脑上有四个核心，而我的Windows(cl.exe)电脑只有两个核心，用最大级别的优化来编译程序。相关设置的详细信息，参见本章的开头。</p>
+<p>接下来，需要回答两个问题：</p>
+<ol>
+<li>各种单例实现的性能具体是多少?</li>
+<li>Linux (GCC)和Windows (cl.exe)之间的差别是否显著?</li>
+</ol>
+<p>最后，我会将所有数字汇总到一个表中。</p>
+<p>展示各种多线程实现的性能数字前，先来看一下串行的代码。C++03标准中，<code>getInstance</code>方法线程不安全。</p>
+<pre><code class="language-c++">// singletonSingleThreaded.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+
+constexpr auto tenMill = 10000000;
+
+class MySingLeton {
+public:
+  static MySingLeton&amp; getInstance() {
+    static MySingLeton instance;
+    volatile int dummy{};
+    return instance;
+  }
+private:
+  MySingLeton() = default;
+  ~MySingLeton() = default;
+  MySingLeton(const MySingLeton&amp;) = delete;
+  MySingLeton&amp; operator=(const MySingLeton&amp;) = delete;
+
+};
+
+int main() {
+
+  constexpr auto fourtyMill = 4 * tenMill;
+
+  const auto begin = std::chrono::system_clock::now();
+
+  for (size_t i = 0; i &lt;= fourtyMill; ++i) {
+    MySingLeton::getInstance();
+  }
+
+  const auto end = std::chrono::system_clock::now() - begin;
+
+  std::cout &lt;&lt; std::chrono::duration&lt;double&gt;(end).count() &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>作为参考实现，我使用了以<a href="https://en.wikipedia.org/wiki/Scott_Meyers">Scott Meyers</a>命名的Meyers单例。这个实现的优雅之处在于，第11行中的<code>singleton</code>对象是一个带有作用域的静态变量，实例只初始化一次，而初始化发生在第一次执行静态方法<code>getInstance</code>(第10 - 14行)时。</p>
+<blockquote>
+<p>使用volatile声明变量dummy</p>
+<p>当我用最高级别的优化选项来编译程序时，编译器删除了第30行中的<code>MySingleton::getInstance()</code>，因为调用不调用都没有效果，我得到了非常快的执行，但结果错误的性能数字。通过使用<code>volatile</code>声明变量<code>dummy</code>(第12行)，明确告诉编译器不允许优化第30行中的<code>MySingleton::getInstance()</code>调用。</p>
+</blockquote>
+<p>下面是单线程用例的性能结果。</p>
+<p><img src="../../../images/detail/Case-Studies/31.png" alt="" /></p>
+<p>C++11中，Meyers单例已经线程安全了。</p>
+<h2 id="线程安全的meyers单例"><a class="header" href="#线程安全的meyers单例">线程安全的Meyers单例</a></h2>
+<p>C++11标准中，保证以线程安全的方式初始化具有作用域的静态变量。Meyers单例使用就是有作用域的静态变量，这样就成了！剩下要做的工作，就是为多线程用例重写Meyers单例。</p>
+<p>多线程中的Meyers单例</p>
+<pre><code class="language-c++">// singletonMeyers.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;future&gt;
+
+constexpr auto tenMill = 10000000;
+
+class MySingLeton {
+public:
+  static MySingLeton&amp; getInstance() {
+    static MySingLeton instance;
+    volatile int dummy{};
+    return instance;
+  }
+private:
+  MySingLeton() = default;
+  ~MySingLeton() = default;
+  MySingLeton(const MySingLeton&amp;) = delete;
+  MySingLeton&amp; operator=(const MySingLeton&amp;) = delete;
+
+};
+
+std::chrono::duration&lt;double&gt; getTime() {
+
+  auto begin = std::chrono::system_clock::now();
+  for (size_t i = 0; i &lt;= tenMill; ++i) {
+    MySingLeton::getInstance();
+  }
+  return std::chrono::system_clock::now() - begin;
+
+}
+
+int main() {
+
+  auto fut1 = std::async(std::launch::async, getTime);
+  auto fut2 = std::async(std::launch::async, getTime);
+  auto fut3 = std::async(std::launch::async, getTime);
+  auto fut4 = std::async(std::launch::async, getTime);
+
+  const auto total = fut1.get() + fut2.get() + fut3.get() + fut4.get();
+
+  std::cout &lt;&lt; total.count() &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>函数<code>getTime</code>中使用单例对象(第24 - 32行)，函数由第36 - 39行中的四个promise来执行，相关future的结果汇总在第41行。</p>
+<p><img src="../../../images/detail/Case-Studies/32.png" alt="" /></p>
+<p>我们来看看最直观的方式——锁。</p>
+<h2 id="stdlock_guard"><a class="header" href="#stdlock_guard">std::lock_guard</a></h2>
+<p><code>std::lock_guard</code>中的互斥量，保证了能以线程安全的方式初始化单例对象。</p>
+<pre><code class="language-c++">// singletonLock.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;future&gt;
+#include &lt;mutex&gt;
+
+constexpr auto tenMill = 10000000;
+
+std::mutex myMutex;
+
+class MySingleton {
+public:
+  static MySingleton&amp; getInstance() {
+    std::lock_guard&lt;std::mutex&gt; myLock(myMutex);
+    if (!instance) {
+      instance = new MySingleton();
+    }
+    volatile int dummy{};
+    return *instance;
+  }
+private:
+  MySingleton() = default;
+  ~MySingleton() = default;
+  MySingleton(const MySingleton&amp;) = delete;
+  MySingleton&amp; operator=(const MySingleton&amp;) = delete;
+
+  static MySingleton* instance;
+};
+
+MySingleton* MySingleton::instance = nullptr;
+
+std::chrono::duration&lt;double&gt; getTime() {
+
+  auto begin = std::chrono::system_clock::now();
+  for (size_t i = 0; i &lt;= tenMill; ++i) {
+    MySingleton::getInstance();
+  }
+  return std::chrono::system_clock::now() - begin;
+
+}
+
+int main() {
+
+  auto fut1 = std::async(std::launch::async, getTime);
+  auto fut2 = std::async(std::launch::async, getTime);
+  auto fut3 = std::async(std::launch::async, getTime);
+  auto fut4 = std::async(std::launch::async, getTime);
+
+  const auto total = fut1.get() + fut2.get() + fut3.get() + fut4.get();
+
+  std::cout &lt;&lt; total.count() &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>这种方式非常的慢。</p>
+<p><img src="../../../images/detail/Case-Studies/33.png" alt="" /></p>
+<p>线程安全单例模式的下一个场景，基于多线程库，并结合<code>std::call_once</code>和<code>std::once_flag</code>。</p>
+<h2 id="使用stdonce_flag的stdcall_once"><a class="header" href="#使用stdonce_flag的stdcall_once">使用std::once_flag的std::call_once</a></h2>
+<p><code>std::call_once</code>和<code>std::once_flag</code>可以一起使用，以线程安全的方式执行可调用对象。</p>
+<pre><code class="language-c++">// singletonCallOnce.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;future&gt;
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+
+constexpr auto tenMill = 10000000;
+
+class MySingleton {
+public:
+  static MySingleton&amp; getInstance() {
+    std::call_once(initInstanceFlag, &amp;MySingleton::initSingleton);
+    volatile int dummy{};
+    return *instance;
+  }
+private:
+  MySingleton() = default;
+  ~MySingleton() = default;
+  MySingleton(const MySingleton&amp;) = delete;
+  MySingleton&amp; operator=(const MySingleton&amp;) = delete;
+
+  static MySingleton* instance;
+  static std::once_flag initInstanceFlag;
+
+  static void initSingleton() {
+    instance = new MySingleton;
+  }
+};
+
+MySingleton* MySingleton::instance = nullptr;
+std::once_flag MySingleton::initInstanceFlag;
+
+std::chrono::duration&lt;double&gt; getTime() {
+
+  auto begin = std::chrono::system_clock::now();
+  for (size_t i = 0; i &lt;= tenMill; ++i) {
+    MySingleton::getInstance();
+  }
+  return std::chrono::system_clock::now() - begin;
+
+}
+
+int main() {
+
+  auto fut1 = std::async(std::launch::async, getTime);
+  auto fut2 = std::async(std::launch::async, getTime);
+  auto fut3 = std::async(std::launch::async, getTime);
+  auto fut4 = std::async(std::launch::async, getTime);
+
+  const auto total = fut1.get() + fut2.get() + fut3.get() + fut4.get();
+
+  std::cout &lt;&lt; total.count() &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>下面是具体的性能数字：</p>
+<p><img src="../../../images/detail/Case-Studies/34.png" alt="" /></p>
+<p>继续使用原子变量来实现线程安全的单例。</p>
+<h2 id="原子变量"><a class="header" href="#原子变量">原子变量</a></h2>
+<p>使用原子变量，让实现变得更具有挑战性，我甚至可以为原子操作指定内存序。基于前面提到的双重检查锁定模式，实现了以下两个线程安全的单例。</p>
+<p><strong>顺序一致语义</strong></p>
+<p>第一个实现中，使用了原子操作，但没有显式地指定内存序，所以默认是顺序一致的。</p>
+<pre><code class="language-c++">// singletonSequentialConsistency.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;future&gt;
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+
+constexpr auto tenMill = 10000000;
+
+class MySingleton {
+public:
+  static MySingleton&amp; getInstance() {
+    MySingleton* sin = instance.load(); 
+    if (!sin) {
+      std::lock_guard&lt;std::mutex&gt;myLock(myMutex);
+      sin = instance.load(std::memory_order_relaxed);
+      if (!sin) {
+        sin = new MySingleton();
+        instance.store(sin);
+      }
+    }
+    volatile int dummy{};
+    return *instance;
+  }
+private:
+  MySingleton() = default;
+  ~MySingleton() = default;
+  MySingleton(const MySingleton&amp;) = delete;
+  MySingleton&amp; operator=(const MySingleton&amp;) = delete;
+
+  static std::atomic&lt;MySingleton*&gt; instance;
+  static std::mutex myMutex;
+};
+
+
+std::atomic&lt;MySingleton*&gt; MySingleton::instance;
+std::mutex MySingleton::myMutex;
+
+std::chrono::duration&lt;double&gt; getTime() {
+
+  auto begin = std::chrono::system_clock::now();
+  for (size_t i = 0; i &lt;= tenMill; ++i) {
+    MySingleton::getInstance();
+  }
+  return std::chrono::system_clock::now() - begin;
+
+}
+
+int main() {
+
+  auto fut1 = std::async(std::launch::async, getTime);
+  auto fut2 = std::async(std::launch::async, getTime);
+  auto fut3 = std::async(std::launch::async, getTime);
+  auto fut4 = std::async(std::launch::async, getTime);
+
+  const auto total = fut1.get() + fut2.get() + fut3.get() + fut4.get();
+
+  std::cout &lt;&lt; total.count() &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>与双重检查锁定模式不同，由于原子操作的默认是顺序一致的，现在可以保证第19行中的<code>sin = new MySingleton()</code>出现在第20行<code>instance.store(sin)</code>之前。看一下第17行：<code>sin = instance.load(std::memory_order_relax)</code>，因为另一个线程可能会在第14行第一个load和第16行锁的使用之间，介入并更改instance的值，所以这里的load是必要的。</p>
+<p><img src="../../../images/detail/Case-Studies/35.png" alt="" /></p>
+<p>我们进一步的对程序进行优化。</p>
+<p><strong>获取-释放语义</strong></p>
+<p>仔细看看之前使用原子实现单例模式的线程安全实现。第14行中单例的加载(或读取)是一个获取操作，第20行中存储(或写入)是一个释放操作。这两种操作都发生在同一个原子上，所以不需要顺序一致。C++11标准保证释放与获取操作在同一原子上同步，并建立顺序约束。也就是，释放操作之后，不能移动之前的所有读和写操作，并且在获取操作之前不能移动之后的所有读和写操作。</p>
+<p>这些都是实现线程安全单例的最低保证。</p>
+<pre><code class="language-c++">// singletonAcquireRelease.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;future&gt;
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+
+constexpr auto tenMill = 10000000;
+
+class MySingleton {
+public:
+  static MySingleton&amp; getInstance() {
+    MySingleton* sin = instance.load(std::memory_order_acquire);
+    if (!sin) {
+      std::lock_guard&lt;std::mutex&gt;myLock(myMutex);
+      sin = instance.load(std::memory_order_release);
+      if (!sin) {
+        sin = new MySingleton();
+        instance.store(sin);
+      }
+    }
+    volatile int dummy{};
+    return *instance;
+  }
+private:
+  MySingleton() = default;
+  ~MySingleton() = default;
+  MySingleton(const MySingleton&amp;) = delete;
+  MySingleton&amp; operator=(const MySingleton&amp;) = delete;
+
+  static std::atomic&lt;MySingleton*&gt; instance;
+  static std::mutex myMutex;
+};
+
+
+std::atomic&lt;MySingleton*&gt; MySingleton::instance;
+std::mutex MySingleton::myMutex;
+
+std::chrono::duration&lt;double&gt; getTime() {
+
+  auto begin = std::chrono::system_clock::now();
+  for (size_t i = 0; i &lt;= tenMill; ++i) {
+    MySingleton::getInstance();
+  }
+  return std::chrono::system_clock::now() - begin;
+
+}
+
+int main() {
+
+  auto fut1 = std::async(std::launch::async, getTime);
+  auto fut2 = std::async(std::launch::async, getTime);
+  auto fut3 = std::async(std::launch::async, getTime);
+  auto fut4 = std::async(std::launch::async, getTime);
+
+  const auto total = fut1.get() + fut2.get() + fut3.get() + fut4.get();
+
+  std::cout &lt;&lt; total.count() &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>获取-释放语义与顺序一致内存序有相似的性能。</p>
+<p><img src="../../../images/detail/Case-Studies/36.png" alt="" /></p>
+<p>x86体系结构中这并不奇怪，这两个内存顺序非常相似。我们可能会在<a href="https://en.wikipedia.org/wiki/ARM_architecture">ARMv7</a>或<a href="https://en.wikipedia.org/wiki/PowerPC">PowerPC架构</a>上的看到性能数字上的明显差异。对这方面比较感兴趣的话，可以阅读Jeff Preshings的博客<a href="http://preshing.com">Preshing on Programming</a>，那里有更详细的内容。</p>
+<p>##各种线程安全单例实现的性能表现总结</p>
+<p>数字很明确，Meyers 单例模式是最快的。它不仅是最快的，也是最容易实现的。如预期的那样，Meyers单例模式比原子模式快两倍。锁的量级最重，所以最慢。<code>std::call_once</code>在Windows上比在Linux上慢得多。</p>
+<table><thead><tr><th align="center">操作系统(编译器)</th><th align="center">单线程</th><th align="center">Meyers单例</th><th align="center"><code>std::lock_guard</code></th><th align="center"><code>std::call_once</code></th><th align="center">顺序一致</th><th align="center">获取-释放语义</th></tr></thead><tbody>
+<tr><td align="center">Linux(GCC)</td><td align="center">0.03</td><td align="center">0.04</td><td align="center">12.48</td><td align="center">0.22</td><td align="center">0.09</td><td align="center">0.07</td></tr>
+<tr><td align="center">Windows(cl.exe)</td><td align="center">0.02</td><td align="center">0.03</td><td align="center">15.48</td><td align="center">1.74</td><td align="center">0.07</td><td align="center">0.07</td></tr>
+</tbody></table>
+<p>关于这些数字，我想强调一点：这是四个线程的性能总和。因为Meyers单例模式几乎与单线程实现一样快，所以并发Meyers单例模式具有最佳的性能。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/The-Details/Case-Studies/4.1-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/The-Details/Case-Studies/4.3-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/The-Details/Case-Studies/4.1-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/The-Details/Case-Studies/4.3-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

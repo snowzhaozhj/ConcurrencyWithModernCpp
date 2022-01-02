@@ -1,0 +1,429 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>活动对象 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html" class="active"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="活动对象"><a class="header" href="#活动对象">活动对象</a></h1>
+<p>活动对象模式将执行与对象的成员函数解耦，每个对象会留在在自己的控制线程中。其目标是通过使用异步方法，处理调度器的请求，从而触发并发。维基百科：<a href="https://en.wikipedia.org/wiki/Active_object">Active object</a>。所以，这种模式也称为并发对象模式。</p>
+<p>客户端的调用会转到代理，代理表现为活动对象的接口。服务提供活动对象的实现，并在单独的线程中运行。代理在运行时将客户端的调用转换为对服务的调用，调度程序将方法加入到激活列表中。调度器与服务在相同的线程中活动，并将方法调用从激活列表中取出，再将它们分派到相应的服务上。最后，客户端可以通过future从代理处获取最终的结果。</p>
+<h2 id="组件"><a class="header" href="#组件">组件</a></h2>
+<p>活动对象模式由六个组件组成:</p>
+<ol>
+<li>代理为活动对象的可访问方法提供接口。代理将触发激活列表的方法，并请求对象的构造。并且，代理和客户端运行在相同的线程中。</li>
+<li>方法请求类定义了执行活动对象的接口。</li>
+<li>激活列表的目标是维护挂起的请求，激活列表将客户端线程与活动对象线程解耦。代理对入队请求的进行处理，而调度器将请求移出队列。</li>
+<li>调度器与代理可在不同的线程中运行。调度器会在活动对象的线程中运行，并决定接下来执行激活列表中的哪个请求。</li>
+<li>可以通过服务实现活动对象，并在活动对象的线程中运行，服务也支持代理接口。</li>
+<li>future是由代理创造的，客户端可以从future上获取活动对象调用的结果。客户端可以安静等待结果，也可以对结果进行轮询。</li>
+</ol>
+<p>下面的图片显示了消息的顺序。</p>
+<p><img src="../../../images/Patterns/Concurrent-Architecture/1.png" alt="" /></p>
+<blockquote>
+<p><strong>代理</strong></p>
+<p>代理设计模式是<a href="https://en.wikipedia.org/wiki/Design_Patterns">《设计模式:可重用的面向对象软件的元素》</a>中的经典模式，代理是其他对象的代表。典型的代理可以是远程代理<a href="https://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture">CORBA</a>、安全代理、虚拟代理或智能指针，如<code>std::shared_ptr</code>。每个代理会为它所代表的对象添加额外的功能。远程代理代表远程对象，并使客户端产生本地对象的错觉。安全代理通过对数据进行加密和解密，将不安全的连接转换为安全的连接。虚拟代理以惰性的方式封装对象的创建，智能指针将接管底层内存的生存期。</p>
+<p><img src="../../../images/Patterns/Concurrent-Architecture/2.png" alt="" /></p>
+<ul>
+<li>代理具有与RealSubject相同的接口，用于管理引用，还有subject的生命周期。</li>
+<li>与Subject具有相同的接口，如代理和RealSubject。</li>
+<li>RealSubject用于提供具体的功能。</li>
+</ul>
+<p>关于代理模式的更多细节，可以参考<a href="https://en.wikipedia.org/wiki/Proxy_pattern">Wikipedia</a>页面。</p>
+</blockquote>
+<h2 id="优点和缺点"><a class="header" href="#优点和缺点">优点和缺点</a></h2>
+<p>介绍Active Object模式的最小实现前，先了解一下它的优点和缺点。</p>
+<ul>
+<li>优点:
+<ul>
+<li>同步只需要在活动对象的线程上进行，不需要在客户端的线程上进行。</li>
+<li>客户端(用户)和服务器(实现者)之间的解耦，同步的挑战则在实现者的一边。</li>
+<li>由于客户端为异步请求，所以系统的吞吐量提高了，从而调用处理密集型方法不会阻塞整个系统。</li>
+<li>调度器可以实现各种策略来执行挂起请求，因此可以按不同的顺序执行入队请求。</li>
+</ul>
+</li>
+<li>缺点:
+<ul>
+<li>如果请求的粒度太细，则活动对象模式(如代理、激活列表和调度器)的性能开销可能过大。</li>
+<li>由于调度器的调度策略和操作系统的调度互相影响，调试活动对象模式通常非常困难，尤其是以不同顺序执行请求的情况下。</li>
+</ul>
+</li>
+</ul>
+<h2 id="具体实现"><a class="header" href="#具体实现">具体实现</a></h2>
+<p>下面的示例展示了活动对象模式的简单实现。我没有定义一个请求，这应该由代理和服务实现。而且，当请求调度程序执行下一个请求时，服务应该只执行这个请求。</p>
+<p>所涉及的类型为<code>future&lt;vector&lt;future&lt;pair&lt;bool, int&gt;&gt;&gt;&gt;</code>，这个类型的标识有点长。为了提高可读性，我使用了声明(第16 - 37行)。</p>
+<pre><code class="language-c++">// activeObject.cpp
+
+#include &lt;algorithm&gt;
+#include &lt;deque&gt;
+#include &lt;functional&gt;
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;mutex&gt;
+#include &lt;numeric&gt;
+#include &lt;random&gt;
+#include &lt;thread&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+
+using std::async;
+using std::boolalpha;
+using std::cout;
+using std::deque;
+using std::distance;
+using std::endl;
+using std::for_each;
+using std::find_if;
+using std::future;
+using std::lock_guard;
+using std::make_move_iterator;
+using std::make_pair;
+using std::move;
+using std::mt19937;
+using std::mutex;
+using std::packaged_task;
+using std::pair;
+using std::random_device;
+using std::sort;
+using std::thread;
+using std::uniform_int_distribution;
+using std::vector;
+
+class IsPrime {
+public:
+  pair&lt;bool, int&gt; operator()(int i) {
+    for (int j = 2; j * j &lt;= i; ++j) {
+      if (i % j == 0)return std::make_pair(false, i);
+    }
+    return std::make_pair(true, i);
+  }
+};
+
+class ActivaeObject {
+public:
+
+  future&lt;pair&lt;bool, int&gt;&gt; enqueueTask(int i) {
+    IsPrime isPrime;
+    packaged_task&lt;pair&lt;bool, int&gt;(int)&gt; newJob(isPrime);
+    auto isPrimeFuture = newJob.get_future();
+    auto pair = make_pair(move(newJob), i);
+    {
+      lock_guard&lt;mutex&gt; lockGuard(activationListMutex);
+      activationList.push_back(move(pair));
+    }
+    return isPrimeFuture;
+  }
+
+  void run() {
+    thread servant([this] {
+      while (!isEmpty()) {
+        auto myTask = dequeueTask();
+        myTask.first(myTask.second);
+      }
+      });
+    servant.join();
+  }
+
+private:
+
+  pair&lt;packaged_task&lt;pair&lt;bool, int&gt;(int)&gt;, int&gt; dequeueTask() {
+    lock_guard&lt;mutex&gt; lockGuard(activationListMutex);
+    auto myTask = std::move(activationList.front());
+    activationList.pop_front();
+    return myTask;
+  }
+
+  bool isEmpty() {
+    lock_guard&lt;mutex&gt; lockGuard(activationListMutex);
+    auto empty = activationList.empty();
+    return empty;
+  }
+
+  deque&lt;pair&lt;packaged_task&lt;pair&lt;bool, int&gt;(int)&gt;, int &gt;&gt; activationList;
+  mutex activationListMutex;
+};
+
+vector&lt;int&gt; getRandNumber(int number) {
+  random_device seed;
+  mt19937 engine(seed());
+  uniform_int_distribution&lt;&gt; dist(1000000, 1000000000);
+  vector&lt;int&gt; numbers;
+  for (long long i = 0; i &lt; number; ++i) numbers.push_back(dist(engine));
+  return numbers;
+}
+
+future&lt;vector&lt;future&lt;pair&lt;bool, int&gt;&gt;&gt;&gt; getFutures(ActivaeObject&amp; activeObject,
+  int numberPrimes) {
+  return async([&amp;activeObject, numberPrimes] {
+    vector&lt;future&lt;pair&lt;bool, int&gt;&gt;&gt; futures;
+    auto randNumbers = getRandNumber(numberPrimes);
+    for (auto numb : randNumbers) {
+      futures.push_back(activeObject.enqueueTask(numb));
+    }
+    return futures;
+    });
+}
+
+
+int main() {
+
+  cout &lt;&lt; boolalpha &lt;&lt; endl;
+
+  ActivaeObject activeObject;
+
+  // a few clients enqueue work concurrently
+  auto client1 = getFutures(activeObject, 1998);
+  auto client2 = getFutures(activeObject, 2003);
+  auto client3 = getFutures(activeObject, 2011);
+  auto client4 = getFutures(activeObject, 2014);
+  auto client5 = getFutures(activeObject, 2017);
+
+  // give me the futures
+  auto futures = client1.get();
+  auto futures2 = client2.get();
+  auto futures3 = client3.get();
+  auto futures4 = client4.get();
+  auto futures5 = client5.get();
+
+  // put all futures together
+  futures.insert(futures.end(), make_move_iterator(futures2.begin()),
+    make_move_iterator(futures2.end()));
+
+  futures.insert(futures.end(), make_move_iterator(futures3.begin()),
+    make_move_iterator(futures3.end()));
+
+  futures.insert(futures.end(), make_move_iterator(futures4.begin()),
+    make_move_iterator(futures4.end()));
+
+  futures.insert(futures.end(), make_move_iterator(futures5.begin()),
+    make_move_iterator(futures5.end()));
+
+  // run the promises
+  activeObject.run();
+
+  // get the results from the futures
+  vector&lt;pair&lt;bool, int&gt;&gt; futResults;
+  futResults.reserve(futResults.size());
+  for (auto&amp; fut : futures)futResults.push_back(fut.get());
+
+  sort(futResults.begin(), futResults.end());
+
+  // separate the primes from the non-primes
+  auto prIt = find_if(futResults.begin(), futResults.end(),
+    [](pair&lt;bool, int&gt;pa) {return pa.first == true; });
+
+  cout &lt;&lt; &quot;Number primes: &quot; &lt;&lt; distance(prIt, futResults.end()) &lt;&lt; endl;
+  cout &lt;&lt; &quot;Primes: &quot; &lt;&lt; endl;
+  for_each(prIt, futResults.end(), [](auto p) {cout &lt;&lt; p.second &lt;&lt; &quot; &quot;; });
+
+  cout &lt;&lt; &quot;\n\n&quot;;
+
+  cout &lt;&lt; &quot;Number no primes: &quot; &lt;&lt; distance(futResults.begin(), prIt) &lt;&lt; endl;
+  cout &lt;&lt; &quot;No primes: &quot; &lt;&lt; endl;
+  for_each(futResults.begin(), prIt, [](auto p) {cout &lt;&lt; p.second &lt;&lt; &quot; &quot;; });
+
+  cout &lt;&lt; endl;
+
+}
+</code></pre>
+<p>示例的基本思想是，客户端可以在激活列表上并发地安排作业。线程的工作是确定哪些数是质数。激活列表是活动对象的一部分，而活动对象在一个单独的线程上进行入队操作，并且客户端可以在激活列表中查询作业的结果。</p>
+<p>程序的详情：5个客户端通过<code>getFutures</code>将工作(第121 - 126行)入队到<code>activeObject</code>。<code>numberPrimes</code>中的数字是1000000到1000000000之间(第96行)的随机数，将这些数值放入<code>vector&lt;future&lt;pair&lt;bool, int&gt;&gt; </code>中。<code>future&lt;pair&lt;bool, int&gt;</code>持有一个<code>bool</code>和<code>int</code>对，其中<code>bool</code>表示<code>int</code>值是否是质数。再看看第108行：<code>future .push_back(activeObject.enqueueTask(numb))</code>。此调用将触发新作业进入激活列表的队列，所有对激活列表的调用都必须受到保护，这里激活列表是一个promise队列(第89行)：<code>deque&lt;pair&lt;packaged_task&lt;pair&lt;bool, int&gt;(int)&gt;, int &gt;&gt; </code>。</p>
+<p>每个promise在调用执行函数对象<code>IsPrime</code>(第39 - 47行)时，会返回一个<code>bool</code>和<code>int</code>对。现在，工作包已经准备好了，开始计算吧。所有客户端在第129 - 133行中返回关联future的句柄，并把所有的future放在一起(第136 - 146行)，这样会使工作更加容易。第149行中的调用<code>activeObject.run()</code>启动执行。<code>run</code>(第64 - 72行)启动单独的线程，并执行promises(第68行)，直到执行完所有作业(第66行)。<code>isEmpty</code>(第83 - 87行)确定队列是否为空，<code>dequeTask</code>会返回一个新任务。通过在每个<code>future</code>上调用<code>futResults.push_back(fut.get())</code>(第154行)，所有结果都会推送到<code>futResults</code>上。第156行对成对的向量进行排序:<code>vector&lt;pair&lt;bool, int&gt;&gt;</code>。其余代码则是给出了计算结果，第159行中的迭代器<code>prIt</code>将第一个迭代器指向一个素数对。</p>
+<p>程序打印素数数量为<code>distance(prIt, futResults.end())</code>(第162行)，并(第164行)逐一显示。</p>
+<p><img src="../../../images/Patterns/Concurrent-Architecture/3.png" alt="" /></p>
+<h2 id="拓展阅读"><a class="header" href="#拓展阅读">拓展阅读</a></h2>
+<ul>
+<li><a href="https://www.dre.vanderbilt.edu/%7Eschmidt/POSA/POSA2/">Pattern-Oriented Software Architecture: Patterns for Concurrent and Networked Objects</a></li>
+<li><a href="http://www.drdobbs.com/parallel/prefer-using-active-objects-instead-of-n/225700095">Prefer Using Active Object instead of Naked Thread (Herb Sutter)</a></li>
+<li><a href="https://github.com/lightful/syscpp/">Active Object implementation in C++11</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

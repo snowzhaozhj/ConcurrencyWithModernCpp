@@ -1,0 +1,712 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>时间库 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../favicon.svg">
+                        <link rel="shortcut icon" href="../../favicon.png">
+                <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+                <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../content/Further-Information/11.2-chinese.html" class="active"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="时间库"><a class="header" href="#时间库">时间库</a></h1>
+<p>如果不写一些关于时间库的内容，那么使用现代C++处理并发性的书就显得不那么完整。时间库由三个部分组成：时间点、时间段和时钟。</p>
+<h2 id="时间点时间段和时钟"><a class="header" href="#时间点时间段和时钟">时间点、时间段和时钟</a></h2>
+<p>时间点：由它的起始点(所谓的纪元<a href="https://en.wikipedia.org/wiki/Epoch_(reference_date)">epoch</a>)和从纪元起经过的时间(表示为时间段)来表示。</p>
+<p>时间段：是两个时间点之间的差值，它用时间刻度的数量来衡量。</p>
+<p>时钟：由一个起点和一个时间刻度组成，此信息可以计算当前时间。</p>
+<p>可以比较时间点。将时间段添加到某个时间点时，可以得到一个新的时间点。时钟周期是测量时间时钟的准确性。耶稣的出生在我的文明中作为一个开始的时间点，一年是一个典型的时间周期。</p>
+<p><a href="https://en.wikipedia.org/wiki/Dennis_Ritchie">Dennis Ritchie</a>，C语言的创造者于2011年去世，我用他的一生来说明这三个概念。为了简单起见，这里只使用年份。</p>
+<p>这是他的一生。</p>
+<p><img src="../../images/Further-Information/The-Time-Library/1.png" alt="" /></p>
+<p>耶稣的诞生是我们时代的起点，也就是纪元元年。1941年和2011年的时间是由纪元源时间点和时间段来定义的。从2011年减去1941年，得到的是时间段。所以，Dennis Ritchie去世时，享年70岁。</p>
+<p>我们继续研究时间库的组件。</p>
+<h2 id="时间点"><a class="header" href="#时间点">时间点</a></h2>
+<p>时间点<code>std::chrono::time_point</code>由起始点(<code>epoch</code>)和附加的时间段定义。类模板由两个组件：时钟和时间段。默认情况下，时间段是从时钟类派生出来的。</p>
+<p><code>std::chrono::time_point</code>类模板</p>
+<pre><code class="language-c++">template&lt;
+  class Clock,
+  class Duration= typename Clock::duration
+&gt;
+class time_point;
+</code></pre>
+<p>对于时钟来说，有以下四个特殊的时间点:</p>
+<ul>
+<li>epoch: 时钟的起点。</li>
+<li>now: 当前时间。</li>
+<li>min: 时钟可以统计的最小时间点。</li>
+<li>max: 时钟可以拥有的最大时间点。</li>
+</ul>
+<p>最小和最大时间点的准确性取决于使用的时钟：<code>std::system::system_clock</code>, <code>std::chrono::steady_clock</code>或<code>std::chrono::high_resolution_clock</code>。</p>
+<p>C++不保证时钟的准确性、起始点，还有有效时间范围。<code>std::chrono::system_clock</code>的起始时间通常是1970年1月1日，也就是所谓的<a href="https://en.wikipedia.org/wiki/Unix_time">UNIX元年</a>，而<code>std::chrono::high_resolution_clock</code>具有最高的统计精度。</p>
+<h3 id="从时间点到日历时间"><a class="header" href="#从时间点到日历时间">从时间点到日历时间</a></h3>
+<p>通过<code>std::chrono::system_clock::to_time_t</code>可以将一个内部使用<code>std::chrono::system_clock</code>的时间点，转换成一个类型为<code>std::time_t</code>的对象。通过函数<a href="http://en.cppreference.com/w/cpp/chrono/c/gmtime"><code>std::gmtime</code></a>对<code>std::time_t</code>对象进行进一步转换，可以得到以<a href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">世界统一时间</a>(UTC)表示的日历时间。最后，可以使用这个日历时间作为函数<a href="http://en.cppreference.com/w/cpp/chrono/c/asctime"><code>std::asctime</code></a>的输入，以获得日历时间的文本表示。</p>
+<p>显示日历时间</p>
+<pre><code class="language-c++">// timepoint.cpp
+
+#include &lt;chrono&gt;
+#include &lt;ctime&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  std::chrono::time_point&lt;std::chrono::system_clock&gt; sysTimePoint;
+  std::time_t tp = std::chrono::system_clock::to_time_t(sysTimePoint);
+  std::string sTp = std::asctime(std::gmtime(&amp;tp));
+  std::cout &lt;&lt; &quot;Epoch: &quot; &lt;&lt; sTp &lt;&lt; std::endl;
+
+  tp = std::chrono::system_clock::to_time_t(sysTimePoint.min());
+  sTp = std::asctime(std::gmtime(&amp;tp));
+  std::cout &lt;&lt; &quot;Time min: &quot; &lt;&lt; sTp &lt;&lt; std::endl;
+
+  tp = std::chrono::system_clock::to_time_t(sysTimePoint.max());
+  sTp = std::asctime(std::gmtime(&amp;tp));
+  std::cout &lt;&lt; &quot;Time max: &quot; &lt;&lt; sTp &lt;&lt; std::endl;
+
+  sysTimePoint = std::chrono::system_clock::now();
+  tp = std::chrono::system_clock::to_time_t(sysTimePoint);
+  sTp = std::asctime(std::gmtime(&amp;tp));
+  std::cout &lt;&lt; &quot;Time now: &quot; &lt;&lt; sTp &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>程序会显示<code>std::chrono::system_clock</code>的有效范围。我的Linux PC上，<code>std::chrono::system_clock</code>以UNIX元年作为起始点，时间点可以在1677年到2262年之间。</p>
+<p><img src="../../images/Further-Information/The-Time-Library/2.png" alt="" /></p>
+<p>可以将时间段添加到时间点上，以获得新的时间点。在有效时间范围之外添加时间段，是未定义行为。</p>
+<h3 id="跨越有效的时间范围"><a class="header" href="#跨越有效的时间范围">跨越有效的时间范围</a></h3>
+<p>下面的示例使用当前时间并加减1000年。为了简单起见，我忽略闰年，假设一年有365天。</p>
+<pre><code class="language-c++">// timepointAddition.cpp
+
+#include &lt;chrono&gt;
+#include &lt;ctime&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std::chrono;
+using namespace std;
+
+string timePointAsString(const time_point&lt;system_clock&gt;&amp; timePoint) {
+  time_t tp = system_clock::to_time_t(timePoint);
+  return asctime(gmtime(&amp;tp));
+}
+
+int main() {
+
+  cout &lt;&lt; endl;
+
+  time_point&lt;system_clock&gt; nowTimePoint = system_clock::now();
+
+  cout &lt;&lt; &quot;Now: &quot; &lt;&lt; timePointAsString(nowTimePoint) &lt;&lt; endl;
+
+  const auto thousandYears = hours(24 * 365 * 1000);
+  time_point&lt;system_clock&gt; historyTimePoint = nowTimePoint - thousandYears;
+  cout &lt;&lt; &quot;Now - 1000 years: &quot; &lt;&lt; timePointAsString(historyTimePoint) &lt;&lt; endl;
+
+  time_point&lt;system_clock&gt; futureTimePoint = nowTimePoint + thousandYears;
+  cout &lt;&lt; &quot;Now + 1000 years: &quot; &lt;&lt; timePointAsString(futureTimePoint) &lt;&lt; endl;
+
+}
+</code></pre>
+<p>程序的输出显示，第25行和第28行中时间点的溢出，将导致错误的结果。从现在的时间点减去1000年，获得了将来的时间点；在当前时间点上加上1000年，得到了过去的时间点。</p>
+<p><img src="../../images/Further-Information/The-Time-Library/3.png" alt="" /></p>
+<p>两个时间点之间的差值是时间段。时间段支持基本的算法，可以在不同的时间刻度下进行显示。</p>
+<h2 id="时间段"><a class="header" href="#时间段">时间段</a></h2>
+<p><code>std::chrono::duration</code>是一个类模板， <code>Rep</code>类型的计次数和计次周期组成。</p>
+<p><code>std::chrono::duration</code>类模板</p>
+<pre><code class="language-c++">template&lt;
+  class Rep,
+  class Period = std::ratio&lt;1&gt;
+&gt; class duration;
+</code></pre>
+<p>计次周期默认长度为<code>std::ratio&lt;1&gt;</code>。<code>std::ratio&lt;1&gt;</code>表示1秒，也可以写成<code>std::ratio&lt; 1,1 &gt;</code>，以此类推，<code>std::ratio&lt;60&gt;</code>是一分钟，<code>std::ratio&lt;1,1000&gt; </code>是1毫秒。当<code>Rep</code>类型是浮点数时，可以使用它来保存时间刻度的分数形式。</p>
+<p>C++11预定义了几个重要的时间单位:</p>
+<pre><code class="language-c++">typedef duration&lt;signed int, nano&gt; nanoseconds;
+typedef duration&lt;signed int, micro&gt; microseconds;
+typedef duration&lt;signed int, milli&gt; milliseconds;
+typedef duration&lt;signed int&gt; seconds;
+typedef duration&lt;signed int, ratio&lt; 60&gt;&gt; minutes;
+typedef duration&lt;signed int, ratio&lt;3600&gt;&gt; hours;
+</code></pre>
+<p>从UNIX元年(1970年1月1日)到现在有多少时间了?通过不同时间的类型别名，我可以很容易地回答这个问题。下面的例子中，继续忽略闰年，假设一年有365天。</p>
+<pre><code class="language-c++">// timeSinceEpoch.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+int main() {
+
+  cout &lt;&lt; fixed &lt;&lt; endl;
+
+  cout &lt;&lt; &quot;Time since 1.1.1970:\n&quot; &lt;&lt; endl;
+
+  const auto timeNow = chrono::system_clock::now();
+  const auto duration = timeNow.time_since_epoch();
+  cout &lt;&lt; duration.count() &lt;&lt; &quot; nanoseconds &quot; &lt;&lt; endl;
+
+  typedef chrono::duration&lt;long double, ratio&lt;1, 1000000&gt;&gt; MyMicroSecondTick;
+  MyMicroSecondTick micro(duration);
+  cout &lt;&lt; micro.count() &lt;&lt; &quot; microseconds&quot; &lt;&lt; endl;
+
+  typedef chrono::duration&lt;long double, ratio&lt;1, 1000&gt;&gt; MyMilliSecondTick;
+  MyMilliSecondTick milli(duration);
+  cout &lt;&lt; milli.count() &lt;&lt; &quot; milliseconds&quot; &lt;&lt; endl;
+
+  typedef chrono::duration&lt;long double&gt; MySecondTick;
+  MySecondTick sec(duration);
+  cout &lt;&lt; sec.count() &lt;&lt; &quot; seconds &quot; &lt;&lt; endl;
+
+  typedef chrono::duration&lt;double, ratio&lt;60&gt;&gt; MyMinuteTick;
+  MyMinuteTick myMinute(duration);
+  cout &lt;&lt; myMinute.count() &lt;&lt; &quot; minutes&quot; &lt;&lt; endl;
+
+  typedef chrono::duration&lt;double, ratio&lt;60 * 60&gt;&gt; MyHourTick;
+  MyHourTick myHour(duration);
+  cout &lt;&lt; myHour.count() &lt;&lt; &quot; hours&quot; &lt;&lt; endl;
+
+  typedef chrono::duration&lt;double, ratio&lt;60 * 60 * 24 * 365&gt;&gt; MyYearTick;
+  MyYearTick myYear(duration);
+  cout &lt;&lt; myYear.count() &lt;&lt; &quot; years&quot; &lt;&lt; endl;
+
+  typedef chrono::duration&lt;double, ratio&lt;60 * 45&gt;&gt; MyLessonTick;
+  MyLessonTick myLesson(duration);
+  cout &lt;&lt; myLesson.count() &lt;&lt; &quot; lessons&quot; &lt;&lt; endl;
+
+  cout &lt;&lt; endl;
+
+}
+</code></pre>
+<p>时间长度是微秒(第18行)、毫秒(第22行)、秒(第26行)、分钟(第30行)、小时(第34行)和年(第38行)。另外，我在第42行定义了德国学校单节课的时长(45分钟)。</p>
+<p><img src="../../images/Further-Information/The-Time-Library/4.png" alt="" /></p>
+<h2 id="计算时间"><a class="header" href="#计算时间">计算时间</a></h2>
+<p>时间单位表示的时间支持基本的算术运算，可以用一个数字乘以或除以一个时间段。当然，也可以比较时间单位表示的时间，所有这些计算和比较都是基于时间单位的。</p>
+<p>在C++14标准中，更加方便。C++14标准支持时间段的文字表示。</p>
+<table><thead><tr><th align="center">类型</th><th align="center">后缀</th><th align="center">示例</th></tr></thead><tbody>
+<tr><td align="center">std::chrono::hours</td><td align="center">h</td><td align="center">5h</td></tr>
+<tr><td align="center">std::chrono::minutes</td><td align="center">min</td><td align="center">5min</td></tr>
+<tr><td align="center">std::chrono::seconds</td><td align="center">s</td><td align="center">5s</td></tr>
+<tr><td align="center">std::chrono::milliseconds</td><td align="center">ms</td><td align="center">5min</td></tr>
+<tr><td align="center">std::chrono::microseconds</td><td align="center">us</td><td align="center">5us</td></tr>
+<tr><td align="center">std::chrono::nanoseconds</td><td align="center">ns</td><td align="center">5ns</td></tr>
+</tbody></table>
+<p>我17岁的儿子Marius，在学校的一天中要花多少时间?我在下面的示例中，回答了这个问题，并以不同的时间段格式显示结果。</p>
+<pre><code class="language-c++">// schoolDay.cpp
+
+#include &lt;iostream&gt;
+#include &lt;chrono&gt;
+
+using namespace std::literals::chrono_literals;
+using namespace std::chrono;
+using namespace std;
+
+int main() {
+
+  cout &lt;&lt; endl;
+
+  constexpr auto schoolHour = 45min;
+
+  constexpr auto shortBreak = 300s;
+  constexpr auto longBreak = 0.25h;
+
+  constexpr auto schoolWay = 15min;
+  constexpr auto homework = 2h;
+
+  constexpr auto schoolDaySec = 2 * schoolWay + 6 * schoolHour + 4 * shortBreak +
+    longBreak + homework;
+
+  cout &lt;&lt; &quot;School day in seconds: &quot; &lt;&lt; schoolDaySec.count() &lt;&lt; endl;
+
+  constexpr duration&lt;double, ratio&lt;3600&gt;&gt; schoolDayHour = schoolDaySec;
+  constexpr duration&lt;double, ratio&lt;60&gt;&gt; schoolDayMin = schoolDaySec;
+  constexpr duration&lt;double, ratio&lt;1, 1000&gt;&gt; schoolDayMilli = schoolDaySec;
+
+  cout &lt;&lt; &quot;School day in hours: &quot; &lt;&lt; schoolDayHour.count() &lt;&lt; endl;
+  cout &lt;&lt; &quot;School day in minutes: &quot; &lt;&lt; schoolDayMin.count() &lt;&lt; endl;
+  cout &lt;&lt; &quot;School day in milliseconds: &quot; &lt;&lt; schoolDayMilli.count() &lt;&lt; endl;
+
+  cout &lt;&lt; endl;
+
+}
+</code></pre>
+<p>有一节德语课的时间(第14行)，一个短暂的休息(第16行)，一个长时间的休息(第17行)，Marius去学校的路(第19行)上花费的时间，以及做家庭作业(第20行)的时间。计算结果<code>schoolDaysInSeconds</code>(第22行)在编译时可用。</p>
+<p><img src="../../images/Further-Information/The-Time-Library/5.png" alt="" /></p>
+<blockquote>
+<p><strong>编译时的计算</strong></p>
+<p>时间常量(第14 - 20行)、第22行中的<code>schoolDaySec</code>和各种时间段(第28 - 30行)都是常量表达式(<code>constexpr</code>)。因此，所有值都可在编译时获得，只有输出是在运行时执行。</p>
+</blockquote>
+<p>报时的准确性取决于所用的时钟。C++中，有三种时钟<code>std::chrono::system_clock</code>, <code>std::chrono::steady_clock</code>和<code>std::chrono::high_resolution_clock</code>。</p>
+<h2 id="时钟"><a class="header" href="#时钟">时钟</a></h2>
+<p>三种不同类型的时钟之间有什么区别?</p>
+<ul>
+<li><code>std::chrono::sytem_clock</code>: 是系统范围内的实时时钟(<a href="https://en.wikipedia.org/wiki/Wall-clock_time">挂壁钟</a>)。该时钟具有<code>to_time_t</code>和<code>from_time_t</code>的辅助功能，可以将时间点转换为日历时间。</li>
+<li><code>std::chrono::steady_clock</code>: 是唯一提供保证的时钟，并且不能调整它。因此，<code>std::chrono::steady_clock</code>是测量时间间隔的首选时钟。</li>
+<li><code>std::chrono::high_resolution_clock</code>：是精度最高的时钟，但它可以只是时钟<code>std::chrono::system_clock</code>或<code>std::chrono::steady_clock</code>的别名。</li>
+</ul>
+<blockquote>
+<p><strong>无保证的准确性、起始点和有效的时间范围</strong></p>
+<p>C++标准不保证时钟的精度、起始点和有效时间范围。通常，<code>std::chrono:system_clock</code>的起始点是1970年1月1日，也就是所谓的UNIX元年，而<code>std::chrono::steady_clock</code>的起始点则是PC的启动时间。</p>
+</blockquote>
+<h3 id="准确性和稳定性"><a class="header" href="#准确性和稳定性">准确性和稳定性</a></h3>
+<p>知道哪些时钟是稳定的，以及它们提供的精度是很有趣的事情。稳定意味着时钟不能调整，可以直接从时钟中得到答案。</p>
+<p>三个时钟的准确性和稳定性</p>
+<pre><code class="language-c++">// clockProperties.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+
+using namespace std::chrono;
+using namespace std;
+
+template &lt; typename T&gt;
+void printRatio() {
+  cout &lt;&lt; &quot; precision: &quot; &lt;&lt; T::num &lt;&lt; &quot;/&quot; &lt;&lt; T::den &lt;&lt; &quot; second &quot; &lt;&lt; endl;
+  typedef typename ratio_multiply&lt;T, kilo&gt;::type MillSec;
+  typedef typename ratio_multiply&lt;T, mega&gt;::type MicroSec;
+  cout &lt;&lt; fixed;
+  cout &lt;&lt; &quot; &quot; &lt;&lt; static_cast&lt;double&gt;(MillSec::num) / MillSec::den
+    &lt;&lt; &quot; milliseconds &quot; &lt;&lt; endl;
+  cout &lt;&lt; &quot; &quot; &lt;&lt; static_cast&lt;double&gt;(MicroSec::num) / MicroSec::den
+    &lt;&lt; &quot; microseconds &quot; &lt;&lt; endl;
+}
+
+int main() {
+
+  cout &lt;&lt; boolalpha &lt;&lt; endl;
+
+  cout &lt;&lt; &quot;std::chrono::system_clock: &quot; &lt;&lt; endl;
+  cout &lt;&lt; &quot; is steady: &quot; &lt;&lt; system_clock::is_steady &lt;&lt; endl;
+  printRatio&lt;chrono::system_clock::period&gt;();
+
+  cout &lt;&lt; endl;
+
+  cout &lt;&lt; &quot;std::chrono::steady_clock: &quot; &lt;&lt; endl;
+  cout &lt;&lt; &quot; is steady: &quot; &lt;&lt; chrono::steady_clock::is_steady &lt;&lt; endl;
+  printRatio&lt;chrono::steady_clock::period&gt;();
+
+  cout &lt;&lt; endl;
+
+  cout &lt;&lt; &quot;std::chrono::high_resolution_clock: &quot; &lt;&lt; endl;
+  cout &lt;&lt; &quot; is steady: &quot; &lt;&lt; chrono::high_resolution_clock::is_steady
+    &lt;&lt; endl;
+  printRatio&lt;chrono::high_resolution_clock::period&gt;();
+
+  cout &lt;&lt; endl;
+
+}
+</code></pre>
+<p>在第27行、第33行和第39行显示每个时钟是否稳定。函数<code>printRatio</code>(第10 -20行)比较难懂。首先，以秒为单位显示时钟的精度。此外，使用函数模板<code>std::ratio_multiply</code>，以及常量<code>std::kilo</code>和<code>std::mega</code>来将单位调整为以浮点数显示的毫秒和微秒。您可以通过<a href="http://en.cppreference.com/w/cpp/numeric/ratio">cppreference.com</a>获得计算时间在编译时的更多详细信息。</p>
+<p>Linux上的输出与Windows上的不同。Linux上，<code>std::chrono::system_clock</code>要精确得多；Windows上，<code>std::chrono::high_resultion_clock</code>是稳定的。</p>
+<p><img src="../../images/Further-Information/The-Time-Library/6.png" alt="" /></p>
+<p><img src="../../images/Further-Information/The-Time-Library/7.png" alt="" /></p>
+<p>虽然C++标准没有指定时钟的纪元，但是可以通过计算得到。</p>
+<h3 id="纪元元年"><a class="header" href="#纪元元年">纪元元年</a></h3>
+<p>由于辅助函数<a href="http://en.cppreference.com/w/cpp/chrono/time_point/time_since_epoch">time_since_epoch</a>，每个时钟返回显示自元年以来已经过了很多时间。</p>
+<p>计算每个时钟的元年</p>
+<pre><code class="language-c++">// now.cpp
+
+#include &lt;chrono&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+
+using namespace std::chrono;
+
+template &lt; typename T&gt;
+void durationSinceEpoch(const T dur) {
+  std::cout &lt;&lt; &quot; Counts since epoch: &quot; &lt;&lt; dur.count() &lt;&lt; std::endl;
+  typedef duration&lt;double, std::ratio&lt;60&gt;&gt; MyMinuteTick;
+  const MyMinuteTick myMinute(dur);
+  std::cout &lt;&lt; std::fixed;
+  std::cout &lt;&lt; &quot; Minutes since epoch: &quot; &lt;&lt; myMinute.count() &lt;&lt; std::endl;
+  typedef duration&lt;double, std::ratio&lt;60 * 60 * 24 * 365&gt;&gt; MyYearTick;
+  const MyYearTick myYear(dur);
+  std::cout &lt;&lt; &quot; Years since epoch: &quot; &lt;&lt; myYear.count() &lt;&lt; std::endl;
+
+}
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  system_clock::time_point timeNowSysClock = system_clock::now();
+  system_clock::duration timeDurSysClock = timeNowSysClock.time_since_epoch();
+  std::cout &lt;&lt; &quot;system_clock: &quot; &lt;&lt; std::endl;
+  durationSinceEpoch(timeDurSysClock);
+
+  std::cout &lt;&lt; std::endl;
+
+  const auto timeNowStClock = steady_clock::now();
+  const auto timeDurStClock = timeNowStClock.time_since_epoch();
+  std::cout &lt;&lt; &quot;steady_clock: &quot; &lt;&lt; std::endl;
+  durationSinceEpoch(timeDurStClock);
+  std::cout &lt;&lt; std::endl;
+
+  const auto timeNowHiRes = high_resolution_clock::now();
+  const auto timeDurHiResClock = timeNowHiRes.time_since_epoch();
+  std::cout &lt;&lt; &quot;high_resolution_clock: &quot; &lt;&lt; std::endl;
+  durationSinceEpoch(timeDurHiResClock);
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>变量<code>timeDurSysClock</code>(第26行)、<code>timeDurStClock</code>(第33行)和<code>timeDurHiResClock</code>(第40行)包含从对应时钟的起始点经过的时间。如果不使用<code>auto</code>自动类型推断，则写入时间点和时间段的确切类型将非常冗长。函数<code>durationSinceEpoch</code>(第9 - 19行)中，以不同的分辨率显示时间持续时间。首先，显示时间刻度的数量(第11行)，然后显示分钟的数量(第15行)，最后显示自<code>epoch</code>以来的年份(第18行)。所有值都依赖于所使用的时钟。为了简单起见，忽略闰年，假设一年有365天。</p>
+<p>同样，Linux和Windows上的结果也是不同的。</p>
+<p><img src="../../images/Further-Information/The-Time-Library/8.png" alt="" /></p>
+<p><img src="../../images/Further-Information/The-Time-Library/9.png" alt="" /></p>
+<p>为了得出正确的结论，我得提一下，Linux PC已经运行了大约5小时(305分钟)，而Windows PC已经运行了超过6小时(391分钟)。</p>
+<p>我的Linux PC上，<code>std::chrono::system_clock</code>和<code>std::chrono::high_resolution_clock</code>以UNIX元年作为起始点。<code>std::chrono::steady_clock</code>的起始点是我电脑的启动时间。虽然<code>std::high_resolution_clock</code>是Linux上的<code>std::system_clock</code>的别名，但<code>std::high_resolution_clock</code>似乎是Windows上的<code>std::steady_clock</code>的别名，这一结论与前一小节的精度和稳定性结果相一致。</p>
+<p>有了时间库，可以限制让线程进入睡眠状态的时限。休眠和等待函数的参数，可以是时间点或是时间段。</p>
+<h2 id="休眠和等待"><a class="header" href="#休眠和等待">休眠和等待</a></h2>
+<p>时间概念是多线程组件(如线程、锁、条件变量和future)的一个重要特性。</p>
+<p><strong>惯例</strong></p>
+<p>多线程中处理时间的方法遵循一个简单的惯例。以<code>_for</code>结尾的方法必须按时间长度进行参数化；以<code>_until</code>结尾的方法，指定一个时间点。下面简要概述了处理睡眠、阻塞和等待的方法。</p>
+<table><thead><tr><th align="center">多线程组件</th><th align="center">_until</th><th align="center">_for</th></tr></thead><tbody>
+<tr><td align="center">std::thread th</td><td align="center">th.sleep_until(in2min)</td><td align="center">th.sleep_for(2s)</td></tr>
+<tr><td align="center">std::unique_lock lk</td><td align="center">lk.try_lock_until(in2min)</td><td align="center">lk.try_lock(2s)</td></tr>
+<tr><td align="center">std::condition_variable cv</td><td align="center">cv.wait_until(in2min)</td><td align="center">cv.wait_for(2s)</td></tr>
+<tr><td align="center">std::future fu</td><td align="center">fu.wait_until(in2min)</td><td align="center">fu.wait_for(2s)</td></tr>
+<tr><td align="center">std::shared_future shFu</td><td align="center">shFu.wait(in2min)</td><td align="center">shFu.wait_for(2s)</td></tr>
+</tbody></table>
+<p><code>in2min</code>表示未来2分钟的时间，<code>2s</code>是时间段2秒。虽然使用自动初始化的时间点<code> in2min</code>，以下的表达式仍然冗长:</p>
+<p>定义一个时间点</p>
+<pre><code class="language-c++">auto in2min= std::chrono::steady_clock::now() + std::chrono::minutes(2);
+</code></pre>
+<p>当使用时间单位时，C++14的时间文字可以帮助我们：2s就代表2秒。</p>
+<p>接下来，让我们看看不同的等待策略。</p>
+<p><strong>各种等待策略</strong></p>
+<p>以下程序的主要思想是，promise提供四种共享future的结果。因为多个<code>shared_future</code>可以等待相同的promise通知，所以没问题。每个future都有不同的等待策略，并且promise和future在不同的线程中执行。为了简单起见，本小节中只讨论一个正在等待的线程。</p>
+<p>下面是四个等待线程的策略:</p>
+<ul>
+<li>consumeThread1: 为promise的结果等待4秒。</li>
+<li>consumeThread2: 为promise的结果等待20秒。</li>
+<li>consumeThread3: 查询promise的结果，并返回休眠700毫秒。</li>
+<li>consumeThread4: 向对方询问结果，然后继续休眠。它的休眠时间从1毫秒开始，每次翻倍。</li>
+</ul>
+<p>程序如下。</p>
+<p>各种等待策略</p>
+<pre><code class="language-c++">// sleepAndWait.cpp
+
+#include &lt;utility&gt;
+#include &lt;iostream&gt;
+#include &lt;future&gt;
+#include &lt;thread&gt;
+#include &lt;utility&gt;
+
+using namespace std;
+using namespace std::chrono;
+
+mutex coutMutex;
+
+long double getDifference(const steady_clock::time_point&amp; tp1,
+  const steady_clock::time_point&amp; tp2) {
+  const auto diff = tp2 - tp1;
+  const auto res = duration &lt;long double, milli&gt;(diff).count();
+  return res;
+}
+
+void producer(promise&lt;int&gt;&amp;&amp; prom) {
+  cout &lt;&lt; &quot;PRODUCING THE VALUE 2011\n\n&quot;;
+  this_thread::sleep_for(seconds(5));
+  prom.set_value(2011);
+}
+
+void consumer(shared_future&lt;int&gt; fut,
+  steady_clock::duration dur) {
+  const auto start = steady_clock::now();
+  future_status status = fut.wait_until(steady_clock::now() + dur);
+  if (status == future_status::ready) {
+    lock_guard&lt;mutex&gt; lockCout(coutMutex);
+    cout &lt;&lt; this_thread::get_id() &lt;&lt; &quot; ready =&gt; Result: &quot; &lt;&lt; fut.get()
+      &lt;&lt; endl;
+  }
+  else {
+    lock_guard&lt;mutex&gt; lockCout(coutMutex);
+    cout &lt;&lt; this_thread::get_id() &lt;&lt; &quot; stopped waiting.&quot; &lt;&lt; endl;
+  }
+  const auto end = steady_clock::now();
+  lock_guard&lt;mutex&gt; lockCout(coutMutex);
+  cout &lt;&lt; this_thread::get_id() &lt;&lt; &quot; waiting time: &quot;
+    &lt;&lt; getDifference(start, end) &lt;&lt; &quot; ms&quot; &lt;&lt; endl;
+}
+
+void consumePeriodically(shared_future&lt;int&gt; fut) {
+  const auto start = steady_clock::now();
+  future_status status;
+  do {
+    this_thread::sleep_for(milliseconds(700));
+    status = fut.wait_for(seconds(0));
+    if (status == future_status::timeout) {
+      lock_guard&lt;mutex&gt; lockCout(coutMutex);
+      cout &lt;&lt; &quot; &quot; &lt;&lt; this_thread::get_id()
+        &lt;&lt; &quot; still waiting.&quot; &lt;&lt; endl;
+    }
+    if (status == future_status::ready) {
+      lock_guard&lt;mutex&gt; lockCout(coutMutex);
+      cout &lt;&lt; &quot; &quot; &lt;&lt; this_thread::get_id()
+        &lt;&lt; &quot; waiting done =&gt; Result: &quot; &lt;&lt; fut.get() &lt;&lt; endl;
+    }
+  } while (status != future_status::ready);
+  const auto end = steady_clock::now();
+  lock_guard&lt;mutex&gt; lockCout(coutMutex);
+  cout &lt;&lt; &quot; &quot; &lt;&lt; this_thread::get_id() &lt;&lt; &quot; waiting time: &quot;
+    &lt;&lt; getDifference(start, end) &lt;&lt; &quot; ms&quot; &lt;&lt; endl;
+}
+
+void consumeWithBackoff(shared_future&lt;int&gt; fut) {
+  const auto start = steady_clock::now();
+  future_status status;
+  auto dur = milliseconds(1);
+  do {
+    this_thread::sleep_for(dur);
+    status = fut.wait_for(seconds(0));
+    dur *= 2;
+    if (status == future_status::timeout) {
+      lock_guard&lt;mutex&gt; lockCout(coutMutex);
+      cout &lt;&lt; &quot; &quot; &lt;&lt; this_thread::get_id()
+        &lt;&lt; &quot; still waiting.&quot; &lt;&lt; endl;
+    }
+    if (status == future_status::ready) {
+      lock_guard&lt;mutex&gt; lockCout(coutMutex);
+      cout &lt;&lt; &quot; &quot; &lt;&lt; this_thread::get_id()
+        &lt;&lt; &quot; waiting done =&gt; Result: &quot; &lt;&lt; fut.get() &lt;&lt; endl;
+    }
+  } while (status != future_status::ready);
+  const auto end = steady_clock::now();
+  lock_guard&lt;mutex&gt; lockCout(coutMutex);
+  cout &lt;&lt; &quot; &quot; &lt;&lt; this_thread::get_id()
+    &lt;&lt; &quot; waiting time: &quot; &lt;&lt; getDifference(start, end) &lt;&lt; &quot; ms&quot; &lt;&lt; endl;
+}
+
+int main() {
+
+  cout &lt;&lt; endl;
+
+  promise&lt;int&gt; prom;
+  shared_future&lt;int&gt; future = prom.get_future();
+  thread producerThread(producer, move(prom));
+
+  thread consumerThread1(consumer, future, seconds(4));
+  thread consumerThread2(consumer, future, seconds(20));
+  thread consumerThread3(consumePeriodically, future);
+  thread consumerThread4(consumeWithBackoff, future);
+
+  consumerThread1.join();
+  consumerThread2.join();
+  consumerThread3.join();
+  consumerThread4.join();
+  producerThread.join();
+
+  cout &lt;&lt; endl;
+
+}
+</code></pre>
+<p>我在主函数中创建promise(第98行)，使用promise创建关联的future(第99行)，并将promise移动到一个单独的线程(第100行)。因为promise不支持复制语义，必须将其移动到线程中。这对于共享future来说是不必要的(第102 - 105行)，它们支持复制语义，因此可以复制。</p>
+<p>讨论线程的工作包之前，简单介绍一下辅助函数<code>getDifference</code>(第14 - 19行)。该函数接受两个时间点，并以毫秒为单位返回这两个时间点之间的时间段。</p>
+<p>那创建的五个线程呢?</p>
+<ul>
+<li>producerThread: 执行函数生成器(第21 - 25行)，并在5秒休眠后发布其结果2011。这是future正在等待的结果。</li>
+<li>consumerThread1: 执行函数<code>consumer</code>函数(第27 - 44行)。线程最多等待4秒(第30行)才继续工作。这段等待的时间不够长，无法从promise中得到结果。</li>
+<li>consumerThread2: 执行<code>consumer</code>函数(第27 - 44行)。线程在继续工作之前最多等待20秒。</li>
+<li>consumerThread3: 定期执行<code>consume</code>函数(第46 - 67行)。休眠700毫秒(第50行)，并请求promise的结果(第60行)。因为第51行<code>std::chrono::seconds(0)</code>，所以不需要等待。如果计算结果可用，将第60行在显示。</li>
+<li>consumerThread4: 执行<code>consumeWithBackoff</code>函数(第69 - 92行)。在第一个迭代1秒内休眠，并在每个迭代中将休眠时间加倍。否则，它的策略就与consumerThread3的策略差不多了。</li>
+</ul>
+<p>现在来同步程序。确定当前时间的时钟和<code>std::cout</code>都是共享变量，但不需要同步。首先，调用<code>std::chrono::steady_clock::now()</code>是线程安全的(第30行和第40行)；其次，C++运行时保证这些字符被写入<code>std::cout</code>是线程安全的。这里，只使用了<code>std::lock_guard</code>来保护<code>std::cout</code>(在第32、37和41行)。</p>
+<p>尽管线程逐个地向<code>std::cout</code>写入数据，但是输出并不容易理解。</p>
+<p><img src="../../images/Further-Information/The-Time-Library/10.png" alt="" /></p>
+<p>第一个输出来自于promise。左边的输出来自future。首先，consumerThread4询问结果，8个字符缩进输出，consumerThread4也显示它的id，consumerThread3紧跟其后，4个字符缩进它的输出，consumerThread1和consumerThread2的输出没有缩进。</p>
+<ul>
+<li>consumeThread1: 等待4000.18ms，但是没有得到结果。</li>
+<li>consumeThread2: 在等待5000.3ms后获取结果，但其等待时间最长可达20秒。</li>
+<li>consumeThread3: 在等待5601.76ms后获取结果。也就是5600ms= 8 * 700ms。</li>
+<li>consumeThread4: 在等待8193.81ms后的获取结果。换句话说，它等待的时间达到了3s之久。</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../content/Further-Information/11.1-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../content/Further-Information/11.3-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../content/Further-Information/11.1-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../content/Further-Information/11.3-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>可协作中断的线程 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html" class="active"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="可协作中断的线程"><a class="header" href="#可协作中断的线程">可协作中断的线程</a></h1>
+<p><code>std::jthread</code>代表协作线程，除了C++11添加的<code>std::thread</code>外，<code>std::jthread</code>还可以自动汇入启动的线程，并发出中断信号。它的特性在提案<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p0660r8.pdf">P0660R8</a>中进行了详细描述：可中断的协程。</p>
+<h2 id="自动汇入"><a class="header" href="#自动汇入">自动汇入</a></h2>
+<p>下面<code>std::thread</code>的行为并不乐观。如果<code>std::thread</code>仍是可汇入的，则在其析构函数中调用<code>std::terminate</code>。如果调用了<code>thre .join()</code>或<code>thre .detach()</code>，则线程<code>thr</code>是可汇入的。</p>
+<pre><code class="language-c++">// threadJoinable.cpp
+
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+  std::cout &lt;&lt; std::boolalpha;
+
+  std::thread thr{ [] {std::cout &lt;&lt; &quot;Joinable std::thread&quot; &lt;&lt; std::endl; } };
+
+  std::cout &lt;&lt; &quot;thr.joinable(): &quot; &lt;&lt; thr.joinable() &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>程序执行的时候，会崩溃掉。</p>
+<p><img src="../../../images/detail/The-Future-CPP-20-23/3.png" alt="" /></p>
+<p>运行了两次，<code>std::thread</code>都会非法终止。第二次运行时，线程<code>thr</code>有显示了消息:“Joinable std::thread”。</p>
+<p>下一个示例中，我将头文件<code>&lt;thread&gt;</code>替换为<code>“jthread.hpp”</code>。并使用C++20标准中的<code>std::jthread</code>。</p>
+<pre><code class="language-c++">// jthreadJoinable.cpp
+
+#include &lt;iostream&gt;
+#include &quot;jthread.hpp&quot;
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+  std::cout &lt;&lt; std::boolalpha;
+
+  std::jthread thr{ [] {std::cout &lt;&lt; &quot;Joinable std::thread&quot; &lt;&lt; std::endl; } };
+
+  std::cout &lt;&lt; &quot;thr.joinable(): &quot; &lt;&lt; thr.joinable() &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>现在，如果线程<code>thr</code>会在调用析构时还是可汇入的，则会自动汇入。</p>
+<p><img src="../../../images/detail/The-Future-CPP-20-23/4.png" alt="" /></p>
+<h2 id="中断stdjthread"><a class="header" href="#中断stdjthread">中断std::jthread</a></h2>
+<p>为了理解其中的思想，我举一个简单的例子。</p>
+<pre><code class="language-c++">// interruptJthread.cpp
+
+#include &quot;jthread.hpp&quot;
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+
+using namespace ::std::literals;
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  std::jthread nonInterruptable([] {
+    int counter{ 0 };
+    while (counter &lt; 10) {
+      std::this_thread::sleep_for(0.2s);
+      std::cerr &lt;&lt; &quot;nonInterruptable: &quot; &lt;&lt; counter &lt;&lt; std::endl;
+      ++counter;
+    }
+    });
+
+  std::jthread interruptable([](std::stop_token stoken) {
+    int counter{ 0 };
+    while (counter &lt; 10) {
+      std::this_thread::sleep_for(0.2s);
+      if (stoken.stop_requested()) return;
+      std::cerr &lt;&lt; &quot;interruptable: &quot; &lt;&lt; counter &lt;&lt; std::endl;
+      ++counter;
+    }
+    });
+
+  std::this_thread::sleep_for(1s);
+
+  std::cerr &lt;&lt; std::endl;
+  std::cerr &lt;&lt; &quot;Main thread interrupts both jthreads&quot; &lt;&lt; std::endl;
+  nonInterruptable.request_stop();
+  interruptable.request_stop();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>主程序中启动了两个线程<code>nonInterruptable</code>和<code>interruptable</code>(第13行和第22行)。与线程<code>nonInterruptable</code>不同，线程<code>interruptable </code>会获取一个<code>std::stop_token</code>，并在26行使用它来检查线程是否被中断:<code>stoken.stop_requested()</code>。在中断的情况下返回Lambda函数，然后线程结束。<code>interruptable.request_stop() </code>(第37行)触发线程的结束。而<code>nonInterruptable.request_stop()</code>并没有什么效果。</p>
+<p><img src="../../../images/detail/The-Future-CPP-20-23/5.png" alt="" /></p>
+<p>下面来了解停止令牌、汇入线程和条件变量的更多细节。</p>
+<h2 id="停止令牌"><a class="header" href="#停止令牌">停止令牌</a></h2>
+<p><code>jthread</code>的附加功能基于<code>std::stop_token</code>、<code>std::stop_callback</code>和<code>std::stop_source</code>。</p>
+<p><strong>std::stop_token , std::stop_source 和std::stop_callback</strong></p>
+<p><code>std::stop_token</code>、<code>std::stop_callback</code>或<code>std::stop_source</code>使其能够异步请求执行停止，或查询执行是否收到了停止信号。可以将<code>std::stop_token</code>传递给操作，然后使用它来主动轮询停止请求的令牌，或者通过<code>std::stop_callback</code>注册回调。停止请求由<code>std::stop_source</code>发送，这个信号影响所有相关的<code>std::stop_token</code>。<code>std::stop_source</code>、<code>std::stop_token</code>和<code>std::stop_callback</code>共享停止状态的所有权，其中<code>request_stop()</code>、<code>stop_requested()</code>和<code>stop_possible()</code>是原子操作。</p>
+<p><code>std::stop_source</code>和<code>std::stop_token</code>组件为停止处理提供了以下属性。</p>
+<p><code>std::stop_source src</code>的成员函数</p>
+<table><thead><tr><th align="center">成员函数</th><th align="center">功能描述</th></tr></thead><tbody>
+<tr><td align="center">src.get_token()</td><td align="center">如果!stop_possible()，则构造一个不共享stop的stop_token对象状态；否则，构造一个stop_token对象，并共享使用*this的停止状态</td></tr>
+<tr><td align="center">src.stop_possible()</td><td align="center">如果停止源可以用于请求停止，则为true</td></tr>
+<tr><td align="center">src.stop_requested()</td><td align="center">如果其中一个所有者调用了stop_possible()和request_stop()，则为true。</td></tr>
+<tr><td align="center">src.request_stop()</td><td align="center">如果!stop_possible()或stop_requested()，则调用没有效果；否则，提出一个停止请求，以便同步调用stop_requested() == true和所有已注册的回调。</td></tr>
+</tbody></table>
+<p><code> std::stop_token stoken</code>的成员函数</p>
+<table><thead><tr><th align="center">成员函数</th><th align="center">功能描述</th></tr></thead><tbody>
+<tr><td align="center">stoken.stop_possible()</td><td align="center">如果后续调用stop_required()将永远不会返回true</td></tr>
+<tr><td align="center">stoken.stop_requested()</td><td align="center">如果在相关的std::stop_source上调用了request_stop()，则为true，否则为false</td></tr>
+</tbody></table>
+<p>如果<code>std::stop_token</code>临时禁用了，那么可以用默认构造的令牌替换它。默认构造的令牌无效。下面的代码片段展示了，如何禁用和启用线程接受信号的功能。</p>
+<p>临时禁用一个<code>std::stop_token</code></p>
+<pre><code class="language-c++">std::jthread jthr([](std::stop_token stoken){
+ ...
+ std::stop_token interruptDisabled;
+ std::swap(stoken, interruptDisabled);
+ ...
+ std::swap(stoken, interruptDisabled);
+ ...
+}
+</code></pre>
+<p><code>std::stop_token interruptDisabled</code>是无效的。这意味着，从第4行到第5行停止令牌被禁用，第6行才启用。</p>
+<p>下面的示例展示了回调的用法。</p>
+<pre><code class="language-c++">// invokeCallback.cpp
+
+#include &quot;jthread.hpp&quot;
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace ::std::literals;
+
+auto func = [](std::stop_token stoken) {
+  int counter{ 0 };
+  auto thread_id = std::this_thread::get_id();
+  std::stop_callback callBack(stoken, [&amp;counter, thread_id] {
+    std::cout &lt;&lt; &quot;Thread id: &quot; &lt;&lt; thread_id
+      &lt;&lt; &quot;; counter : &quot; &lt;&lt; counter &lt;&lt; std::endl;
+    });
+  while (counter &lt; 10) {
+    std::this_thread::sleep_for(0.2s);
+    ++counter;
+  }
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  std::vector&lt;std::jthread&gt; vecThreads(10);
+  for (auto&amp; thr : vecThreads)thr = std::jthread(func);
+
+  std::this_thread::sleep_for(1s);
+
+  for (auto&amp; thr : vecThreads)thr.request_stop();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>这10个线程中的每个都调用Lambda函数func(第10 - 21行)。第13 - 16行中的回调显示线程id和计数器。由于主线程的睡眠时间为1秒，子线程的睡眠时间为1秒，所以调用回调时计数器为4。<code>request_stop()</code>会在每个线程上触发回调。</p>
+<p><img src="../../../images/detail/The-Future-CPP-20-23/6.png" alt="" /></p>
+<p><strong>汇入线程</strong></p>
+<p><code>std::jhread</code>是一个<code>std::thread</code>变种，它具有发出中断信号，并自动汇入的附加功能。为了支持这个功能，它需要一个<code>std::stop_token</code>。</p>
+<p><code>std::jthread jthr</code>停止令牌的成员函数</p>
+<table><thead><tr><th align="center">成员函数</th><th align="center">功能描述</th></tr></thead><tbody>
+<tr><td align="center">jthr.get_stop_source()</td><td align="center">返回stop_token</td></tr>
+<tr><td align="center">jthr.request_stop()</td><td align="center">与src.request_stop()相同</td></tr>
+</tbody></table>
+<p><strong>condition_variable_any成员函数wait的新重载</strong></p>
+<p><code>std::condition_variable_any</code>的三个<code>wait</code>变体<code>wait_for</code>和<code>wait_until</code>将有新的重载，新的重载会使用<code>std::stop_token</code>。</p>
+<pre><code class="language-c++">template &lt;class Predicate&gt;
+ bool wait_until(Lock&amp; lock,
+ Predicate pred,
+ stop_token stoken);
+
+template &lt;class Clock, class Duration, class Predicate&gt;
+ bool wait_until(Lock&amp; lock,
+ const chrono::time_point&lt;Clock, Duration&gt;&amp; abs_time,
+ Predicate pred,
+ stop_token stoken);
+
+template &lt;class Rep, class Period, class Predicate&gt;
+ bool wait_for(Lock&amp; lock,
+ const chrono::duration&lt;Rep, Period&gt;&amp; rel_time,
+ Predicate pred,
+ stop_token stoken);
+</code></pre>
+<p>这个新的重载需要一个谓词函数。该版本在传入的<code>std::stop_token stoken</code>发出中断信号时，得到通知。这三个重载相当于下面的表达式：</p>
+<pre><code class="language-c++">// wait_until in lines 1 - 4
+while(!pred() &amp;&amp; !stoken.stop_requested()) {
+  wait(lock, [&amp;pred, &amp;stoken] {
+  	return pred() || stoken.stop_requested();
+  });
+}
+return pred();
+
+// wait_until in lines 6 - 10
+while(!pred() &amp;&amp; !stoken.stop_requested() &amp;&amp; Clock::now() &lt; abs_time) {
+  cv.wait_until(lock,
+  abs_time,
+  [&amp;pred, &amp;stoken] {
+  	return pred() || stoken.stop_requested();
+  });
+}
+return pred();
+
+// wait_for in lines 12 - 16
+return wait_until(lock, chrono::steady_clock::now() + rel_time, std::move(pred), std\
+::move(stoken));
+</code></pre>
+<p>调用<code>wait</code>之后，可以对停止请求进行检查。</p>
+<pre><code class="language-c++">cv.wait_until(lock, predicate, stoken);
+if (stoken.stop_requested()){
+	// interrupt occurred
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

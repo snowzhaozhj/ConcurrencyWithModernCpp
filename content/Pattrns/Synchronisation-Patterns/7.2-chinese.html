@@ -1,0 +1,940 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>处理突变 - ConcurrencyWithModernCpp</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../../../favicon.svg">
+                        <link rel="shortcut icon" href="../../../favicon.png">
+                <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+                <link rel="stylesheet" href="../../../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../content/Reader-Testimonials.html"><strong aria-hidden="true">1.</strong> 读者推荐</a></li><li class="chapter-item expanded "><a href="../../../content/Source-Code.html"><strong aria-hidden="true">2.</strong> 代码说明</a></li><li class="chapter-item expanded "><a href="../../../content/How-you-should-read-the-book.html"><strong aria-hidden="true">3.</strong> 如何阅读</a></li><li class="chapter-item expanded "><a href="../../../content/History-Quick-Overview.html"><strong aria-hidden="true">4.</strong> C++并发历史概述</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 详细介绍</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.0-chinese.html"><strong aria-hidden="true">5.1.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.1-chinese.html"><strong aria-hidden="true">5.1.1.</strong> 内存模型的基础知识</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.2-chinese.html"><strong aria-hidden="true">5.1.2.</strong> 编程协议</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.3-chinese.html"><strong aria-hidden="true">5.1.3.</strong> 原子操作</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.4-chinese.html"><strong aria-hidden="true">5.1.4.</strong> 同步和顺序</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Memory-Model/1.5-chinese.html"><strong aria-hidden="true">5.1.5.</strong> 栅栏(Fences)</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.0-chinese.html"><strong aria-hidden="true">5.2.</strong> 多线程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.1-chinese.html"><strong aria-hidden="true">5.2.1.</strong> 线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.2-chinese.html"><strong aria-hidden="true">5.2.2.</strong> 共享数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.3-chinese.html"><strong aria-hidden="true">5.2.3.</strong> 线程-本地数据</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.4-chinese.html"><strong aria-hidden="true">5.2.4.</strong> 条件变量</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Multithreading/2.5-chinese.html"><strong aria-hidden="true">5.2.5.</strong> 任务</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.0-chinese.html"><strong aria-hidden="true">5.3.</strong> 标准库的并行算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.1-chinese.html"><strong aria-hidden="true">5.3.1.</strong> 执行策略</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.2-chinese.html"><strong aria-hidden="true">5.3.2.</strong> 算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.3-chinese.html"><strong aria-hidden="true">5.3.3.</strong> 新算法</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Parallel-Algorithms-of-the-Standard/3.4-chinese.html"><strong aria-hidden="true">5.3.4.</strong> 性能概况</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.0-chinese.html"><strong aria-hidden="true">5.4.</strong> 案例研究</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.1-chinese.html"><strong aria-hidden="true">5.4.1.</strong> 求向量元素的加和</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.2-chinese.html"><strong aria-hidden="true">5.4.2.</strong> 单例模式：线程安全的初始化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.3-chinese.html"><strong aria-hidden="true">5.4.3.</strong> 使用CppMem进行优化</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/Case-Studies/4.4-chinese.html"><strong aria-hidden="true">5.4.4.</strong> 总结</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.0-chinese.html"><strong aria-hidden="true">5.5.</strong> C++20/23的特性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.1-chinese.html"><strong aria-hidden="true">5.5.1.</strong> 关于执行</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.2-chinese.html"><strong aria-hidden="true">5.5.2.</strong> 可协作中断的线程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.3-chinese.html"><strong aria-hidden="true">5.5.3.</strong> 原子智能指针</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.4-chinese.html"><strong aria-hidden="true">5.5.4.</strong> 扩展特性</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.5-chinese.html"><strong aria-hidden="true">5.5.5.</strong> 门闩和栅栏</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.6-chinese.html"><strong aria-hidden="true">5.5.6.</strong> 协程</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.7-chinese.html"><strong aria-hidden="true">5.5.7.</strong> 事务性内存</a></li><li class="chapter-item expanded "><a href="../../../content/The-Details/The-Future-CPP-20-23/5.8-chinese.html"><strong aria-hidden="true">5.5.8.</strong> 任务块</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 模式</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.0-chinese.html"><strong aria-hidden="true">6.1.</strong> 模式和最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.1-chinese.html"><strong aria-hidden="true">6.1.1.</strong> 相关历史</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.2-chinese.html"><strong aria-hidden="true">6.1.2.</strong> 价值所在</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.3-chinese.html"><strong aria-hidden="true">6.1.3.</strong> 模式与最佳实践</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Patterns-and-Best-Practices/6.4-chinese.html"><strong aria-hidden="true">6.1.4.</strong> 反模式</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.0-chinese.html"><strong aria-hidden="true">6.2.</strong> 同步模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html"><strong aria-hidden="true">6.2.1.</strong> 处理共享</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Synchronisation-Patterns/7.2-chinese.html" class="active"><strong aria-hidden="true">6.2.2.</strong> 处理突变</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html"><strong aria-hidden="true">6.3.</strong> 并发架构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.1-chinese.html"><strong aria-hidden="true">6.3.1.</strong> 活动对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.2-chinese.html"><strong aria-hidden="true">6.3.2.</strong> 监控对象</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Concurrent-Architecture/8.3-chinese.html"><strong aria-hidden="true">6.3.3.</strong> 半同步/半异步</a></li></ol></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.0-chinese.html"><strong aria-hidden="true">6.4.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.1-chinese.html"><strong aria-hidden="true">6.4.1.</strong> 通常情况</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.2-chinese.html"><strong aria-hidden="true">6.4.2.</strong> 多线程</a></li><li class="chapter-item expanded "><a href="../../../content/Pattrns/Best-Practices/9.3-chinese.html"><strong aria-hidden="true">6.4.3.</strong> 内存模型</a></li></ol></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 数据结构</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.1-chinese.html"><strong aria-hidden="true">7.1.</strong> 有锁结构</a></li><li class="chapter-item expanded "><a href="../../../content/Data-Structures/10.2-chinese.html"><strong aria-hidden="true">7.2.</strong> 无锁结构</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 更多信息</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.1-chinese.html"><strong aria-hidden="true">8.1.</strong> 挑战</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.2-chinese.html"><strong aria-hidden="true">8.2.</strong> 时间库</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.3-chinese.html"><strong aria-hidden="true">8.3.</strong> CppMem-概述</a></li><li class="chapter-item expanded "><a href="../../../content/Further-Information/11.4-chinese.html"><strong aria-hidden="true">8.4.</strong> 术语表</a></li></ol></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">ConcurrencyWithModernCpp</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="处理突变"><a class="header" href="#处理突变">处理突变</a></h1>
+<p>如果不同时读写数据，就没有数据竞争，最简单的方法是使用不可变值。除此之外，还有两种典型的策略。首先，用锁来保护临界区，例如：范围锁或策略锁。在面向对象设计中，关键部分的通常是对象(包括它的接口)，线程安全的接口会保护整个对象。其次，修改线程只是在工作完成时发出信号，这就是<em>保护性暂挂</em>模式。</p>
+<h2 id="范围锁"><a class="header" href="#范围锁">范围锁</a></h2>
+<p>范围锁是将RAII(资源获取即初始化)应用于互斥锁，这个用法的关键思想是将资源获取和释放绑定到对象的生存期。顾名思义，对象的生命周期范围是确定的。这里的范围意味着，C++运行时会负责调用对象的析构函数，从而释放资源。</p>
+<p>ScopedLock类实现了范围锁。</p>
+<pre><code class="language-c++">// scopedLock.cpp
+
+#include &lt;iostream&gt;
+#include &lt;mutex&gt;
+#include &lt;new&gt;
+#include &lt;string&gt;
+#include &lt;utility&gt;
+
+class ScopedLock{
+private:
+  std::mutex&amp; mut;
+public:
+	explicit ScopedLock(std::mutex&amp; m) :mut(m) {
+		mut.lock();
+		std::cout &lt;&lt; &quot;Lock the mutex: &quot; &lt;&lt; &amp;mut &lt;&lt; std::endl;
+	}
+	~ScopedLock() {
+		std::cout &lt;&lt; &quot;Release the mutex: &quot; &lt;&lt; &amp;mut &lt;&lt; std::endl;
+		mut.unlock();
+	}
+};
+
+int main() {
+
+	std::cout &lt;&lt; std::endl;
+
+	std::mutex mutex1;
+	ScopedLock scopedLock1{ mutex1 };
+
+	std::cout &lt;&lt; &quot;\nBefore local scope&quot; &lt;&lt; std::endl;
+	{
+		std::mutex mutex2;
+		ScopedLock scopedLock2{ mutex2 };
+	}
+	std::cout &lt;&lt; &quot;After local scope&quot; &lt;&lt; std::endl;
+
+	std::cout &lt;&lt; &quot;\nBefore try-catch block&quot; &lt;&lt; std::endl;
+	try {
+		std::mutex mutex3;
+		ScopedLock scopedLoack3{ mutex3 };
+		throw std::bad_alloc();
+	}
+	catch (std::bad_alloc&amp; e) {
+		std::cout &lt;&lt; e.what();
+	}
+	std::cout &lt;&lt; &quot;\nAfter try-catch block&quot; &lt;&lt; std::endl;
+
+	std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>ScopedLock通过引用的方式获取互斥对象(第13行)。互斥量在构造函数(第15行)中锁定，在析构函数(第19行)中进行解锁。由于RAII的使用习惯，对象在销毁时，会自动对互斥量进行解锁。</p>
+<p><img src="../../../images/Patterns/Synchronisation-Patterns/6.png" alt="" /></p>
+<p><code>scopedLock1</code>的作用域在主函数体中。因此，<code>mutex1</code>最后才解锁，<code>mutex2</code>(第34行)和<code>mutex3</code>(第42行)也是同理。对于<code>mutex3</code>而言，如果触发异常，也会调用<code>scopedLock3</code>的析构函数。有趣的是，<code>mutex3</code>重用了<code>mutex2</code>的内存，因为两者的地址相同。</p>
+<p>C++17支持四种类型的锁：<code>std::lock_guard</code>/<code>std::scoped_lock</code>用于简单场景，<code>std::unique_lock</code>/<code>std::shared_lock</code>用于高级场景，可以在关于锁的章节中了解更多的细节。</p>
+<p><strong>拓展阅读</strong></p>
+<ul>
+<li><a href="https://www.dre.vanderbilt.edu/%7Eschmidt/POSA/POSA2/">Pattern-Oriented Software Architecture: Patterns for Concurrent and Networked Objects</a></li>
+</ul>
+<h2 id="策略锁"><a class="header" href="#策略锁">策略锁</a></h2>
+<p>编写代码库时，这个库可用于各种领域，包括并发。为了安全起见，要用锁来保护关键部分。倘若库在单线程环境中运行，因为实现使用了重量级同步机制，则会存在性能问题。那么，现在就轮到策略锁登场了。</p>
+<p>策略锁是将策略模式的思想应用于锁。这意味着，会将锁定策略放到实例对象中，并使其成为一个可热插拔的组件。那么，什么是策略模式呢?</p>
+<p><strong>Strategy Pattern</strong></p>
+<p><img src="../../../images/Patterns/Synchronisation-Patterns/7.png" alt="" /></p>
+<p>策略模式是<a href="https://en.wikipedia.org/wiki/Design_Patterns">《设计模式：可重用的面向对象软件元素》</a>一书中经典的行为模式之一。其关键思想是定义一系列算法，将它们封装在一个对象中，从而使其成为可热插拔的组件。</p>
+<p>策略模式</p>
+<pre><code class="language-c++">// strategy.cpp
+
+#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+class Strategy {
+public:
+  virtual void operator()() = 0;
+  virtual ~Strategy() = default;
+};
+
+class Context {
+  std::shared_ptr&lt;Strategy&gt; _start;
+public:
+  explicit Context() : _start(nullptr) {}
+  void setStrategy(std::shared_ptr&lt;Strategy&gt; start) { _start = start; }
+  void strategy() { if (_start)(*_start)(); }
+};
+
+class Strategy1 :public Strategy {
+  void operator()() override {
+    std::cout &lt;&lt; &quot;Foo&quot; &lt;&lt; std::endl;
+  }
+};
+
+class Strategy2 : public Strategy {
+  void operator()() override {
+    std::cout &lt;&lt; &quot;Bar&quot; &lt;&lt; std::endl;
+  }
+};
+
+class Strategy3 :public Strategy {
+  void operator()() override {
+    std::cout &lt;&lt; &quot;FooBar&quot; &lt;&lt; std::endl;
+  }
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  Context con;
+
+  con.setStrategy(std::shared_ptr&lt;Strategy&gt;(new Strategy1));
+  con.strategy();
+
+  con.setStrategy(std::shared_ptr&lt;Strategy&gt;(new Strategy2));
+  con.strategy();
+
+  con.setStrategy(std::shared_ptr&lt;Strategy&gt;(new Strategy3));
+  con.strategy();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>第6至10行中的抽象类<code>Strategy</code>定义了策略。每个特定的策略，如<code>Strategy1</code>(第20行)、<code>Strategy2</code>(第26行)或<code>Strategy3</code>(第32行)，都必须支持函数调用操作符(第8行)。使用者在<code>Context</code>中集合了各种策略，在第16行设置特定的策略，并在第17行执行它。因为<code>Context</code>通过一个指向<code>Strategy</code>类的指针来执行，所以<code>Strategy1</code>、<code>Strategy2</code>和<code>Strategy3</code>的执行方法是私有的。</p>
+<p><img src="../../../images/Patterns/Synchronisation-Patterns/8.png" alt="" /></p>
+<p><strong>具体实现</strong></p>
+<p>实现策略锁有两种经典的方法：运行时多态性(面向对象)和编译时多态性(模板)。两种方式各有利弊。</p>
+<ul>
+<li>优点：</li>
+<li>运行时多态
+<ul>
+<li>允许在运行时配置策略锁。</li>
+<li>了解有面向对象的开发人员，更容易理解。</li>
+</ul>
+</li>
+<li>编译时多态
+<ul>
+<li>无抽象的惩罚。</li>
+<li>扁平的层次结构。</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>运行时多态</li>
+<li>额外需要一个指针。</li>
+<li>可能有很深的派生层次。</li>
+<li>编译时多态
+<ul>
+<li>出错时会有非常详细的信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>讨论了理论之后，我在两个程序中实现了策略锁。示例中，策略锁可支持无锁、独占锁和共享锁。简单起见，我在内部使用了互斥锁。此外，策略锁的模型也限定了其锁定的范围。</p>
+<p><strong>运行时多态</strong></p>
+<p>strategizedLockingRuntime.cpp程序中展示了三种互斥锁。</p>
+<p>运行时的多态性策略锁</p>
+<pre><code class="language-c++">// strategizedLockingRuntime.cpp
+
+#include &lt;iostream&gt;
+#include &lt;mutex&gt;
+#include &lt;shared_mutex&gt;
+
+class Lock {
+public:
+  virtual void lock() const = 0;
+  virtual void unlock() const = 0;
+};
+
+class StrategizedLocking {
+  Lock&amp; lock;
+public:
+  StrategizedLocking(Lock&amp; l) :lock(l) {
+    lock.lock();
+  }
+  ~StrategizedLocking() {
+    lock.unlock();
+  }
+};
+
+struct NullObjectMutex {
+  void lock() {};
+  void unlock() {};
+};
+
+class NoLock :public Lock {
+  void lock() const override {
+    std::cout &lt;&lt; &quot;NoLock::lock: &quot; &lt;&lt; std::endl;
+    nullObjectMutex.lock();
+  }
+  void unlock() const override {
+    std::cout &lt;&lt; &quot;NoLock::unlock: &quot; &lt;&lt; std::endl;
+    nullObjectMutex.unlock();
+  }
+  mutable NullObjectMutex nullObjectMutex;
+};
+
+class ExclusiveLock : public Lock {
+  void lock() const override {
+    std::cout &lt;&lt; &quot;  ExclusiveLock::lock: &quot; &lt;&lt; std::endl;
+    mutex.lock();
+  }
+  void unlock() const override {
+    std::cout &lt;&lt; &quot;  ExclusiveLock::unlock: &quot; &lt;&lt; std::endl;
+    mutex.unlock();
+  }
+  mutable std::mutex mutex;
+};
+
+class SharedLock : public Lock {
+  void lock() const override {
+    std::cout &lt;&lt; &quot; SharedLock::lock_shared: &quot; &lt;&lt; std::endl;
+    sharedMutex.lock_shared();
+  }
+  void unlock() const override {
+    std::cout &lt;&lt; &quot; SharedLock::unlock_shared: &quot; &lt;&lt; std::endl;
+    sharedMutex.unlock_shared();
+  }
+  mutable std::shared_mutex sharedMutex;
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  NoLock noLock;
+  StrategizedLocking stratLock1{ noLock };
+
+  {
+    ExclusiveLock exLock;
+    StrategizedLocking stratLock2{ exLock };
+    {
+      SharedLock sharLock;
+      StrategizedLocking startLock3{ sharLock };
+    }
+  }
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p><code>StrategizedLocking</code>类中有一把锁(第14行)。<code>StrategizedLocking</code>模型是范围锁，因此在构造函数(第16行)中进行锁定，在析构函数(第19行)中进行解锁。<code>Lock</code>(第7 - 11行)是一个抽象类，定义了所有接口。派生类分别是<code>NoLock</code> (第29行)、<code>ExclusiveLock</code>(第41行)和<code>SharedLock</code>(第53行)。<code>SharedLock</code>在<code>std::shared_mutex</code>上可使用<code>lock_shared</code>(第56行)和<code>unlock_shared</code>进行锁定和解锁。每个锁持有一个互斥对象<code>NullObjectMutex</code>(第38行)、<code>std::mutex</code>(第50行)或<code>std::shared_mutex</code>(第62行)。其实，<code>NullObjectMutex</code>就是一个无操作的占位符。互斥对象声明为可变，就意味着可以用在常量方法中使用，比如：lock和unlock中。</p>
+<blockquote>
+<p><strong>空对象</strong></p>
+<p>类NullObjectMutex是<a href="https://en.wikipedia.org/wiki/Null_object_pattern">空对象模式</a>的一个例子，由空方法组成，算是一个占位符，这样便于优化器可以将它完全删除。</p>
+</blockquote>
+<p><strong>编译时多态</strong></p>
+<p>基于模板的实现与基于面向对象的实现非常相似。</p>
+<p>编译时多态性策略锁</p>
+<pre><code class="language-c++">// StrategizedLockingCompileTime.cpp
+
+#include &lt;iostream&gt;
+#include &lt;mutex&gt;
+#include &lt;shared_mutex&gt;
+
+
+template &lt;typename LOCK&gt;
+class StrategizedLocking {
+  LOCK&amp; lock;
+public:
+  StrategizedLocking(LOCK&amp; l) :lock(l) {
+    lock.lock();
+  }
+  ~StrategizedLocking() {
+    lock.unlock();
+  }
+};
+
+struct NullObjectMutex {
+  void lock() {};
+  void unlock() {};
+};
+
+class NoLock {
+public:
+  void lock() const {
+    std::cout &lt;&lt; &quot;NoLock::lock: &quot; &lt;&lt; std::endl;
+    nullObjectMutex.lock();
+  }
+  void unlock() const {
+    std::cout &lt;&lt; &quot;NoLock::unlock: &quot; &lt;&lt; std::endl;
+    nullObjectMutex.unlock();
+  }
+  mutable NullObjectMutex nullObjectMutex;
+};
+
+class ExclusiveLock {
+public:
+  void lock() const {
+    std::cout &lt;&lt; &quot;  ExclusiveLock::lock: &quot; &lt;&lt; std::endl;
+    mutex.lock();
+  }
+  void unlock() const {
+    std::cout &lt;&lt; &quot;  ExclusiveLock::unlock: &quot; &lt;&lt; std::endl;
+    mutex.unlock();
+  }
+  mutable std::mutex mutex;
+};
+
+class SharedLock {
+public:
+  void lock() const {
+    std::cout &lt;&lt; &quot; SharedLock::lock_shared: &quot; &lt;&lt; std::endl;
+    sharedMutex.lock_shared();
+  }
+  void unlock() const {
+    std::cout &lt;&lt; &quot; SharedLock::unlock_shared: &quot; &lt;&lt; std::endl;
+    sharedMutex.unlock_shared();
+  }
+  mutable std::shared_mutex sharedMutex;
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  NoLock noLock;
+  StrategizedLocking stratLock1{ noLock };
+
+  {
+    ExclusiveLock exLock;
+    StrategizedLocking stratLock2{ exLock };
+    {
+      SharedLock sharLock;
+      StrategizedLocking startLock3{ sharLock };
+    }
+  }
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>这次<code>NoLock</code>(第25行)、<code>ExclusiveLock</code>(第38行)和<code>SharedLock</code>(第51行)没有抽象的基类了。结果<code>StrategizedLocking</code>可以用不支持相应接口的对象进行实例化，而这将导致编译时错误。C++20中，可以使用<code>Lockable : template &lt;Lockable Lock&gt; class StrategizedLocking</code>代替<code>template &lt;typename Lock&gt; class StrategizedLocking</code>。这意味着所有使用的锁必须支持Lockable<a href="https://en.cppreference.com/w/cpp/language/constraints">概念</a>。概念需要命名，并且<a href="https://en.cppreference.com/w/cpp/named_req">Lockable</a>已经在C++20中定义了。如果没有满足此要求，则编译将失败，并出现简单易懂的错误消息。</p>
+<p>两个程序会生成相同的输出:</p>
+<p><img src="../../../images/Patterns/Synchronisation-Patterns/9.png" alt="" /></p>
+<p><strong>拓展阅读</strong></p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Design_Patterns">Design Patterns: Elements of Reusable Object-Oriented Software</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy Pattern</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Null_object_pattern">Null Object Pattern</a></li>
+<li><a href="https://www.dre.vanderbilt.edu/%7Eschmidt/POSA/POSA2/">Pattern-Oriented Software Architecture: Patterns for Concurrent and Networked Objects</a></li>
+</ul>
+<h2 id="线程安全的接口"><a class="header" href="#线程安全的接口">线程安全的接口</a></h2>
+<p>当程序的关键部分只是一个对象时，那么使用线程安全的接口就在合适不过了。用锁可能会导致性能问题，甚至会导致死锁。下面的伪代码可以清楚地阐明我的观点。</p>
+<pre><code class="language-c++">struct Critical{
+  void method1(){
+    lock(mut);
+    method2();
+    ...
+  }
+  void method2(){
+    lock(mut);
+    ...
+  }
+  mutex mut;
+};
+
+Critical crit;
+crit.method1();
+</code></pre>
+<p>使用<code>crit.method1</code>会使互斥锁锁定两次。为了简单起见，这个锁是一个范围锁。当然，这里还有两个问题：</p>
+<ol>
+<li>当<code>lock</code>是递归锁时，<code>method2</code>中的第二个<code>lock(mut)</code>是多余的。</li>
+<li>当<code>lock</code>不是递归锁时，<code>method2</code>中的第二个<code>lock(mut)</code>会导致未定义行为。大多数情况下，会出现死锁。</li>
+</ol>
+<p>线程安全的接口可以避免这两个问题，因为：</p>
+<ul>
+<li>所有(public)接口都应该使用锁。</li>
+<li>所有(保护的和私有的)方法都不使用锁。</li>
+<li>接口只能使用保护的方法或私有方法调用，而公共方法则不能调用。</li>
+</ul>
+<p>threadSafeInterface.cpp程序显示了其用法。</p>
+<pre><code class="language-c++">// threadSafeInterface.cpp
+
+#include &lt;iostream&gt;
+#include &lt;mutex&gt;
+#include &lt;shared_mutex&gt;
+
+class Critical {
+
+public:
+  void interface1() const {
+    std::lock_guard&lt;std::mutex&gt; lockGuard(mut);
+    implementation1();
+  }
+  void interface2() {
+    std::lock_guard&lt;std::mutex&gt; lockGuard(mut);
+    implementation2();
+    implementation3();
+    implementation1();
+  }
+private:
+  void implementation1() const {
+    std::cout &lt;&lt; &quot;implementation1: &quot;
+      &lt;&lt; std::this_thread::get_id() &lt;&lt; std::endl;
+  }
+  void implementation2() const {
+    std::cout &lt;&lt; &quot;  implementation2: &quot;
+      &lt;&lt; std::this_thread::get_id() &lt;&lt; std::endl;
+  }
+  void implementation3() const {
+    std::cout &lt;&lt; &quot;   implementation3: &quot;
+      &lt;&lt; std::this_thread::get_id() &lt;&lt; std::endl;
+  }
+
+
+  mutable std::mutex mut;
+
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  std::thread t1([] {
+    const Critical crit;
+    crit.interface1();
+    });
+
+  std::thread t2([] {
+    Critical crit;
+    crit.interface2();
+    crit.interface1();
+    });
+
+
+  Critical crit;
+  crit.interface1();
+  crit.interface2();
+
+  t1.join();
+  t2.join();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p>包括主线程在内的三个线程都使用了Critical实例。由于线程安全的接口，所有对公开API的调用都是同步的。第35行中的互斥对象是可变的，因此可以在const方法<code>implementation1</code>中使用。</p>
+<p>线程安全的接口有三个好处：</p>
+<ol>
+<li>互斥锁不可能递归调用。在C++中，对非递归互斥对象的递归调用会导致未定义行为，通常都会死锁。</li>
+<li>该程序使用最小范围的锁定，因此同步的代价最小。仅在关键类的公共或私有方法中使用<code>std::recursive_mutex</code>将产生重量级的同步，从而遭受性能惩罚。</li>
+<li>从用户的角度来看，<code>Critical</code>很容易使用，而同步只是实现的一个细节而已。</li>
+</ol>
+<p>三个线程交错的输出：</p>
+<p><img src="../../../images/Patterns/Synchronisation-Patterns/10.png" alt="" /></p>
+<p>尽管线程安全的接口看起来很容易实现，但是也需要留意两个风险点。</p>
+<p><strong>风险</strong></p>
+<p>类中使用静态成员和使用虚接口时，需要特别小心。</p>
+<p><strong>静态成员</strong></p>
+<p>当类有静态成员时，就必须同步该类实例上的所有成员函数。</p>
+<pre><code class="language-c++">class Critical {
+
+public:
+  void interface1() const {
+    std::lock_guard&lt;std::mutex&gt; lockGuard(mut);
+    implementation1();
+  }
+  void interface2() {
+    std::lock_guard&lt;std::mutex&gt; lockGuard(mut);
+    implementation2();
+    implementation3();
+    implementation1();
+  }
+  
+private:
+  void implementation1() const {
+    std::cout &lt;&lt; &quot;implementation1: &quot;
+      &lt;&lt; std::this_thread::get_id() &lt;&lt; std::endl;
+    ++called;
+  }
+  void implementation2() const {
+    std::cout &lt;&lt; &quot;  implementation2: &quot;
+      &lt;&lt; std::this_thread::get_id() &lt;&lt; std::endl;
+    ++called;
+  }
+  void implementation3() const {
+    std::cout &lt;&lt; &quot;   implementation3: &quot;
+      &lt;&lt; std::this_thread::get_id() &lt;&lt; std::endl;
+    ++called;
+  }
+
+  inline static int called{ 0 };
+  inline static std::mutex mut;
+
+};
+</code></pre>
+<p><code>Critical</code>类使用了静态成员(第32行)来计算调用成员函数的频率。<code>Critical</code>的所有实例，都使用同一个静态成员，因此必须同步。本例中，临界区为<code>Critical</code>的所有实例。</p>
+<blockquote>
+<p>内联静态成员</p>
+<p>C++17中，静态数据成员可以声明为内联。可以在类中定义，以及初始化内联静态数据成员。</p>
+<pre><code class="language-c++">struct X
+{
+  	inline static int n = 1;
+}
+</code></pre>
+</blockquote>
+<p><strong>虚接口</strong></p>
+<p>当重写虚接口函数时，即使重写的函数是私有的，也应该有锁。</p>
+<pre><code class="language-c++">// threadSafeInterfaceVirtual.cpp
+
+#include &lt;iostream&gt;
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+
+class Base {
+
+public:
+  virtual void interface() {
+    std::lock_guard&lt;std::mutex&gt; lockGuard(mut);
+    std::cout &lt;&lt; &quot;Base with lock&quot; &lt;&lt; std::endl;
+  }
+private:
+  std::mutex mut;
+};
+
+class Derived : public Base {
+
+  void interface() override {
+    std::cout &lt;&lt; &quot;Derived without lock&quot; &lt;&lt; std::endl;
+  };
+
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  Base* base1 = new Derived;
+  base1-&gt;interface();
+
+  Derived der;
+  Base&amp; base2 = der;
+  base2.interface();
+
+  std::cout &lt;&lt; std::endl;
+
+}
+</code></pre>
+<p><code>base1-&gt;interface</code>和<code>base2.interface</code>中，<code>base1</code>和<code>base2</code>是静态类型是<code>Base</code>，因此<code>interface</code>是一个公开接口。由于接口方法是虚函数，因此在运行时使用派生的动态类型Derived进行。最后，调用派生类Derived的私有接口。</p>
+<p><img src="../../../images/Patterns/Synchronisation-Patterns/11.png" alt="" /></p>
+<p>有两种方法可以避免风险：</p>
+<ol>
+<li>使接口成为非虚接口，这种技术称为<a href="https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Non-Virtual_Interface">NVI(非虚拟接口)</a>。</li>
+<li>将接口声明为<code>final</code>: <code>virtual void interface() final;</code>。</li>
+</ol>
+<p><strong>扩展阅读</strong></p>
+<ul>
+<li><a href="https://www.dre.vanderbilt.edu/%7Eschmidt/POSA/POSA2/">Pattern-Oriented Software Architecture: Patterns for Concurrent and Networked Objects</a></li>
+</ul>
+<h2 id="保护性暂挂模式"><a class="header" href="#保护性暂挂模式">保护性暂挂模式</a></h2>
+<p>锁和一些先决条件的组合，是构成保护性暂挂模式的基础件。如果未满足先决条件，则线程将自己置为休眠状态。为了避免数据竞争或死锁，检查线程时会使用锁。</p>
+<p>现在，来看看各种情况:</p>
+<ul>
+<li>处于等待状态的线程，会根据通知更改状态，也可以主动请求更改状态。我把这称为“推拉原则”。</li>
+<li>等待可以有时限，也可以没有时限。</li>
+<li>可以将通知发送给一个或所有正在等待的线程。</li>
+</ul>
+<p><strong>推拉原则</strong></p>
+<p>先来说说推原则。</p>
+<p><strong>推原则</strong></p>
+<p>大多数情况下，使用条件变量或future/promise来进行线程同步。条件变量或promise将通知发送到正在等待的线程。promise没有<code>notify_one</code>或<code>notify_all</code>方法，而空的<code>set_value</code>调用通常用于模拟通知。下面的程序段展示发送通知的线程和等待的线程。</p>
+<ul>
+<li>条件变量</li>
+</ul>
+<pre><code class="language-c++">void waitingForWork(){
+  std::cout &lt;&lt; &quot;Worker: Waiting for work.&quot; &lt;&lt; std::endl;
+  std::unique_lock&lt;std::mutex&gt; lck(mutex_);
+  condVar.wait(lck, []{ return dataReady; });
+  doTheWork();
+  std::cout &lt;&lt; &quot;Work done.&quot; &lt;&lt; std::endl;
+}
+
+void setDataReady(){
+  {
+    std::lock_guard&lt;std::mutex&gt; lck(mutex_);
+    dataReady = true;
+  }
+  std::cout &lt;&lt; &quot;Sender: Data is ready.&quot; &lt;&lt; std::endl;
+  condVar.notify_one();
+}
+</code></pre>
+<ul>
+<li>future/promise</li>
+</ul>
+<pre><code class="language-c++">void waitingForWork(std::future&lt;void&gt;&amp;&amp; fut){
+  std::cout &lt;&lt; &quot;Worker: Waiting for work.&quot; &lt;&lt; std::endl;
+  fut.wait();
+  doTheWork();
+  std::cout &lt;&lt; &quot;Work done.&quot; &lt;&lt; std::endl;
+}
+void setDataReady(std::promise&lt;void&gt;&amp;&amp; prom){
+  std::cout &lt;&lt; &quot;Sender: Data is ready.&quot; &lt;&lt; std::endl;
+  prom.set_value();
+}
+</code></pre>
+<p><strong>拉原则</strong></p>
+<p>线程也可以主动地要求改变状态，而不是被动地等待状态改变。C++中并不支持“拉原则”，但可以用原子变量来实现。</p>
+<pre><code class="language-c++">std::vector&lt;int&gt; mySharedWork;
+std::mutex mutex_;
+std::condition_variable condVar;
+
+bool dataReady{false};
+
+void waitingForWork(){
+  std::cout &lt;&lt; &quot;Waiting &quot; &lt;&lt; std::endl;
+  std::unique_lock&lt;std::mutex&gt; lck(mutex_);
+  condVar.wait(lck, []{ return dataReady; });
+  mySharedWork[1] = 2;
+  std::cout &lt;&lt; &quot;Work done &quot; &lt;&lt; std::endl;
+}
+
+void setDataReady(){
+  mySharedWork = {1, 0, 3};
+  {
+    std::lock_guard&lt;std::mutex&gt; lck(mutex_);
+    dataReady = true;
+  }
+  std::cout &lt;&lt; &quot;Data prepared&quot; &lt;&lt; std::endl;
+  condVar.notify_one();
+}
+</code></pre>
+<p><strong>有或无时限的等待</strong></p>
+<p>条件变量和future有三个用于等待的方法:<code>wait</code>、<code>wait_for</code>和<code>wait_until</code>。<code>wait_for</code>需要一个时间段，<code>wait_until</code>需要一个时间点。</p>
+<p>各种等待策略中，消费者线程等待时间为<code>steady_clock::now() + dur</code>。如果promise已经准备好了，就会获取值；如果没准备好，则只显示其id: <code>this_thread::get_it()</code>。</p>
+<pre><code class="language-c++">void producer(promise&lt;int&gt;&amp;&amp; prom){
+  cout &lt;&lt; &quot;PRODUCING THE VALUE 2011\n\n&quot;;
+  this_thread::sleep_for(seconds(5));
+  prom.set_value(2011);
+}
+
+void consumer(shared_future&lt;int&gt; fut,
+steady_clock::duration dur){
+  const auto start = steady_clock::now();
+  future_status status= fut.wait_until(steady_clock::now() + dur);
+  if ( status == future_status::ready ){
+    lock_guard&lt;mutex&gt; lockCout(coutMutex);
+    cout &lt;&lt; this_thread::get_id() &lt;&lt; &quot; ready =&gt; Result: &quot; &lt;&lt; fut.get()
+    &lt;&lt; endl;
+  }
+  else{
+    lock_guard&lt;mutex&gt; lockCout(coutMutex);
+    cout &lt;&lt; this_thread::get_id() &lt;&lt; &quot; stopped waiting.&quot; &lt;&lt; endl;
+  }
+  const auto end= steady_clock::now();
+  lock_guard&lt;mutex&gt; lockCout(coutMutex);
+  cout &lt;&lt; this_thread::get_id() &lt;&lt; &quot; waiting time: &quot;
+  		 &lt;&lt; getDifference(start,end) &lt;&lt; &quot; ms&quot; &lt;&lt; endl;
+}
+</code></pre>
+<p><strong>通知一个或所有等待线程</strong></p>
+<p><code>notify_one</code>可以唤醒一个等待的线程，<code>notify_all</code>可以唤醒所有等待的线程。使用<code>notify_one</code>时，不能确定哪一个线程会被唤醒，而其他条件变量则保持在等待状态。因为future和promise之间存在关联性，所以这种情况在<code>std::future</code>中是不可能发生的。如果想模拟一对多的关系，那么应该使用<code>std::shared_future</code>而不是<code>std::future</code>，因为<code>std::shared_future</code>是可以复制的。</p>
+<p>下面的程序显示了一个简单的工作流，promise和future之间是一对一/一对多的关系。</p>
+<pre><code class="language-c++">// bossWorker.cpp
+
+#include &lt;future&gt;
+#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;random&gt;
+#include &lt;string&gt;
+#include &lt;thread&gt;
+#include &lt;utility&gt;
+
+int getRandomTime(int start, int end) {
+
+  std::random_device seed;
+  std::mt19937 engine(seed());
+  std::uniform_int_distribution&lt;int&gt; dist(start, end);
+
+  return dist(engine);
+}
+
+class Worker {
+public:
+  explicit Worker(const std::string&amp; n) :name(n) {}
+
+  void operator()(std::promise&lt;void&gt;&amp;&amp; prepareWork,
+    std::shared_future&lt;void&gt; boss2Worker) {
+
+    // prepare the work and notify the boss
+    int prepareTime = getRandomTime(500, 2000);
+    std::this_thread::sleep_for(std::chrono::microseconds(prepareTime));
+    prepareWork.set_value();
+    std::cout &lt;&lt; name &lt;&lt; &quot;: &quot; &lt;&lt; &quot;Work prepared after &quot;
+      &lt;&lt; prepareTime &lt;&lt; &quot; milliseconds.&quot; &lt;&lt; std::endl;
+
+    // still waiting for the permission to start working
+    boss2Worker.wait();
+  }
+private:
+  std::string name;
+};
+
+int main() {
+
+  std::cout &lt;&lt; std::endl;
+
+  // define the std::promise = &gt; Instruction from the boss
+  std::promise&lt;void&gt; startWorkPromise;
+
+  // get the std::shared_future's from the std::promise
+  std::shared_future&lt;void&gt; startWorkFuture = startWorkPromise.get_future();
+
+  std::promise&lt;void&gt; herbPrepared;
+  std::future&lt;void&gt; waitForHerb = herbPrepared.get_future();
+  Worker herb(&quot; Herb&quot;);
+  std::thread herbWork(herb, std::move(herbPrepared), startWorkFuture);
+
+  std::promise&lt;void&gt; scottPrepared;
+  std::future&lt;void&gt; waitForScott = scottPrepared.get_future();
+  Worker scott(&quot; Scott&quot;);
+  std::thread scottWork(scott, std::move(scottPrepared), startWorkFuture);
+
+  std::promise&lt;void&gt; bjarnePrepared;
+  std::future&lt;void&gt; waitForBjarne = bjarnePrepared.get_future();
+  Worker bjarne(&quot; Bjarne&quot;);
+  std::thread bjarneWork(bjarne, std::move(bjarnePrepared), startWorkFuture);
+
+  std::cout &lt;&lt; &quot;BOSS: PREPARE YOUR WORK.\n &quot; &lt;&lt; std::endl;
+
+  // waiting for the worker
+  waitForHerb.wait(), waitForScott.wait(), waitForBjarne.wait();
+
+  // notify the workers that they should begin to work
+  std::cout &lt;&lt; &quot;\nBOSS: START YOUR WORK. \n&quot; &lt;&lt; std::endl;
+  startWorkPromise.set_value();
+
+  herbWork.join();
+  scottWork.join();
+  bjarneWork.join();
+
+}
+</code></pre>
+<p>该程序的关键思想是boss(主线程)有三个员工：herb(第53行)、scott(第58行)和bjarne(第63行)，每个worker由一个线程表示。老板在第64行等待，直到所有的员工完成工作。这意味着，每个员工在任务下发后的任意时间点，都可以向老板发送完成通知。因为会转到<code>std::future</code>，所以员工到老板的通知是一对一的(第30行)。而从老板到员工的工作指令，则是一对多的通知(第73行)。对于这个一对多的通知，需要使用<code>std::shared_future</code>。</p>
+<p><img src="../../../images/Patterns/Synchronisation-Patterns/12.png" alt="" /></p>
+<p><strong>扩展阅读</strong></p>
+<ul>
+<li><a href="http://gee.cs.oswego.edu/dl/cpj/">Concurrent Programming in Java: Design Principles and Patterns (Doug Lea)</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../../../content/Pattrns/Synchronisation-Patterns/7.1-chinese.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../../../content/Pattrns/Concurrent-Architecture/8.0-chinese.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>
